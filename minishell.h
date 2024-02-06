@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 16:58:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:57:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,9 @@ int *ft_is_expandable(char *input, int variable_count);
 int ft_decr_incr(int condition);
 int ft_should_expand(int single_quotes, int double_quotes);
 void ft_testing_expand(char *input);
+char *ft_char_join(char *base_str, char to_join);
+t_list *ft_find_var(t_list **env, char* input);
+char *ft_join_var(t_list **env, char *final_input, char *input);
+char *ft_expand(char *input, t_list **env);
 
 #endif

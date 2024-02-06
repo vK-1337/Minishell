@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 17:32:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:01:21 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,104 @@ int ft_should_expand(int single_quotes, int double_quotes)
     return (0);
   return (1337);
 }
-ft_expand(char *input)
+char *ft_expand(char *input, t_list **env)
 {
+  int i;
+  int *vars;
+  int vars_number;
   char *final_input;
+  int var_idx;
 
-  
+  vars_number = ft_contain_variables(input);
+  if (vars_number > 0)
+  {
+    i = 0;
+    var_idx = 0;
+    vars = ft_is_expandable(input, vars_number);
+    while (input[i])
+    {
+      if (input[i] != 36)
+        final_input = ft_char_join(final_input, input[i]);
+      else if (input[i] == 36 && ft_isalpha(input[i + 1]))
+      {
+        if (var_idx < vars_number && vars[var_idx] == 1)
+        {
+          if (ft_var_exists(env, &input[i]))
+            final_input = ft_join_var(env, final_input, &input[i]); // TODO
+          else
+            final_input = ft_char_join(final_input, ' '); // ! SEE IN BASH WHAT HAPPENS IF EXPAND EMPTY VAR //
+          // ! GO TO NEXT WORD ANYWAY
+          while (input[i + 1] && input[i + 1] != ' ')
+            i++;
+        }
+        else
+          final_input = ft_char_join(final_input, input[i]);
+        var_idx++;
+      }
+      i++;
+    }
+  }
+  else
+    return (input);
+  return (final_input);
+}
+
+char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEEDED
+{
+  char *new_str;
+  t_list *env_var;
+  int var_len;
+  int i;
+  int j;
+
+  i = 0;
+  env_var = ft_find_var(env, input);
+  while (((char *)env_var->content)[i])
+  {
+    if (((char *)env_var->content)[i] == '=')
+      break;
+    i++;
+  }
+  var_len = ft_strlen(env_var->content + i);
+  new_str = malloc((ft_strlen(final_input) + var_len + 1) * sizeof(char));
+  if (!new_str)
+    return (NULL);
+  j = 0;
+  while (final_input[i])
+  {
+    new_str[j] = final_input[j];
+    j++;
+  }
+  j = 0;
+  while (((char *)env_var->content)[i])
+  {
+    new_str[j] = ((char *)env_var->content)[i];
+    j++;
+    i++;
+  }
+  new_str[j] = '\0';
+  free(final_input);
+  return (new_str);
+}
+
+t_list *ft_find_var(t_list **env, char* input)
+{
+  int i;
+  t_list *curr;
+
+  i = 0;
+  while (input[i])
+  {
+    if (input[i] == '=')
+      break;
+    i++;
+  }
+  curr = *env;
+  while (curr)
+  {
+    if (ft_strncmp(curr->content, input, i) == 0)
+      return (curr);
+    curr = curr->next;
+  }
+  return (NULL);
 }

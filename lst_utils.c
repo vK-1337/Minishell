@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:06:09 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/02/06 13:51:47 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/02/06 14:05:53 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_env(t_list *env)
+void	ft_free_list(t_list **list)
 {
-	while (env)
+	t_list	*tmp;
+
+	if (!list || !*list)
+		return ;
+	while (*list)
 	{
-		printf("%s\n", (char *)env->content);
-		env = env->next;
+		tmp = (*list)->next;
+		free(*list);
+		*list = tmp;
 	}
 }
 
-t_list	*ft_convert_env(char **env)
+void	ft_delete_last(t_list *env_node)
 {
-	int		i;
-	t_list	*env_list;
+	env_node->prev->next = NULL;
+	free(env_node);
+}
 
-	i = 0;
-	env_list = NULL;
-	while (env[i])
-	{
-		ft_lstadd_back(&env_list, ft_lstnew((char *)env[i]));
-		i++;
-	}
-	return (env_list);
+void	ft_delete_connect(t_list *env_node)
+{
+	env_node->prev->next = env_node->next;
+	env_node->next->prev = env_node->prev;
+	free(env_node);
 }

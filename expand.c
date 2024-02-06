@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:06:09 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/02/06 14:37:45 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_env(t_list *env)
-{
-	while (env)
-	{
-		printf("%s\n", (char *)env->content);
-		env = env->next;
-	}
-}
+// TODO Function to know if the variable need to be expanded or not
 
-t_list	*ft_convert_env(char **env)
-{
-	int		i;
-	t_list	*env_list;
+// ? How to know if the variable should be expanded
+  // * Get informations on conditions
 
-	i = 0;
-	env_list = NULL;
-	while (env[i])
-	{
-		ft_lstadd_back(&env_list, ft_lstnew((char *)env[i]));
-		i++;
-	}
-	return (env_list);
-}
+// TODO 

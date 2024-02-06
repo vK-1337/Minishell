@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:48:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/05 20:31:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:05:05 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strjoin(char *s1, char *s2, int free_s1)
 		s3[i++] = s2[j++];
 	}
 	s3[i] = '\0';
-  if (free_s1)
-    free(s1);
+	if (free_s1)
+		free(s1);
 	return (s3);
 }

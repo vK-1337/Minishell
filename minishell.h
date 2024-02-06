@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:24:37 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:58:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,12 @@ int			ft_not_double_quoted(char *input, int char_index);
 void		ft_free_list(t_list **list);
 void		ft_delete_last(t_list *env_node);
 void		ft_delete_connect(t_list *env_node);
+
+// EXPAND //
+int ft_contain_variables(char *input);
+int *ft_is_expandable(char *input, int variable_count);
+int ft_decr_incr(int condition);
+int ft_should_expand(int single_quotes, int double_quotes);
+void ft_testing_expand(char *input);
 
 #endif

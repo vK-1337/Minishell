@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:09:17 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:54:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
+    ft_testing_expand(input);
 		if (strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
 		else if (strncmp("unset", input, 5) == 0)

@@ -4,6 +4,7 @@ SRCS =	env.c \
 				minishell.c \
 				env_utils.c \
 				lst_utils.c \
+				expand.c \
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

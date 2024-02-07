@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 10:40:37 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:50:21 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define FALSE 0
 # define TRUE 1
-
+# define SIZE 150
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <readline/history.h>
@@ -75,6 +75,9 @@ char *ft_char_join(char *base_str, char to_join);
 t_list *ft_find_var(t_list **env, char* input);
 char *ft_join_var(t_list **env, char *final_input, char *input);
 char *ft_expand(char *input, t_list **env);
+
+// CD CMD //
+void change_directory(char **path, char *command);
 
 // DEBUG //
 void ft_print_expandables(int *vars, int vars_number);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 10:29:49 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:50:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int ac, char **av, char **env)
 			break ;
 		else if (strncmp("unset", input, 5) == 0)
 			env_list = *ft_unset(&env_list, &input[6]);
+		else if (strncmp ("cd", input, 2) == 0)
+			change_directory(&prompt, input);
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

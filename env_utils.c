@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:05:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 11:41:11 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,12 @@ int	ft_var_exists(t_list **env_list, char *var)
 
 	curr = *env_list;
 	i = 0;
-	while (var[i])
-	{
-		if (var[i] == '=')
-			break ;
+	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_')
 		i++;
-	}
+  var++;
 	while (curr)
 	{
-		if (strncmp(curr->content, var, i) == 0)
+		if (ft_strncmp(curr->content, var, i) == 0 && ((char*)curr->content)[i] == '=')
 			return (1);
 		curr = curr->next;
 	}

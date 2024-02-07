@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 08:54:43 by vk                #+#    #+#             */
-/*   Updated: 2023/11/07 15:37:23 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 09:03:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] && str[i + 1] && str[i + 2] && str[i + 3])
-		i += 4;
+  if (!str)
+    return (i);
 	while (str[i])
 		i++;
 	return (i);

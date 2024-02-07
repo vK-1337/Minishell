@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 20:57:50 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 10:40:37 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,8 @@ char *ft_char_join(char *base_str, char to_join);
 t_list *ft_find_var(t_list **env, char* input);
 char *ft_join_var(t_list **env, char *final_input, char *input);
 char *ft_expand(char *input, t_list **env);
+
+// DEBUG //
+void ft_print_expandables(int *vars, int vars_number);
 
 #endif

@@ -6,13 +6,11 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 21:14:13 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 10:29:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ! SEG FAULT WHEN CALLING FT_EXPAND //
 
 int	main(int ac, char **av, char **env)
 {

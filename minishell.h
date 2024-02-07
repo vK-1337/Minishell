@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 10:40:37 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:39:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_parsed_input
 // PROMPT //
 char		*ft_extract_hostname(char *session_manager);
 char		*trim_pwd(char *pwd);
-char		*ft_build_prompt(void);
+char		*ft_build_prompt(t_list **env);
 
 // ENV CMD //
 t_list		*ft_convert_env(char **env);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 11:39:17 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:30:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,48 +84,45 @@ char *ft_expand(char *input, t_list **env)
   char *final_input;
   int var_idx;
 
+  i = 0;
+  var_idx = 0;
   vars_number = ft_contain_variables(input);
-  if (vars_number > 0)
+  vars = ft_is_expandable(input, vars_number);
+  final_input = NULL;
+  while (input[i])
   {
-    i = 0;
-    var_idx = 0;
-    vars = ft_is_expandable(input, vars_number);
-    final_input = NULL;
-    while (input[i])
+    if (input[i] != 36)
     {
-      if (input[i] != 36)
+      if (input[i] == 34)
       {
-        if (input[i] == 34)
-        {
-          if (!ft_not_single_quoted(input, i))
-            final_input = ft_char_join(final_input, input[i]);
-        }
-        else if (input[i] == 39)
-        {
-          if (!ft_not_double_quoted(input, i))
-            final_input = ft_char_join(final_input, input[i]);
-        }
-        else
+        if (!ft_not_single_quoted(input, i))
           final_input = ft_char_join(final_input, input[i]);
       }
-      else if (input[i] == 36 && ft_isalpha(input[i + 1]))
+      else if (input[i] == 39)
       {
-        if (var_idx < vars_number && vars[var_idx] == 1)
-        {
-          if (ft_var_exists(env, &input[i]))
-            final_input = ft_join_var(env, final_input, &input[i]); // TODO
-          while (input[i + 1] && (ft_isalnum(input[i + 1])))
-            i++;
-        }
-        else
+        if (!ft_not_double_quoted(input, i))
           final_input = ft_char_join(final_input, input[i]);
-        var_idx++;
       }
-      i++;
+      else
+        final_input = ft_char_join(final_input, input[i]);
     }
+    else if (input[i] == 36 && ft_isalpha(input[i + 1]))
+    {
+      if (var_idx < vars_number && vars[var_idx] == 1)
+      {
+        if (ft_var_exists(env, &input[i]))
+          final_input = ft_join_var(env, final_input, &input[i]);
+        while (input[i + 1] && (ft_isalnum(input[i + 1])))
+          i++;
+      }
+      else
+        final_input = ft_char_join(final_input, input[i]);
+      var_idx++;
+    }
+    i++;
   }
-  else
-    return (input);
+  free(input);
+  free(vars);
   return (final_input);
 }
 

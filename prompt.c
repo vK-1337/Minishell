@@ -6,27 +6,27 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:06:36 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:40:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_build_prompt(void)
+char	*ft_build_prompt(t_list **env)
 {
 	char	*hostname;
-	char	*username;
-	char	*pwd;
+	char *username;
+	t_list *pwd;
 	char	*final_prompt;
 
 	hostname = ft_extract_hostname(getenv("SESSION_MANAGER"));
 	username = getenv("USER");
-	pwd = getenv("PWD");
+	pwd = ft_find_var(env, "$PWD");
 	final_prompt = ft_strjoin(username, "@", 0);
 	final_prompt = ft_strjoin(final_prompt, hostname, 1);
 	final_prompt = ft_strjoin(final_prompt, ":", 1);
 	final_prompt = ft_strjoin(final_prompt, "~", 1);
-	final_prompt = ft_strjoin(final_prompt, trim_pwd(pwd), 1);
+	final_prompt = ft_strjoin(final_prompt, trim_pwd(&((char *)pwd->content)[4]), 1);
 	final_prompt = ft_strjoin(final_prompt, "$ ", 1);
 	free(hostname);
 	return (final_prompt);

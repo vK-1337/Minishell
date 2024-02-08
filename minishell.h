@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 19:01:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:38:47 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
-# include <sys/types.h>
 
 typedef int	t_bool;
 
@@ -68,21 +67,27 @@ void		ft_delete_last(t_list *env_node);
 void		ft_delete_connect(t_list *env_node);
 
 // EXPAND //
-int ft_contain_variables(char *input);
-int *ft_is_expandable(char *input, int variable_count);
-int ft_decr_incr(int condition);
-int ft_should_expand(int single_quotes, int double_quotes);
-void ft_testing_expand(char *input);
-char *ft_char_join(char *base_str, char to_join);
-t_list *ft_find_var(t_list **env, char* input);
-char *ft_join_var(t_list **env, char *final_input, char *input);
-char *ft_expand(char *input, t_list **env);
+int			ft_contain_variables(char *input);
+int			*ft_is_expandable(char *input, int variable_count);
+int			ft_decr_incr(int condition);
+int			ft_should_expand(int single_quotes, int double_quotes);
+void		ft_testing_expand(char *input);
+char		*ft_char_join(char *base_str, char to_join);
+t_list		*ft_find_var(t_list **env, char *input);
+char		*ft_join_var(t_list **env, char *final_input, char *input);
+char		*ft_expand(char *input, t_list **env);
 
 // DEBUG //
-void ft_print_expandables(int *vars, int vars_number);
+void		ft_print_expandables(int *vars, int vars_number);
 
 // SIGNALS //
-void ft_init_signals(struct sigaction *signals);
-void	sig_handler(int signum, siginfo_t *info, void *context);
+void		ft_init_signals(struct sigaction *signals);
+void		sig_handler(int signum, siginfo_t *info, void *context);
+
+// CD CMD //
+int		ft_cd(char *path, t_list **env);
+void		ft_replace_pwd(t_list **env, char *current_directory);
+void		ft_set_pwd(t_list **env);
+int			old_pwd_use(char **path, t_list **env);
 
 #endif

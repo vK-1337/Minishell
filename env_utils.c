@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 15:44:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:48:37 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_var_exists(t_list **env_list, char *var)
   var++;
 	while (curr)
 	{
-		if (ft_strncmp(curr->var_name, var, i) == 0 && curr->var_name[i] == NULL)
+		if (ft_strncmp(curr->var_name, var, i) == 0 && curr->var_name[i] == '\0')
 			return (1);
 		curr = curr->next;
 	}
@@ -100,7 +100,7 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 	}
 	while (curr)
 	{
-		if (strncmp(curr->var_name, new_var, i) == 0 && curr->var_name[i] == NULL)
+		if (strncmp(curr->var_name, new_var, i) == 0 && curr->var_name[i] == '\0')
 		{
 			curr->content = new_var + i + 1;
 			return ;
@@ -116,7 +116,7 @@ t_list	**ft_unset(t_list **env_list, char *var_to_del)
 	curr = *env_list;
 	while (curr)
 	{
-		if (strncmp(curr->content, var_to_del, ft_strlen(var_to_del)) == 0)
+		if (strncmp(curr->var_name, var_to_del, ft_strlen(var_to_del)) == 0)
 		{
 			if (curr->prev == NULL)
 			{

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 17:39:24 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/07 19:01:46 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+# include <sys/types.h>
 
 typedef int	t_bool;
 
@@ -78,5 +80,9 @@ char *ft_expand(char *input, t_list **env);
 
 // DEBUG //
 void ft_print_expandables(int *vars, int vars_number);
+
+// SIGNALS //
+void ft_init_signals(struct sigaction *signals);
+void	sig_handler(int signum, siginfo_t *info, void *context);
 
 #endif

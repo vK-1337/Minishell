@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 16:30:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:28:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char *ft_expand(char *input, t_list **env)
     {
       if (input[i] == 34)
       {
-        if (!ft_not_single_quoted(input, i))
+        if (!ft_not_single_quoted(input, i)) // || ft_around_command(input, i))
           final_input = ft_char_join(final_input, input[i]);
       }
       else if (input[i] == 39)
@@ -125,6 +125,17 @@ char *ft_expand(char *input, t_list **env)
   free(vars);
   return (final_input);
 }
+
+// int ft_around_command(char *input, int char_index)
+// {
+//   int i;
+
+//   i = 0;
+//   while (input[i])
+//   {
+
+//   }
+// }
 
 char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEEDED
 {
@@ -182,12 +193,13 @@ t_list *ft_find_var(t_list **env, char* input)
   curr = *env;
   while (curr)
   {
-    if (ft_strncmp(curr->content, input, i) == 0)
+    if (ft_strncmp(curr->var_name, input, i) == 0)
       return (curr);
     curr = curr->next;
   }
   return (NULL);
 }
+
 void ft_print_expandables(int *vars, int vars_number)
 {
   int i;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:16:07 by vk                #+#    #+#             */
-/*   Updated: 2023/11/14 15:51:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:22:02 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	new_head = NULL;
 	while (lst != NULL)
 	{
-		new = ft_lstnew(f(lst->content));
+		new = ft_lstnew(f(lst->content), 0);
 		if (!new)
 		{
 			ft_lstclear(&new, del);

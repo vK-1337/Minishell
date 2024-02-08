@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 15:28:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:24:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char *ft_expand(char *input, t_list **env)
     {
       if (input[i] == 34)
       {
-        if (!ft_not_single_quoted(input, i)) // || ft_around_command(input, i))
+        if (!ft_not_single_quoted(input, i))  //|| ft_around_command(input, i))
           final_input = ft_char_join(final_input, input[i]);
       }
       else if (input[i] == 39)
@@ -130,7 +130,6 @@ char *ft_expand(char *input, t_list **env)
 // {
 //   int i;
 
-//   i = 0;
 //   while (input[i])
 //   {
 
@@ -147,13 +146,8 @@ char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEE
 
   i = 0;
   env_var = ft_find_var(env, input);
-  while (((char *)env_var->content)[i])
-  {
-    if (((char *)env_var->content)[i - 1] == '=')
-      break;
-    i++;
-  }
-  var_len = ft_strlen(((char *)env_var->content) + i);
+  printf("env_var.var_name -> %s\n", env_var->var_name);
+  var_len = ft_strlen(env_var->content);
   new_str = malloc((ft_strlen(final_input) + var_len + 1) * sizeof(char));
   if (!new_str)
     return (NULL);
@@ -166,9 +160,9 @@ char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEE
       j++;
     }
   }
-  while (((char *)env_var->content)[i])
+  while (env_var->content[i])
   {
-    new_str[j] = ((char *)env_var->content)[i];
+    new_str[j] = env_var->content[i];
     j++;
     i++;
   }

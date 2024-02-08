@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 21:02:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:15:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
     input = ft_expand(input, &env_list);
-    printf("YOOOOO %s\n", input);
+    printf("%s\n", input);
 		if (ft_strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
 		else if (ft_strncmp("unset", input, 5) == 0)

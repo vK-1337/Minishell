@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:04:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:26:27 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,15 @@ void				ft_putnbr_fd(int n, int fd);
 
 typedef struct s_list
 {
-	void			*content;
+	char			*var_name;
+	char			*content;
 	struct s_list	*next;
 	struct s_list	*prev;
 }					t_list;
 
 // BONUS
 
-t_list				*ft_lstnew(void *content);
+t_list	*ft_lstnew(void *content, int build_env);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);

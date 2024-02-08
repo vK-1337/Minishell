@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/07 17:40:49 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:26:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_build_prompt(t_list **env)
 	final_prompt = ft_strjoin(final_prompt, hostname, 1);
 	final_prompt = ft_strjoin(final_prompt, ":", 1);
 	final_prompt = ft_strjoin(final_prompt, "~", 1);
-	final_prompt = ft_strjoin(final_prompt, trim_pwd(&((char *)pwd->content)[4]), 1);
+	final_prompt = ft_strjoin(final_prompt, trim_pwd(pwd->content), 1);
 	final_prompt = ft_strjoin(final_prompt, "$ ", 1);
 	free(hostname);
 	return (final_prompt);

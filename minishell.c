@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 16:00:51 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:25:11 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,25 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
     input = ft_expand(input, &env_list);
     printf("%s\n", input);
-		if (ft_strncmp("env", input, 3) == 0)
-			ft_print_env(env_list);
-		else if (ft_strncmp("unset", input, 5) == 0)
-			ft_unset(&env_list, &input[6]);
-		else if (ft_strncmp("export", input, 6) == 0)
-			ft_export(&env_list, &input[7]);
-		else if (ft_strncmp(input, "exit", 4) == 0)
-			break ;
-		else if (ft_strncmp("unset", input, 5) == 0)
-			env_list = *ft_unset(&env_list, &input[6]);
-		else if (ft_strncmp("cd", input, 2) == 0)
-		{
-			ft_cd(&input[3], &env_list);
-			free(prompt);
-			prompt = ft_build_prompt(&env_list);
-		}
+    if (input != NULL)
+    {
+      if (ft_strncmp("env", input, 3) == 0)
+        ft_print_env(env_list);
+      else if (ft_strncmp("unset", input, 5) == 0)
+        ft_unset(&env_list, &input[6]);
+      else if (ft_strncmp("export", input, 6) == 0)
+        ft_export(&env_list, &input[7]);
+      else if (ft_strncmp(input, "exit", 4) == 0)
+        break ;
+      else if (ft_strncmp("unset", input, 5) == 0)
+        env_list = *ft_unset(&env_list, &input[6]);
+      else if (ft_strncmp("cd", input, 2) == 0)
+      {
+        ft_cd(&input[3], &env_list);
+        free(prompt);
+        prompt = ft_build_prompt(&env_list);
+      }
+    }
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

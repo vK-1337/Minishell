@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/09 16:01:55 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:12:46 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int ft_contain_variables(char *input)
   {
     if (input[i] == '$' && (ft_isalpha(input[i + 1])))
       variable_count++;
-    if (input[i] == '$' && input[i + 1] == "{")
-      while ()
+    // if (input[i] == '$' && input[i + 1] == "{")
+    //   while ()
     i++;
   }
   return (variable_count);

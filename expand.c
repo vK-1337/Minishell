@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 16:24:32 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:01:55 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int ft_contain_variables(char *input)
   variable_count = 0;
   while (input[i])
   {
-    if (input[i] == '$' && ft_isalpha(input[i + 1]))
+    if (input[i] == '$' && (ft_isalpha(input[i + 1])))
       variable_count++;
+    if (input[i] == '$' && input[i + 1] == "{")
+      while ()
     i++;
   }
   return (variable_count);
@@ -92,20 +94,7 @@ char *ft_expand(char *input, t_list **env)
   while (input[i])
   {
     if (input[i] != 36)
-    {
-      if (input[i] == 34)
-      {
-        if (!ft_not_single_quoted(input, i))  //|| ft_around_command(input, i))
-          final_input = ft_char_join(final_input, input[i]);
-      }
-      else if (input[i] == 39)
-      {
-        if (!ft_not_double_quoted(input, i))
-          final_input = ft_char_join(final_input, input[i]);
-      }
-      else
-        final_input = ft_char_join(final_input, input[i]);
-    }
+      final_input = ft_char_join(final_input, input[i]);
     else if (input[i] == 36 && ft_isalpha(input[i + 1]))
     {
       if (var_idx < vars_number && vars[var_idx] == 1)
@@ -129,24 +118,27 @@ char *ft_expand(char *input, t_list **env)
 // int ft_around_command(char *input, int char_index)
 // {
 //   int i;
+//   int quotes;
 
-//   while (input[i])
+//   i = 0;
+//   double_quotes = 0;
+//   while (i < char_index && input[i])
 //   {
-
+//     if (input[i] == 34)
+//     i++;
 //   }
 // }
 
 char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEEDED
 {
-  char *new_str;
-  t_list *env_var;
-  int var_len;
   int i;
   int j;
+  int var_len;
+  char *new_str;
+  t_list *env_var;
 
   i = 0;
   env_var = ft_find_var(env, input);
-  printf("env_var.var_name -> %s\n", env_var->var_name);
   var_len = ft_strlen(env_var->content);
   new_str = malloc((ft_strlen(final_input) + var_len + 1) * sizeof(char));
   if (!new_str)

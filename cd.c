@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:52:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/08 17:42:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/09 09:37:41 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int    ft_cd (char *path, t_list **env)
     int SIZE;
 
     SIZE = 1024;
-    ft_set_pwd(env); 
+    ft_set_pwd(env);
     if (old_pwd_use(&path, env) == 1)
         return (0);
     if (chdir(path) == -1)
@@ -81,7 +81,7 @@ void ft_set_pwd(t_list **env)
         SIZE = SIZE * 2;
         current_directory = malloc(sizeof (char) * SIZE);
     }
-    pwd->content = ft_strdup(current_directory);
+    pwd->content = ft_strdup(current_directory, 1);
     free(current_directory);
 }
 
@@ -95,7 +95,7 @@ int old_pwd_use(char **path, t_list **env)
     if (ft_strncmp(*path, "-", 1) == 0)
     {
         old_pwd = ft_find_var(env, "$OLDPWD");
-        
+
         if (old_pwd == NULL || old_pwd->content == NULL)
         {
             printf("cd: OLDPWD not set\n");
@@ -103,7 +103,7 @@ int old_pwd_use(char **path, t_list **env)
         }
         else
         {
-            old_pwd_content = ft_strdup(old_pwd->content);
+            old_pwd_content = ft_strdup(old_pwd->content, 1);
             if (ft_cd(old_pwd->content, env) == 1)
                 printf("%s\n", old_pwd_content);
             free(old_pwd_content);

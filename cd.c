@@ -6,11 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 15:52:17 by udumas            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/09 09:37:41 by vda-conc         ###   ########.fr       */
-=======
-/*   Updated: 2024/02/08 19:25:30 by udumas           ###   ########.fr       */
->>>>>>> 60d42c261bdf4c7a342c911df6d65e69d38b9c67
+/*   Updated: 2024/02/09 16:24:03 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +16,9 @@ int    ft_cd (char *path, t_list **env)
 {
     char *current_directory;
 
-<<<<<<< HEAD
-    SIZE = 1024;
-    ft_set_pwd(env);
-    if (old_pwd_use(&path, env) == 1)
-=======
     if (ft_set_pwd(env) == 0)
         return (0);
     if (old_pwd_use(path, env) == 1 || back_home(path, env) == 1)
->>>>>>> 60d42c261bdf4c7a342c911df6d65e69d38b9c67
         return (0);
     if (chdir(path) == -1)
     {
@@ -90,7 +80,7 @@ int ft_set_pwd(t_list **env)
         free(current_directory);
         return (0);
     }
-    pwd->content = ft_strdup(current_directory, 1);
+    pwd->content = ft_strdup(current_directory);
     free(current_directory);
     return (1);
 }
@@ -113,7 +103,7 @@ int old_pwd_use(char *path, t_list **env)
         }
         else
         {
-            old_pwd_content = ft_strdup(old_pwd->content, 1);
+            old_pwd_content = ft_strdup(old_pwd->content);
             if (ft_cd(old_pwd->content, env) == 1)
                 printf("%s\n", old_pwd_content);
             free(old_pwd_content);

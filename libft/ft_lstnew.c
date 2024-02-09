@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/08 15:26:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:37:02 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ t_list	*ft_lstnew(void *content, int build_env)
   else
   {
     split = ft_split(content, '=');
-    new_node->var_name = split[0];
-    new_node->content = split[1];
+    new_node->var_name = ft_strdup(split[0]);
+    new_node->content = ft_strdup(split[1]);
+    free(split);
   }
   new_node->next = NULL;
   new_node->prev = NULL;

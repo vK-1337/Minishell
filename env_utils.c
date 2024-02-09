@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 16:27:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/09 08:46:26 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	ft_var_exists(t_list **env_list, char *var)
 
 	curr = *env_list;
 	i = 0;
-  printf("Var => |%s|\n", var);
 	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_')
 		i++;
   var++;
@@ -101,9 +100,9 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 	}
 	while (curr)
 	{
-		if (strncmp(curr->content, new_var, i) == 0)
+		if (strncmp(curr->var_name, new_var, i) == 0 && curr->var_name[i] == '\0')
 		{
-			curr->content = new_var;
+			curr->content = new_var + i + 1;
 			return ;
 		}
 		curr = curr->next;
@@ -117,7 +116,7 @@ t_list	**ft_unset(t_list **env_list, char *var_to_del)
 	curr = *env_list;
 	while (curr)
 	{
-		if (strncmp(curr->content, var_to_del, ft_strlen(var_to_del)) == 0)
+		if (strncmp(curr->var_name, var_to_del, ft_strlen(var_to_del)) == 0)
 		{
 			if (curr->prev == NULL)
 			{

@@ -7,6 +7,8 @@ SRCS =	env.c \
 				expand.c \
 				expand_utils.c \
 				cd.c \
+				pwd.c \
+				exec_command.c \
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

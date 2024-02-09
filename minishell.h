@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 16:38:47 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:01:22 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define FALSE 0
 # define TRUE 1
-
+# define SIZE 4096
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <readline/history.h>
@@ -87,7 +87,14 @@ void		sig_handler(int signum, siginfo_t *info, void *context);
 // CD CMD //
 int		ft_cd(char *path, t_list **env);
 void		ft_replace_pwd(t_list **env, char *current_directory);
-void		ft_set_pwd(t_list **env);
-int			old_pwd_use(char **path, t_list **env);
+int		ft_set_pwd(t_list **env);
+int			old_pwd_use(char *path, t_list **env);
+int back_home(char *path, t_list **env);
+
+// PWD CMD //
+int ft_pwd(void);
+
+// EXEC COMMAND //
+int exec_shell_command(char *command, t_list *env);
 
 #endif

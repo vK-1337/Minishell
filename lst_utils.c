@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:51:47 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/06 14:05:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:38:43 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_free_list(t_list **list)
 	while (*list)
 	{
 		tmp = (*list)->next;
+		free((*list)->var_name);
+		free((*list)->content);
 		free(*list);
 		*list = tmp;
 	}

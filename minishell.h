@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 11:43:23 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 12:08:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_parsed_input
 	int		pipe;
 	int		chevron;
 }			t_parsed_input;
+
 
 // PROMPT //
 char		*ft_extract_hostname(char *session_manager);

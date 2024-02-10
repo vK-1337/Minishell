@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/09 16:23:22 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 14:05:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
 // STRUCT
+
+typedef enum e_ttype
+{
+	COMMAND,
+	OPTION,
+	CMD_ARG,
+	OPERATOR,
+	PATH_FILE
+}				t_ttype;
 
 typedef struct s_list
 {

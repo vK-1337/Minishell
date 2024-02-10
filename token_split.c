@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 11:25:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 15:47:53 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,35 @@ int	ft_count_tokens(char const *s)
 			double_quotes += ft_decr_incr(double_quotes);
 		if (s[i] == 39)
 			single_quotes += ft_decr_incr(single_quotes);
-		if (s[i] != ' ' && (s[i + 1] == ' ' || s[i + 1] == '\0'))
+		if (s[i] != ' ' && (s[i + 1] == ' ' || s[i + 1] == '\0' || s[i
+				+ 1] == 34 || s[i + 1] == 39))
 		{
-			if (single_quotes == 0 && double_quotes == 0)
-				count++;
+			if (s[i] == 34 && double_quotes == 0)
+			{
+				double_quotes += ft_decr_incr(double_quotes);
+				if (s[i + 1])
+				{
+					i++;
+					while (s[i + 1] && s[i] != 34)
+						i++;
+				}
+			}
+			else if (s[i] == 39 && single_quotes == 0)
+			{
+				single_quotes += ft_decr_incr(single_quotes);
+				if (s[i + 1])
+				{
+					i++;
+					while (s[i] != 39)
+						i++;
+				}
+			}
+			i++;
+			count++;
 		}
 		i++;
 	}
+	printf("Je trouve %d tokens\n", count);
 	return (count);
 }
 
@@ -92,13 +114,26 @@ int	ft_tokenlen(const char *str, int index)
 		delimiter = ' ';
 	while (str[index] != delimiter && str[index])
 	{
+		if ((str[index + 1] == 34 && delimiter != 34) || (str[index + 1] == 39
+				&& delimiter != 39))
+		{
+			i++;
+			index++;
+			break ;
+		}
 		i++;
 		index++;
 	}
 	if (delimiter == 34 || delimiter == 39)
+	{
+		printf("Taille du mot => |%d|\n", i + 2);
 		return (i + 2);
+	}
 	else
+	{
+		printf("Taille du mot => |%d|\n", i);
 		return (i);
+	}
 }
 
 void	ft_print_tokens(char **tokens)

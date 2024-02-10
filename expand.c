@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/09 16:12:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 10:02:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@ int ft_contain_variables(char *input)
 {
   int i;
   int variable_count;
+  int j;
 
   i = 0;
   variable_count = 0;
+  j = 0;
   while (input[i])
   {
     if (input[i] == '$' && (ft_isalpha(input[i + 1])))
       variable_count++;
-    // if (input[i] == '$' && input[i + 1] == "{")
-    //   while ()
+    if (input[i] == '$' && input[i + 1] == '{')
+    {
+      j = i + 2;
+      while ((ft_isalnum(input[j]) || input[j] == '_'))
+       j++;
+      if (input[j] == '}')
+        variable_count++;
+    }
     i++;
   }
   return (variable_count);
@@ -33,6 +41,7 @@ int ft_contain_variables(char *input)
 int *ft_is_expandable(char *input, int variable_count)
 {
   int i;
+  int j;
   int index;
   int single_quotes;
   int double_quotes;
@@ -53,6 +62,14 @@ int *ft_is_expandable(char *input, int variable_count)
     {
       expand_infos[index] = ft_should_expand(single_quotes, double_quotes);
       index++;
+    }
+    else if (input[i] == 36 && input[i + 1] == '{')
+    {
+      j = i + 2;
+      while ((ft_isalnum(input[j]) || input[j] == '_'))
+        j++;
+      if (input[j] == '}')
+        expand_infos[index] = ft_should_expand(single_quotes, double_quotes);
     }
     i++;
   }
@@ -81,6 +98,7 @@ int ft_should_expand(int single_quotes, int double_quotes)
 char *ft_expand(char *input, t_list **env)
 {
   int i;
+  int j;
   int *vars;
   int vars_number;
   char *final_input;
@@ -108,26 +126,30 @@ char *ft_expand(char *input, t_list **env)
         final_input = ft_char_join(final_input, input[i]);
       var_idx++;
     }
+    else if (input[i] == 36 && input[i + 1] == '{')
+    {
+      if (var_idx < vars_number && vars[var_idx] == 1)
+      {
+        j = i + 2;
+        while ((ft_isalnum(input[j]) || input[j] == '_'))
+          j++;
+        if (input[j] == '}' && ft_var_exists(env, &input[i + 1]))
+        {
+          final_input = ft_join_var(env, final_input, &input[i + 1]);
+          while (input[i + 1] && input[i] != '}')
+            i++;
+        }
+      }
+      else
+        final_input = ft_char_join(final_input, input[i]);
+      var_idx++;
+    }
     i++;
   }
   free(input);
   free(vars);
   return (final_input);
 }
-
-// int ft_around_command(char *input, int char_index)
-// {
-//   int i;
-//   int quotes;
-
-//   i = 0;
-//   double_quotes = 0;
-//   while (i < char_index && input[i])
-//   {
-//     if (input[i] == 34)
-//     i++;
-//   }
-// }
 
 char *ft_join_var(t_list **env, char *final_input, char *input) // ! REFACTO NEEDED
 {

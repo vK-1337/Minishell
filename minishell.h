@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/09 15:01:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/10 11:43:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define FALSE 0
-# define TRUE 1
 # define SIZE 4096
 # include "libft/libft.h"
 # include <fcntl.h>
@@ -28,18 +26,27 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef int	t_bool;
-
 typedef struct s_parsed_input
 {
 	char	*cmd;
-	char	*cmd_args;
+	char	*args;
+	int		pipe;
+	int		chevron;
 }			t_parsed_input;
 
 // PROMPT //
 char		*ft_extract_hostname(char *session_manager);
 char		*trim_pwd(char *pwd);
 char		*ft_build_prompt(t_list **env);
+
+// LEXER //
+t_list *ft_lexer(char *input, t_list **env);
+int			ft_count_tokens(char const *s);
+char		**ft_token_split(char const *s);
+void		ft_add_token(char *element, const char *src, size_t index,
+				size_t len);
+int ft_tokenlen(const char *str, int index);
+void ft_print_tokens(char **tokens);
 
 // ENV CMD //
 t_list		*ft_convert_env(char **env);
@@ -85,16 +92,16 @@ void		ft_init_signals(struct sigaction *signals);
 void		sig_handler(int signum, siginfo_t *info, void *context);
 
 // CD CMD //
-int		ft_cd(char *path, t_list **env);
+int			ft_cd(char *path, t_list **env);
 void		ft_replace_pwd(t_list **env, char *current_directory);
-int		ft_set_pwd(t_list **env);
+int			ft_set_pwd(t_list **env);
 int			old_pwd_use(char *path, t_list **env);
-int back_home(char *path, t_list **env);
+int			back_home(char *path, t_list **env);
 
 // PWD CMD //
-int ft_pwd(void);
+int			ft_pwd(void);
 
 // EXEC COMMAND //
-int exec_shell_command(char *command, t_list *env);
+int			exec_shell_command(char *command, t_list *env);
 
 #endif

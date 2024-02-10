@@ -9,6 +9,8 @@ SRCS =	env.c \
 				cd.c \
 				pwd.c \
 				exec_command.c \
+				token_split.c \
+				lexer.c \
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

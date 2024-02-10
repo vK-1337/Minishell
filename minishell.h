@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 12:08:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:08:17 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,22 @@ typedef struct s_parsed_input
 	int		chevron;
 }			t_parsed_input;
 
-
 // PROMPT //
 char		*ft_extract_hostname(char *session_manager);
 char		*trim_pwd(char *pwd);
 char		*ft_build_prompt(t_list **env);
 
 // LEXER //
-t_list *ft_lexer(char *input, t_list **env);
+t_list		*ft_lexer(char *input, t_list **env);
 int			ft_count_tokens(char const *s);
 char		**ft_token_split(char const *s);
 void		ft_add_token(char *element, const char *src, size_t index,
 				size_t len);
-int ft_tokenlen(const char *str, int index);
-void ft_print_tokens(char **tokens);
+int			ft_tokenlen(const char *str, int index);
+void		ft_print_tokens(char **tokens);
+int			ft_is_separator(char c);
+int			ft_is_operator(char c);
+int			ft_go_next(const char *str, int index);
 
 // ENV CMD //
 t_list		*ft_convert_env(char **env);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 15:47:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 20:40:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,56 @@ int	ft_count_tokens(char const *s)
 	single_quotes = 0;
 	while (s[i])
 	{
-		if (s[i] == 34)
-			double_quotes += ft_decr_incr(double_quotes);
-		if (s[i] == 39)
-			single_quotes += ft_decr_incr(single_quotes);
-		if (s[i] != ' ' && (s[i + 1] == ' ' || s[i + 1] == '\0' || s[i
-				+ 1] == 34 || s[i + 1] == 39))
+		if (ft_is_operator(s[i]))
 		{
-			if (s[i] == 34 && double_quotes == 0)
-			{
-				double_quotes += ft_decr_incr(double_quotes);
-				if (s[i + 1])
-				{
-					i++;
-					while (s[i + 1] && s[i] != 34)
-						i++;
-				}
-			}
-			else if (s[i] == 39 && single_quotes == 0)
-			{
-				single_quotes += ft_decr_incr(single_quotes);
-				if (s[i + 1])
-				{
-					i++;
-					while (s[i] != 39)
-						i++;
-				}
-			}
+			i++;
+			if (s[i + 1] && s[i + 1] == s[i])
+				i++;
+			count++;
+		}
+		else if ((s[i] == 34 || s[i] == 39))
+		{
+			if (s[i + 1])
+				i += ft_go_next(s, i);
+			count++;
+		}
+		else if (s[i] != ' ' && ft_is_separator(s[i + 1]))
+		{
 			i++;
 			count++;
 		}
-		i++;
+		else
+			i++;
 	}
-	printf("Je trouve %d tokens\n", count);
 	return (count);
+}
+
+int	ft_go_next(const char *str, int index)
+{
+	int		i;
+	char	go_to;
+
+	i = 0;
+	go_to = str[index];
+	if (str[index - 1] != go_to)
+  {
+	  i++;
+    index++;
+    while (str[index] != go_to)
+    {
+      index++;
+      i++;
+    }
+  }
+	return (i + 1);
+}
+
+int	ft_is_separator(char c)
+{
+	if (c == 34 || c == 39 || c == 60 || c == 62 || c == 124 || c == '\0'
+		|| c == ' ')
+		return (1);
+	return (0);
 }
 
 char	**ft_token_split(char const *s)
@@ -78,12 +94,14 @@ char	**ft_token_split(char const *s)
 		if (s[i] != ' ' && s[i])
 		{
 			word_len = ft_tokenlen(s, i);
+      printf("Longueur du token => |%zu|\n", word_len);
 			words[j] = malloc((word_len + 1) * sizeof(char));
 			ft_add_token(words[j], s, i, word_len);
-			i += (word_len - 1);
+      i += (word_len - 1);
 			j++;
 		}
-		i++;
+    printf("Caractere apres increment => |%c|\n", s[i]);
+    i++;
 	}
 	words[words_nbr] = NULL;
 	return (words);
@@ -99,41 +117,58 @@ void	ft_add_token(char *element, const char *src, size_t index, size_t len)
 	element[i] = '\0';
 }
 
+int ft_define_delimiter(char c)
+{
+  if (ft_is_operator(c))
+    return (c);
+  else if (c == 34 || c == 39)
+    return (c);
+  else
+    return (32);
+}
+
 int	ft_tokenlen(const char *str, int index)
 {
 	int	i;
 	int	delimiter;
 
 	i = 0;
-	if (str[index] == 34 || str[index] == 39)
-	{
-		delimiter = str[index];
-		index++;
-	}
-	else
-		delimiter = ' ';
-	while (str[index] != delimiter && str[index])
-	{
-		if ((str[index + 1] == 34 && delimiter != 34) || (str[index + 1] == 39
-				&& delimiter != 39))
-		{
-			i++;
-			index++;
-			break ;
-		}
-		i++;
-		index++;
-	}
+	delimiter = ft_define_delimiter(str[index]);
+  printf("Delimiter => |%c|\n", delimiter);
 	if (delimiter == 34 || delimiter == 39)
 	{
-		printf("Taille du mot => |%d|\n", i + 2);
-		return (i + 2);
+    index++;
+		while (str[index] != delimiter)
+		{
+			index++;
+			i++;
+		}
 	}
+  else if (delimiter != 32)
+  {
+    if (str[index + 1] && str[index + 1] == delimiter)
+      i = 2;
+    else
+      i = 1;
+  }
 	else
 	{
-		printf("Taille du mot => |%d|\n", i);
-		return (i);
+		while (str[index] && str[index] != delimiter)
+		{
+			if (str[index + 1] == 34 || str[index + 1] == 39 || ft_is_operator(str[index + 1]))
+			{
+				i++;
+				index++;
+				break ;
+			}
+			i++;
+			index++;
+		}
 	}
+	if (delimiter == 34 || delimiter == 39)
+		return (i + 2);
+	else
+		return (i);
 }
 
 void	ft_print_tokens(char **tokens)

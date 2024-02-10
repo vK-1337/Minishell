@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 14:05:33 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:18:29 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,35 @@ t_list *ft_lexer(char *input, t_list **env)
 
 // t_list *ft_convert_tokens(char **tokens)
 // {
-//   // todo Iterate through all tokens
-//   // todo put the content inside token_node->content
-//   // todo token_node.type = ft_define_ttype(node.content)
-//   // todo do it again.
+//   int i;
+//   t_ttype type;
+//   t_list *token_list;
+
+//   i = 0;
+//   while (tokens[i])
+//   {
+//     type = ft_define_ttype(tokens[i])
+
+//   }
 // }
+
+// t_ttype ft_define_ttype(char *token)
+// {
+//   int i;
+
+//   i = 0;
+//   if (!token)
+//     return (NULL);
+//   while (token[i])
+//   {
+//     if (ft_is_operator(token[i]))
+//       i++;
+//   }
+// }
+
+int ft_is_operator(char c)
+{
+  if (c == 38 || c == 60 || c == 62 || c == 124)
+    return (1);
+  return (0);
+}

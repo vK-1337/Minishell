@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 19:08:17 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:22:05 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_parsed_input
-{
-	char	*cmd;
-	char	*args;
-	int		pipe;
-	int		chevron;
-}			t_parsed_input;
-
 // PROMPT //
 char		*ft_extract_hostname(char *session_manager);
 char		*trim_pwd(char *pwd);
@@ -50,6 +42,11 @@ void		ft_print_tokens(char **tokens);
 int			ft_is_separator(char c);
 int			ft_is_operator(char c);
 int			ft_go_next(const char *str, int index);
+t_list *ft_convert_tokens(char **tokens);
+t_ttype ft_define_ttype(char *token, char* previous_token);
+char *ft_print_type(t_ttype type);
+int ft_is_option(char *token);
+int ft_is_file(char *token);
 
 // ENV CMD //
 t_list		*ft_convert_env(char **env);

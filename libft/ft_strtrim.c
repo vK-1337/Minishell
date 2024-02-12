@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:50:38 by vda-conc          #+#    #+#             */
-/*   Updated: 2023/11/11 11:33:15 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/12 09:34:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*s2;
 
 	i = ft_get_index(s1, set);
-	if (i == strlen(s1) || !s1)
+	if (i == ft_strlen(s1) || !s1)
 	{
 		s2 = malloc(sizeof(char));
 		s2[0] = '\0';

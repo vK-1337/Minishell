@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 20:40:01 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:49:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,11 @@ char	**ft_token_split(char const *s)
 		if (s[i] != ' ' && s[i])
 		{
 			word_len = ft_tokenlen(s, i);
-      printf("Longueur du token => |%zu|\n", word_len);
 			words[j] = malloc((word_len + 1) * sizeof(char));
 			ft_add_token(words[j], s, i, word_len);
       i += (word_len - 1);
 			j++;
 		}
-    printf("Caractere apres increment => |%c|\n", s[i]);
     i++;
 	}
 	words[words_nbr] = NULL;
@@ -134,7 +132,6 @@ int	ft_tokenlen(const char *str, int index)
 
 	i = 0;
 	delimiter = ft_define_delimiter(str[index]);
-  printf("Delimiter => |%c|\n", delimiter);
 	if (delimiter == 34 || delimiter == 39)
 	{
     index++;

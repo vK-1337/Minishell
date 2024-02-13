@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_tokenadd_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:13:30 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:59:42 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/12 23:26:06 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:59:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_pwd(void)
+void	ft_tokenlstadd_back(t_token **lst, t_token *new)
 {
-	char	*cwd;
+	t_token	*tmp;
 
-	cwd = malloc(sizeof(char) * SIZE);
-	if (cwd == NULL)
-		return (perror("malloc() error"), 0);
-	if (getcwd(cwd, SIZE) == NULL)
+	tmp = NULL;
+	if (!lst || !new)
+		return ;
+	if (*lst)
 	{
-		perror("getcwd() error");
-		free(cwd);
-		return (0);
+		tmp = ft_tokenlstlast((*lst));
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = NULL;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (1);
+	else
+	{
+		new->next = NULL;
+		new->prev = NULL;
+		*lst = new;
+	}
 }

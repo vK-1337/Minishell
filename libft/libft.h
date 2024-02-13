@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/10 20:47:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 08:51:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int					ft_toupper(int character);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2, int free_s1);
 char				*ft_strtrim(char const *s1, char const *set);
-char				**ft_split(char const *s, char c);
+char				**ft_split(char *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -69,7 +69,7 @@ typedef enum e_ttype
 	CMD_ARG,
 	OPERATOR,
 	PATH_FILE
-}				t_ttype;
+}					t_ttype;
 
 typedef struct s_list
 {
@@ -81,7 +81,7 @@ typedef struct s_list
 
 // BONUS
 
-t_list	*ft_lstnew(void *content, int build_env);
+t_list				*ft_lstnew(void *content, int build_env);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);

@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_tokenlstnew.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/13 09:24:44 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:24:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-t_list	*ft_lstnew(void *content, int build_env)
+t_token	*ft_tokenlstnew(void *content, t_ttype type)
 {
-	t_list	*new_node;
-	char	**split;
+	t_token	*new_node;
 
-	new_node = malloc(sizeof(t_list));
+	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
-	if (!build_env)
-	{
-		new_node->var_name = NULL;
-		new_node->content = content;
-	}
-	else
-	{
-		split = ft_split(content, '=');
-		new_node->var_name = ft_strdup(split[0]);
-		new_node->content = ft_strdup(split[1]);
-		free(split);
-	}
+	new_node->token = content;
+	new_node->type = type;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);

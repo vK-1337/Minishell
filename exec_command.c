@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/09 15:01:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/13 09:41:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 char	*take_path(t_list *env)
 {
-	t_list    *env_node;
+	t_list	*env_node;
 
 	env_node = env;
 	while (env_node)
-    {
-        if (ft_strncmp(env_node->var_name, "PATH", 4) == 0)
-            return (env_node->content);
-        env_node = env_node->next;
-    }
+	{
+		if (ft_strncmp(env_node->var_name, "PATH", 4) == 0)
+			return (env_node->content);
+		env_node = env_node->next;
+	}
 	return (NULL);
 }
 
@@ -59,6 +58,7 @@ char	*add_slash(char *cmd1)
 	cmd_slash[i + 1] = '\0';
 	return (cmd_slash);
 }
+
 char	*check_valid_command(char *cmd, char *path)
 {
 	char	**path_split;
@@ -86,30 +86,30 @@ char	*check_valid_command(char *cmd, char *path)
 	return (ft_free_char_tab(path_split), ft_free_char_tab(cmd_split), path);
 }
 
-char **redo_env(t_list *env)
+char	**redo_env(t_list *env)
 {
-    t_list *env_node;
-    char *env_str;
-    char *temp;
-    char **split_env;
-    
-    env_node = env;
-    while (env_node)
-    {
-        temp = ft_strjoin(env_node->var_name, "=", 0);
-        env_str = ft_strjoin("", temp, 0);
-        free(temp);
-        temp = ft_strjoin(env_str, env_node->content, 0);
-        free(env_str);
-        env_str = temp;
-        temp = ft_strjoin(env_str, "\n", 0);
-        free(env_str);
-        env_str = temp;
-        env_node = env_node->next;
-    }
-    split_env = ft_split(env_str, '\n');
-    free(env_str);
-    return (split_env);
+	t_list	*env_node;
+	char	*env_str;
+	char	*temp;
+	char	**split_env;
+
+	env_node = env;
+	while (env_node)
+	{
+		temp = ft_strjoin(env_node->var_name, "=", 0);
+		env_str = ft_strjoin("", temp, 0);
+		free(temp);
+		temp = ft_strjoin(env_str, env_node->content, 0);
+		free(env_str);
+		env_str = temp;
+		temp = ft_strjoin(env_str, "\n", 0);
+		free(env_str);
+		env_str = temp;
+		env_node = env_node->next;
+	}
+	split_env = ft_split(env_str, '\n');
+	free(env_str);
+	return (split_env);
 }
 
 int	exec_command(char *command, t_list *env)
@@ -126,27 +126,25 @@ int	exec_command(char *command, t_list *env)
 	else
 	{
 		execve(instruct, ft_split(command, ' '), redo_env(env));
-        printf("execve error\n");
+		printf("execve error\n");
 		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
 
-int exec_shell_command(char *command, t_list *env)
+int	exec_shell_command(char *command, t_list *env)
 {
-    int id;
-    id = fork();
-    if (id == 0)
-    {
-        exec_command(command, env);
-        exit(EXIT_SUCCESS);
-    }
-    else
-    {
-        waitpid(id, NULL, 0);
-    }
-    return (1);
+	int	id;
+
+	id = fork();
+	if (id == 0)
+	{
+		exec_command(command, env);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		waitpid(id, NULL, 0);
+	}
+	return (1);
 }
-
-
-

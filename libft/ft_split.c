@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:36:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2023/11/14 15:55:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 08:53:05 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_fill_element(char *element, const char *src, size_t index,
 	element[i] = '\0';
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	size_t	i;
 	size_t	j;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/09 08:46:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:59:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_export(t_list **env_list, char *new_var)
 {
@@ -66,6 +66,7 @@ int	forbidden_char(char c)
 	}
 	return (0);
 }
+
 int	ft_var_exists(t_list **env_list, char *var)
 {
 	t_list	*curr;
@@ -75,10 +76,11 @@ int	ft_var_exists(t_list **env_list, char *var)
 	i = 0;
 	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_')
 		i++;
-  var++;
+	var++;
 	while (curr)
 	{
-		if (ft_strncmp(curr->var_name, var, i) == 0 && curr->var_name[i] == '\0')
+		if (ft_strncmp(curr->var_name, var, i) == 0
+			&& curr->var_name[i] == '\0')
 			return (1);
 		curr = curr->next;
 	}
@@ -100,35 +102,12 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 	}
 	while (curr)
 	{
-		if (strncmp(curr->var_name, new_var, i) == 0 && curr->var_name[i] == '\0')
+		if (strncmp(curr->var_name, new_var, i) == 0
+			&& curr->var_name[i] == '\0')
 		{
 			curr->content = new_var + i + 1;
 			return ;
 		}
 		curr = curr->next;
 	}
-}
-
-t_list	**ft_unset(t_list **env_list, char *var_to_del)
-{
-	t_list	*curr;
-
-	curr = *env_list;
-	while (curr)
-	{
-		if (strncmp(curr->var_name, var_to_del, ft_strlen(var_to_del)) == 0)
-		{
-			if (curr->prev == NULL)
-			{
-				env_list = &curr->next;
-				return (env_list);
-			}
-			else if (curr->next == NULL)
-				return (ft_delete_last(curr), env_list);
-			else
-				return (ft_delete_connect(curr), env_list);
-		}
-		curr = curr->next;
-	}
-	return (NULL);
 }

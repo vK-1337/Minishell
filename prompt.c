@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 16:01:29 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:30:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_build_prompt(t_list **env)
 {
 	char	*hostname;
-	char *username;
-	t_list *pwd;
+	char	*username;
+	t_list	*pwd;
 	char	*final_prompt;
 
 	hostname = ft_extract_hostname(getenv("SESSION_MANAGER"));

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_tokenlstclear.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:13:30 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:59:42 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/12 23:52:20 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:55:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_pwd(void)
+void	ft_tokenlstclear(t_token **lst, void (*del)(void *))
 {
-	char	*cwd;
+	t_token	*current;
+	t_token	*next;
 
-	cwd = malloc(sizeof(char) * SIZE);
-	if (cwd == NULL)
-		return (perror("malloc() error"), 0);
-	if (getcwd(cwd, SIZE) == NULL)
+	if (!lst || !del)
+		return ;
+	current = *lst;
+	while (current != NULL)
 	{
-		perror("getcwd() error");
-		free(cwd);
-		return (0);
+		next = current->next;
+		ft_tokenlstdelone(current, del);
+		current = next;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (1);
+	(*lst) = NULL;
 }

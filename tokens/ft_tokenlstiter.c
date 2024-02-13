@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:13:30 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:59:42 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/13 10:58:06 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:13:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_pwd(void)
+void	ft_tokenlstiter(t_token *lst, void (*f)(void *))
 {
-	char	*cwd;
-
-	cwd = malloc(sizeof(char) * SIZE);
-	if (cwd == NULL)
-		return (perror("malloc() error"), 0);
-	if (getcwd(cwd, SIZE) == NULL)
+	if (!lst || !f)
+		return ;
+	while (lst->next != NULL)
 	{
-		perror("getcwd() error");
-		free(cwd);
-		return (0);
+		(*f)(lst->token);
+		lst = lst->next;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (1);
+	(*f)(lst->token);
 }

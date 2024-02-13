@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_tokenlstmap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:13:30 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:59:42 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/13 12:16:07 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:59:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_pwd(void)
+t_token	*ft_tokenlstmap(t_token *lst, void *(*f)(void *), void (*del)(void *))
 {
-	char	*cwd;
+	t_token	*new;
+	t_token	*new_head;
 
-	cwd = malloc(sizeof(char) * SIZE);
-	if (cwd == NULL)
-		return (perror("malloc() error"), 0);
-	if (getcwd(cwd, SIZE) == NULL)
+	if (!f || !del)
+		return (NULL);
+	new_head = NULL;
+	while (lst != NULL)
 	{
-		perror("getcwd() error");
-		free(cwd);
-		return (0);
+		new = ft_tokenlstnew(f(lst->token), 0);
+		if (!new)
+		{
+			ft_tokenlstclear(&new, del);
+			return (NULL);
+		}
+		ft_tokenlstadd_back(&new_head, new);
+		lst = lst->next;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (1);
+	return (new_head);
 }

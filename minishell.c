@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/12 17:02:54 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 09:31:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	char	*prompt;
-	t_list	*env_list;
-  struct sigaction  signals;
+	char				*input;
+	char				*prompt;
+	t_list				*env_list;
+	struct sigaction	signals;
 
 	(void)ac;
 	(void)av;
 	if (!env[0])
 		return (0);
-  ft_init_signals(&signals);
-  signal(SIGQUIT, SIG_IGN);
+	ft_init_signals(&signals);
+	signal(SIGQUIT, SIG_IGN);
 	rl_bind_key('\t', rl_complete);
 	env_list = ft_convert_env(env);
 	prompt = ft_build_prompt(&env_list);
@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
-    ft_lexer(input, &env_list);
+		ft_lexer(input, &env_list);
 		if (ft_strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
 		else if (ft_strncmp("unset", input, 5) == 0)
@@ -67,25 +67,25 @@ int	main(int ac, char **av, char **env)
 	return (0);
 }
 
-void ft_init_signals(struct sigaction *signals)
+void	ft_init_signals(struct sigaction *signals)
 {
-  signals->sa_flags = SA_SIGINFO;
-  signals->sa_sigaction = sig_handler;
-  sigemptyset(&signals->sa_mask);
-  sigaddset(&signals->sa_mask, SIGQUIT);
-  sigaction(SIGINT, signals, NULL);
-  sigaction(SIGQUIT, signals, NULL);
+	signals->sa_flags = SA_SIGINFO;
+	signals->sa_sigaction = sig_handler;
+	sigemptyset(&signals->sa_mask);
+	sigaddset(&signals->sa_mask, SIGQUIT);
+	sigaction(SIGINT, signals, NULL);
+	sigaction(SIGQUIT, signals, NULL);
 }
 
 void	sig_handler(int signum, siginfo_t *info, void *context)
 {
-  (void) context;
-  (void) info;
-  if (signum == SIGINT)
-  {
-    printf("\n");
-    rl_replace_line("", 1);
-    rl_on_new_line();
-    rl_redisplay();
-  }
+	(void)context;
+	(void)info;
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }

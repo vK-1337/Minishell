@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_tokenlstsize.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 15:18:52 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/12 23:14:56 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:11:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	ft_print_env(t_list *env)
+int	ft_tokenlstsize(t_list *lst)
 {
-	while (env)
-	{
-    printf("%s", (char *)env->var_name);
-    printf("=");
-		printf("%s\n", (char *)env->content);
-		env = env->next;
-	}
-}
+	size_t	i;
 
-t_list	*ft_convert_env(char **env)
-{
-	int		i;
-	t_list	*env_list;
-
+	if (!lst)
+		return (0);
 	i = 0;
-	env_list = NULL;
-	while (env[i])
+	while (lst->next != NULL)
 	{
-		ft_lstadd_back(&env_list, ft_lstnew((char *)env[i], 1));
+		lst = lst->next;
 		i++;
 	}
-	return (env_list);
+	return (i + 1);
 }

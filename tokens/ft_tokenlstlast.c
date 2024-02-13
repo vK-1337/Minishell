@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:13:30 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:59:42 by vda-conc         ###   ########.fr       */
+/*   Created: 2023/11/12 23:23:30 by vk                #+#    #+#             */
+/*   Updated: 2024/02/12 19:12:29 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	ft_pwd(void)
+t_token	*ft_tokenlstlast(t_token *lst)
 {
-	char	*cwd;
-
-	cwd = malloc(sizeof(char) * SIZE);
-	if (cwd == NULL)
-		return (perror("malloc() error"), 0);
-	if (getcwd(cwd, SIZE) == NULL)
+	if (!lst)
+		return (NULL);
+	else
 	{
-		perror("getcwd() error");
-		free(cwd);
-		return (0);
+		while (lst->next != NULL)
+			lst = lst->next;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (1);
+	return (lst);
 }

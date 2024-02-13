@@ -6,11 +6,11 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:17:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/08 09:40:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:08:46 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 // ! FOR ECHO WE WILL NEED TO HANDLE -N OPTION.
 // ! THAT IMPLICATES TO HANDLE -N INSIDE ARGUMENT
@@ -47,4 +47,3 @@ int ft_detect_n_option(char *args)
   }
   return (0);
 }
-

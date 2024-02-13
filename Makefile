@@ -1,14 +1,14 @@
 SRCS =			env/env.c \
-				prompt.c \
-				parser.c \
-				minishell.c \
+				prompt/prompt.c \
+				lexer/quotes.c \
+				main/minishell.c \
 				env/export.c \
 				env/unset.c \
 				lst_utils.c \
 				expand/expand.c \
 				expand/expand_utils.c \
-				cd.c \
-				pwd.c \
+				cd/cd.c \
+				pwd/pwd.c \
 				exec_command.c \
 				tokens/token_split.c \
 				tokens/ft_tokenlstadd_front.c \
@@ -20,7 +20,9 @@ SRCS =			env/env.c \
 				tokens/ft_tokenlstnew.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
-				lexer.c \
+				tokens/token_utils.c \
+				lexer/lexer.c \
+				lexer/lexer_utils.c \
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

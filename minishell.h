@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 09:30:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:11:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,18 @@ void				sig_handler(int signum, siginfo_t *info, void *context);
 
 // CD CMD //
 int					ft_cd(char *path, t_list **env);
-void				ft_replace_pwd(t_list **env, char *current_directory);
+int					ft_replace_pwd(t_list **env);
 int					ft_set_pwd(t_list **env);
 int					old_pwd_use(char *path, t_list **env);
 int					back_home(char *path, t_list **env);
+int					CDPATH_FIND(char *path, t_list **env);
 
 // PWD CMD //
 int					ft_pwd(void);
 
 // EXEC COMMAND //
 int					exec_shell_command(char *command, t_list *env);
+char				*add_slash(char *cmd1);
+void				ft_free_char_tab(char **str);
 
 #endif

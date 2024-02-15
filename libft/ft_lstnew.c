@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/13 09:24:44 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:50:27 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_list	*ft_lstnew(void *content, int build_env)
 {
 	t_list	*new_node;
-	char	**split;
+	int		i;
+	int		j;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
@@ -27,12 +28,46 @@ t_list	*ft_lstnew(void *content, int build_env)
 	}
 	else
 	{
-		split = ft_split(content, '=');
-		new_node->var_name = ft_strdup(split[0]);
-		new_node->content = ft_strdup(split[1]);
-		free(split);
+		i = ft_find_equal(content);
+        new_node->var_name = malloc((i + 1) * sizeof (char));
+		ft_strlcpy(new_node->var_name, content, i + 1);
+		j = ft_after_equal(content);
+        new_node->content = malloc((j + 1) * sizeof (char));
+		ft_strlcpy(new_node->content, content + i + 1, j);
 	}
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
+}
+
+int	ft_find_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_after_equal(char *str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			break;
+        i++;
+	}
+	j = 0;
+	while (str[i++])
+		j++;
+	return (j);
 }

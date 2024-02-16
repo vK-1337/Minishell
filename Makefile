@@ -8,6 +8,7 @@ SRCS =			env/env.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				cd/cd.c \
+				cd/cd_utils.c \
 				pwd/pwd.c \
 				exec_command.c \
 				tokens/token_split.c \

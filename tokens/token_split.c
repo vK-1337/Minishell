@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 09:55:07 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:06:17 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	ft_define_delimiter(char c)
 		return (c);
 	else if (c == 34 || c == 39)
 		return (c);
+    else if (c == 40)
+        return (c);
 	else
 		return (32);
 }
@@ -76,6 +78,15 @@ int	ft_tokenlen(const char *str, int index)
 			i++;
 		}
 	}
+    if (delimiter == 40)
+    {
+        index++;
+        while (str[index] != 41)
+        {
+            index++;
+            i++;
+        }
+    }
 	else if (delimiter != 32)
 	{
 		if (str[index + 1] && str[index + 1] == delimiter)
@@ -98,7 +109,7 @@ int	ft_tokenlen(const char *str, int index)
 			index++;
 		}
 	}
-	if (delimiter == 34 || delimiter == 39)
+	if (delimiter == 34 || delimiter == 39 || delimiter == 40)
 		return (i + 2);
 	else
 		return (i);

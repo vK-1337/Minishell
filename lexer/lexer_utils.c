@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 09:58:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:12:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*ft_print_type(t_ttype type)
 		return ("Operator");
 	if (type == PATH_FILE)
 		return ("Path file");
+	if (type == PARENTHESIS)
+		return ("Parenthesis");
 	return ("1337");
 }
 

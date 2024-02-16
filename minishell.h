@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/15 22:18:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:22:36 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,18 @@ t_list				**ft_unset(t_list **env_list, char *var_to_del);
 /*                                                                             */
 /*******************************************************************************/
 
-void			ft_is_prev_greaterforbidden_char(char c);
+void				ft_is_prev_greaterforbidden_char(char c);
 void				ft_display_export(t_list **env_list);
 t_list				*ft_copy_env_node(t_list *env_node);
 int					ft_is_prev_greater(char *curr_var, char *prev_var);
 void				ft_swapback_nodes(t_list *prev, t_list *curr);
 t_list				**ft_sort_nodes(t_list **env_list);
 t_list				**ft_copy_env_list(t_list **env_list);
+void				ft_replace_var(t_list **env_list, char *new_var);
+int					ft_var_exists(t_list **env_list, char *var);
+void				ft_export(t_list **env_list, char *new_var);
+int					ft_correct_format(char *new_var);
+int					forbidden_char(char c);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -126,7 +131,12 @@ t_list				**ft_copy_env_list(t_list **env_list);
 int					ft_unclosed_input(char *input);
 int					ft_not_quoted(char *input, int char_index);
 int					ft_not_single_quoted(char *input, int char_index);
-int					ft_nft_is_prev_greater       LST UTILS                                    */
+int					ft_not_double_quoted(char *input, int char_index);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                 LST UTILS                                   */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

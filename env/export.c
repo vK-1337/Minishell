@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/15 22:08:31 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:59:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,11 @@ void ft_display_export(t_list **env_list)
 {
     t_list *curr;
     t_list **list_copy;
+    t_list **sorted_list;
 
     list_copy = ft_copy_env_list(env_list);
-    list_copy = ft_sort_nodes(list_copy);
-    curr = *list_copy;
+    sorted_list = ft_sort_nodes(env_list);
+    curr = *sorted_list;
     while (curr)
     {
         printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
@@ -174,8 +175,9 @@ t_list **ft_sort_nodes(t_list **env_list)
         tmp = curr->next;
         while (curr->prev && ft_is_prev_greater(curr->var_name, curr->prev->var_name))
             ft_swapback_nodes(curr->prev, curr);
-        last_node = curr;
         curr = tmp;
+        if (curr)
+            last_node = curr;
     }
     curr = last_node;
     while (curr)
@@ -193,6 +195,10 @@ void	ft_swapback_nodes(t_list *prev, t_list *curr)
 
 	next_tmp = curr->next;
 	prev_tmp = prev->prev;
+    if (curr->next)
+    {
+        curr->next->prev = prev;
+    }
 	curr->next = prev;
 	curr->prev = prev_tmp;
 	if (prev->prev)

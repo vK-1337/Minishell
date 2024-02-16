@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 10:08:17 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:10:44 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_ttype	ft_define_ttype(char *token, char *previous_token)
 	j = 0;
 	if (!token)
 		return (0);
+	if (token[i] == 40)
+		return (PARENTHESIS);
 	if (ft_is_operator(token[i]))
 		return (OPERATOR);
 	if (token[i] == 34 || token[i] == 39)

@@ -6,26 +6,22 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:19:24 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 18:04:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:27:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_init_signals(struct sigaction *signals)
+//! NEED TO FIX SIGNALS IN CHILDS
+
+void	ft_init_signals()
 {
-	signals->sa_flags = SA_SIGINFO;
-	signals->sa_sigaction = sig_handler;
-	sigemptyset(&signals->sa_mask);
-	sigaddset(&signals->sa_mask, SIGQUIT);
-	sigaction(SIGINT, signals, NULL);
-	sigaction(SIGQUIT, signals, NULL);
+	signal(SIGINT, sig_handler);
+    signal(SIGQUIT, SIG_IGN);
 }
 
-void	sig_handler(int signum, siginfo_t *info, void *context)
+void	sig_handler(int signum)
 {
-	(void)context;
-	(void)info;
 	if (signum == SIGINT)
 	{
 		printf("\n");
@@ -35,13 +31,16 @@ void	sig_handler(int signum, siginfo_t *info, void *context)
 	}
 }
 
-void	wait_p_handler(int signum, siginfo_t *info, void *context)
+void	wait_p_handler(int signum)
 {
-	(void)context;
-	(void)info;
-	(void)signum;
-    if (signum == SIGQUIT)
-        printf("Quit (core dumped)\n");
-    else if (signum == SIGINT)
+    if (signum == SIGINT)
         printf("\n");
+    else if (signum == SIGQUIT)
+        printf("Quit (core dumped)\n");
+}
+
+void	ft_change_signals()
+{
+	signal(SIGINT, wait_p_handler);
+    signal(SIGQUIT, wait_p_handler);
 }

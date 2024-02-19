@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 17:49:10 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:26:42 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				ft_print_env(t_list *env);
 /*                                                                             */
 /*******************************************************************************/
 
-int	exec_shell_command(char *command, t_list *env, struct sigaction *signals);
+int					exec_shell_command(char *command, t_list *env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 
@@ -210,9 +210,10 @@ int					ft_pwd(void);
 /*                                                                             */
 /*******************************************************************************/
 
-void				ft_init_signals(struct sigaction *signals);
-void				sig_handler(int signum, siginfo_t *info, void *context);
-void				wait_p_handler(int signum, siginfo_t *info, void *context);
+void				ft_init_signals(void);
+void				ft_change_signals(void);
+void				sig_handler(int signum);
+void				wait_p_handler(int signum);
 
 /*******************************************************************************/
 /*                                                                             */

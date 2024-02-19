@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 18:05:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:36:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	main(int ac, char **av, char **env)
 {
+
 	char				*input;
 	char				*prompt;
 	t_list				*env_list;
-	struct sigaction	signals;
 
 	(void)ac;
 	(void)av;
+    rl_catch_signals = 0;
 	if (!env[0])
 		return (0);
-	ft_init_signals(&signals);
-	signal(SIGQUIT, SIG_IGN);
 	rl_bind_key('\t', rl_complete);
 	env_list = ft_convert_env(env);
 	prompt = ft_build_prompt(&env_list);
 	while (1)
 	{
+        ft_init_signals();
 		input = readline(prompt);
 		if (input == NULL)
 		{
@@ -39,6 +39,7 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
+        ft_change_signals();
 		ft_lexer(input, &env_list);
 		if (ft_strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
@@ -59,7 +60,7 @@ int	main(int ac, char **av, char **env)
 		else if (ft_strncmp("pwd", input, 3) == 0)
 			ft_pwd();
 		else
-			exec_shell_command(input, env_list, &signals);
+			exec_shell_command(input, env_list);
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

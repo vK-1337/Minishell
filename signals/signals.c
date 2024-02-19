@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:19:24 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 17:55:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:04:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ void	wait_p_handler(int signum, siginfo_t *info, void *context)
 	(void)context;
 	(void)info;
 	(void)signum;
-    printf("\n");
+    if (signum == SIGQUIT)
+        printf("Quit (core dumped)\n");
+    else if (signum == SIGINT)
+        printf("\n");
 }

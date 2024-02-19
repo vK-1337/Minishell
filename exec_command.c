@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:41:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:54:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	exec_command(char *command, t_list *env)
 	return (0);
 }
 
-int	exec_shell_command(char *command, t_list *env)
+int	exec_shell_command(char *command, t_list *env, struct sigaction *signals)
 {
 	int	id;
 
@@ -144,7 +144,11 @@ int	exec_shell_command(char *command, t_list *env)
 	}
 	else
 	{
+        signals->sa_sigaction = wait_p_handler;
+        sigaction(SIGINT, signals, NULL);
 		waitpid(id, NULL, 0);
+        signals->sa_sigaction = sig_handler;
+        sigaction(SIGINT, signals, NULL);
 	}
 	return (1);
 }

@@ -1,18 +1,21 @@
-SRCS =			env/env.c \
-				prompt/prompt.c \
-				lexer/quotes.c \
-				main/minishell.c \
+SRCS =			cd/cd.c \
+				cd/cd_utils.c \
+				env/env.c \
 				env/export.c \
 				env/unset.c \
-				lst_utils.c \
+				exec_command.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
-				cd/cd.c \
-				cd/cd_utils.c \
+				lexer/lexer.c \
+				lexer/lexer_utils.c \
+				lexer/quotes.c \
+				lst_utils.c \
+				main/minishell.c \
+				prompt/prompt.c \
 				pwd/pwd.c \
-				exec_command.c \
+				signals/signals.c \
 				tokens/token_split.c \
 				tokens/ft_tokenlstadd_front.c \
 				tokens/ft_tokenlstclear.c \
@@ -24,19 +27,19 @@ SRCS =			env/env.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
 				tokens/token_utils.c \
-				lexer/lexer.c \
-				lexer/lexer_utils.c \
 
-OBJS = $(SRCS:.c=.o) ./libft/libft.a
+CFLAGS = -Wall -Werror -Wextra -g3
 
-NAME = minishell
+LDFLAGS = -L./libft -lft -lreadline
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Werror -Wextra -g3
-LDFLAGS = -L./libft -lft -lreadline
+NAME = minishell
 
-# colors
+OBJS = $(SRCS:.c=.o) ./libft/libft.a
+
+# COLORS
+
 GREEN = \033[0;32m
 NC = \033[0m
 YELLOW = \e[0;93m
@@ -50,9 +53,6 @@ $(NAME): $(OBJS)
 $(LIBFT):
 	make -C ./libft
 
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
-
 all: $(NAME) $(LIBFT)
 
 clean:
@@ -61,6 +61,9 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	$(MAKE) -C ./libft fclean
+
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 re: fclean
 	make all

@@ -6,13 +6,13 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/14 19:50:27 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:30:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content, int build_env)
+t_list	*ft_lstnew(void *content, int build_env, int env_print)
 {
 	t_list	*new_node;
 	int		i;
@@ -29,12 +29,16 @@ t_list	*ft_lstnew(void *content, int build_env)
 	else
 	{
 		i = ft_find_equal(content);
-        new_node->var_name = malloc((i + 1) * sizeof (char));
+		new_node->var_name = malloc((i + 1) * sizeof(char));
 		ft_strlcpy(new_node->var_name, content, i + 1);
 		j = ft_after_equal(content);
-        new_node->content = malloc((j + 1) * sizeof (char));
+		new_node->content = malloc((j + 1) * sizeof(char));
 		ft_strlcpy(new_node->content, content + i + 1, j);
 	}
+	if (env_print)
+		new_node->env_print = 1;
+	else
+		new_node->env_print = 0;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
@@ -63,8 +67,8 @@ int	ft_after_equal(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-			break;
-        i++;
+			break ;
+		i++;
 	}
 	j = 0;
 	while (str[i++])

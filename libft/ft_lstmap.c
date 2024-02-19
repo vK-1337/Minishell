@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:16:07 by vk                #+#    #+#             */
-/*   Updated: 2024/02/08 15:22:02 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:30:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	new_head = NULL;
 	while (lst != NULL)
 	{
-		new = ft_lstnew(f(lst->content), 0);
+		new = ft_lstnew(f(lst->content), 0, 1);
 		if (!new)
 		{
 			ft_lstclear(&new, del);

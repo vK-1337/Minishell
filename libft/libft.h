@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 14:10:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:10:02 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char				*ft_strdup(const char *s);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
+int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *first, const char *second,
 						size_t length);
 char				*ft_strnstr(const char *big, const char *little,

@@ -15,6 +15,7 @@
 
 # define SIZE 4096
 # include "libft/libft.h"
+# include <dirent.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -191,6 +192,25 @@ char				*ft_char_join(char *base_str, char to_join);
 t_list				*ft_find_var(t_list **env, char *input);
 char				*ft_join_var(t_list **env, char *final_input, char *input);
 char				*ft_expand(char *input, t_list **env);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                 WILDCARD                                    */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+int					ft_contain_wildcards(char *input);
+int					ft_decr_incr(int condition);
+int					ft_pattern_match(char *pattern, char *name);
+int					ft_starting_match(char *pattern, char *name);
+int					ft_ending_match(char *pattern, char *name);
+int					ft_both_match(char *pattern, char *name);
+size_t				ft_strlen(const char *str);
+int					ft_next_char_found(char pattern_char, char *name);
+int					ft_match_multiple_wc(char *pattern, char *name);
+int					ft_match_single_wc(char *pattern, char *name);
 
 /*******************************************************************************/
 /*                                                                             */

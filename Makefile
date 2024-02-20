@@ -7,6 +7,8 @@ SRCS =			env/env.c \
 				lst_utils.c \
 				expand/expand.c \
 				expand/expand_utils.c \
+				expand/wildcard.c \
+				expand/wildcard_utils.c \
 				cd/cd.c \
 				cd/cd_utils.c \
 				pwd/pwd.c \

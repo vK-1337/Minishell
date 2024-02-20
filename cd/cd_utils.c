@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 15:49:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/19 14:28:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int ft_set_pwd(t_list **env)
     pwd = ft_find_var(env, "$PWD");
     if (pwd == NULL)
     {
-        ft_lstadd_back(env, ft_lstnew("PWD", 1));
+        ft_lstadd_back(env, ft_lstnew("PWD", 1, 1));
         pwd = ft_find_var(env, "$PWD");
     }
     free(pwd->content);
@@ -48,7 +48,7 @@ int ft_replace_pwd(t_list **env)
     t_list *pwd;
     t_list *old_pwd;
     char *current_directory;
-    
+
     current_directory = NULL;
     current_directory = ft_get_current_directory(current_directory);
     if (current_directory == NULL)
@@ -56,7 +56,7 @@ int ft_replace_pwd(t_list **env)
     old_pwd = ft_find_var(env, "$OLDPWD");
     if (old_pwd == NULL)
     {
-        ft_lstadd_back(env, ft_lstnew("OLDPWD", 1));
+        ft_lstadd_back(env, ft_lstnew("OLDPWD", 1, 1));
         old_pwd = ft_find_var(env, "$OLDPWD");
     }
     free(old_pwd->content);

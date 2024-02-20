@@ -55,23 +55,27 @@ typedef struct s_ast
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                                  PROMPT                                     */
+/*                                   CD                                        */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 
-char				*ft_extract_hostname(char *session_manager);
-char				*trim_pwd(char *pwd);
-char				*ft_build_prompt(t_list **env);
+int					ft_cd(char *path, t_list **env);
+int					ft_replace_pwd(t_list **env);
+int					ft_set_pwd(t_list **env);
+int					old_pwd_use(char *path, t_list **env);
+int					back_home(char *path, t_list **env);
+int					CDPATH_FIND(char *path, t_list **env);
 
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                                  LEXER                                      */
+/*                                 DEBUG                                       */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 
+void				ft_print_expandables(int *vars, int vars_number);
 t_token				*ft_lexer(char *input, t_list **env);
 int					ft_count_tokens(char const *s);
 char				**ft_token_split(char const *s);
@@ -102,12 +106,32 @@ void				ft_print_env(t_list *env);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                                  UNSET                                      */
+/*                                   EXEC                                      */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 
-t_list				**ft_unset(t_list **env_list, char *var_to_del);
+int					exec_shell_command(char *command, t_list *env);
+char				*add_slash(char *cmd1);
+void				ft_free_char_tab(char **str);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                 EXPAND                                      */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+int					ft_contain_variables(char *input);
+int					*ft_is_expandable(char *input, int variable_count);
+int					ft_decr_incr(int condition);
+int					ft_should_expand(int single_quotes, int double_quotes);
+void				ft_testing_expand(char *input);
+char				*ft_char_join(char *base_str, char to_join);
+t_list				*ft_find_var(t_list **env, char *input);
+char				*ft_join_var(t_list **env, char *final_input, char *input);
+char				*ft_expand(char *input, t_list **env);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -128,7 +152,8 @@ void				ft_replace_var(t_list **env_list, char *new_var);
 int					ft_var_exists(t_list **env_list, char *var);
 void				ft_export(t_list **env_list, char *new_var);
 int					ft_correct_format(char *new_var);
-int					forbidden_char(char c);
+int					ft_forbidden_char(char c);
+int					ft_contain_equal(char *new_var);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -146,6 +171,30 @@ int					ft_not_double_quoted(char *input, int char_index);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
+/*                                  LEXER                                      */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+t_list				*ft_lexer(char *input, t_list **env);
+int					ft_count_tokens(char const *s);
+char				**ft_token_split(char const *s);
+void				ft_add_token(char *element, const char *src, size_t index,
+						size_t len);
+int					ft_tokenlen(const char *str, int index);
+void				ft_print_tokens(char **tokens);
+int					ft_is_separator(char c);
+int					ft_is_operator(char c);
+int					ft_go_next(const char *str, int index);
+t_token				*ft_convert_tokens(char **tokens);
+t_ttype				ft_define_ttype(char *token, char *previous_token);
+char				*ft_print_type(t_ttype type);
+int					ft_is_option(char *token);
+int					ft_is_file(char *token);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
 /*                                 LST UTILS                                   */
 /*                                                                             */
 /*                                                                             */
@@ -154,6 +203,41 @@ int					ft_not_double_quoted(char *input, int char_index);
 void				ft_free_list(t_list **list);
 void				ft_delete_last(t_list *env_node);
 void				ft_delete_connect(t_list *env_node);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                  PROMPT                                     */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+char				*ft_extract_hostname(char *session_manager);
+char				*trim_pwd(char *pwd);
+char				*ft_build_prompt(t_list **env);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                   PWD                                       */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+int					ft_pwd(void);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                                 SIGNALS                                     */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+void				ft_init_signals(void);
+void				ft_change_signals(void);
+void				sig_handler(int signum);
+void				wait_p_handler(int signum);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -178,20 +262,12 @@ void				ft_print_token_list(t_token **tokens);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                                 EXPAND                                      */
+/*                                  UNSET                                      */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 
-int					ft_contain_variables(char *input);
-int					*ft_is_expandable(char *input, int variable_count);
-int					ft_decr_incr(int condition);
-int					ft_should_expand(int single_quotes, int double_quotes);
-void				ft_testing_expand(char *input);
-char				*ft_char_join(char *base_str, char to_join);
-t_list				*ft_find_var(t_list **env, char *input);
-char				*ft_join_var(t_list **env, char *final_input, char *input);
-char				*ft_expand(char *input, t_list **env);
+t_list				**ft_unset(t_list **env_list, char *var_to_del);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -211,63 +287,6 @@ size_t				ft_strlen(const char *str);
 int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 DEBUG                                       */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-
-void				ft_print_expandables(int *vars, int vars_number);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 SIGNALS                                     */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-
-void				ft_init_signals(struct sigaction *signals);
-void				sig_handler(int signum, siginfo_t *info, void *context);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   CD                                        */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-
-int					ft_cd(char *path, t_list **env);
-int					ft_replace_pwd(t_list **env);
-int					ft_set_pwd(t_list **env);
-int					old_pwd_use(char *path, t_list **env);
-int					back_home(char *path, t_list **env);
-int					CDPATH_FIND(char *path, t_list **env);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   PWD                                       */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-
-int					ft_pwd(void);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 EXEC                                        */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-int					exec_shell_command(char *command, t_list *env);
-char				*add_slash(char *cmd1);
-void				ft_free_char_tab(char **str);
 
 /*******************************************************************************/
 /*                                                                             */

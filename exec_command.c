@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 09:41:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/19 21:32:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,6 @@ int	exec_shell_command(char *command, t_list *env)
 		exit(EXIT_SUCCESS);
 	}
 	else
-	{
-		waitpid(id, NULL, 0);
-	}
+        waitpid(id, NULL, 0);
 	return (1);
 }

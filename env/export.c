@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/16 15:59:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:20:29 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,34 @@ void	ft_export(t_list **env_list, char *new_var)
 {
 	if (!new_var || !env_list)
 		return ;
+    printf("New_var: %s\n", new_var);
+	if (new_var[0] == '\0')
+		ft_display_export(env_list);
 	if (ft_correct_format(new_var))
 	{
 		if (ft_var_exists(env_list, new_var))
 			ft_replace_var(env_list, new_var);
+		else if (ft_contain_equal(new_var))
+			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 1));
 		else
-			ft_lstadd_back(env_list, ft_lstnew(new_var, 1));
+			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 0));
 	}
 	else
 		return ;
+}
+
+int	ft_contain_equal(char *new_var)
+{
+	int	i;
+
+	i = 0;
+	while (new_var[i])
+	{
+		if (new_var[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_correct_format(char *new_var)
@@ -39,19 +58,17 @@ int	ft_correct_format(char *new_var)
 	}
 	while (new_var[i])
 	{
-		if (forbidden_char(new_var[i]))
+		if (ft_forbidden_char(new_var[i]))
 		{
 			printf("`%s': not a valid identifier\n", new_var);
 			return (0);
 		}
-		if (new_var[i] == '=')
-			return (1);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-int	forbidden_char(char c)
+int	ft_forbidden_char(char c)
 {
 	int		i;
 	char	*charset;
@@ -111,82 +128,87 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 		curr = curr->next;
 	}
 }
-void ft_display_export(t_list **env_list)
+void	ft_display_export(t_list **env_list)
 {
-    t_list *curr;
-    t_list **list_copy;
-    t_list **sorted_list;
+	t_list	*curr;
+	t_list	**list_copy;
+	t_list	**sorted_list;
 
-    list_copy = ft_copy_env_list(env_list);
-    sorted_list = ft_sort_nodes(env_list);
-    curr = *sorted_list;
-    while (curr)
-    {
-        printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
-        curr = curr->next;
-    }
+	list_copy = ft_copy_env_list(env_list);
+	sorted_list = ft_sort_nodes(env_list);
+	curr = *sorted_list;
+	while (curr)
+	{
+        if (curr->content)
+            printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
+        else
+            printf("declare -x %s\n", curr->var_name);
+		curr = curr->next;
+	}
 }
 
-t_list **ft_copy_env_list(t_list **env_list)
+t_list	**ft_copy_env_list(t_list **env_list)
 {
-    t_list *curr;
-    t_list **copy;
-    t_list *node_copy;
+	t_list	*curr;
+	t_list	**copy;
+	t_list	*node_copy;
 
-    curr = *env_list;
-    copy = malloc(sizeof(t_list));
-    while (curr)
-    {
-        node_copy = ft_copy_env_node(curr);
-        if (!node_copy)
-            return (NULL);
-        ft_lstadd_back(copy, node_copy);
-        curr = curr->next;
-    }
-    return (copy);
+	curr = *env_list;
+	// copy = malloc(sizeof(t_list *));
+    copy = NULL;
+	while (curr)
+	{
+		node_copy = ft_copy_env_node(curr);
+		if (!node_copy)
+			return (NULL);
+		ft_lstadd_back(copy, node_copy);
+		curr = curr->next;
+	}
+	return (copy);
 }
 
-t_list *ft_copy_env_node(t_list *env_node)
+t_list	*ft_copy_env_node(t_list *env_node)
 {
-    t_list *copy;
+	t_list	*copy;
 
-    copy = malloc(sizeof(t_list));
-    if (!copy)
-        return (NULL);
-    copy->content = env_node->content;
-    copy->var_name = env_node->var_name;
-    copy->next = NULL;
-    copy->prev = NULL;
-    return (copy);
+	copy = malloc(sizeof(t_list));
+	if (!copy)
+		return (NULL);
+	copy->content = env_node->content;
+	copy->var_name = env_node->var_name;
+	copy->next = NULL;
+	copy->prev = NULL;
+	return (copy);
 }
 
-t_list **ft_sort_nodes(t_list **env_list)
+t_list	**ft_sort_nodes(t_list **env_list)
 {
-    t_list *curr;
-    t_list *tmp;
-    t_list *last_node;
-    int i;
+	t_list	*curr;
+	t_list	*tmp;
+	t_list	*last_node;
+	int		i;
 
-    curr = *env_list;
-    curr = curr->next;
-    i = 0;
-    while (curr)
-    {
-        tmp = curr->next;
-        while (curr->prev && ft_is_prev_greater(curr->var_name, curr->prev->var_name))
-            ft_swapback_nodes(curr->prev, curr);
-        curr = tmp;
-        if (curr)
-            last_node = curr;
-    }
-    curr = last_node;
-    while (curr)
-    {
-        last_node = curr;
-        curr = curr->prev;
-    }
-    *env_list = last_node;
-    return (env_list);
+	curr = *env_list;
+	curr = curr->next;
+	i = 0;
+	while (curr)
+	{
+		tmp = curr->next;
+		while (curr->prev && ft_is_prev_greater(curr->var_name,
+				curr->prev->var_name))
+			ft_swapback_nodes(curr->prev, curr);
+		curr = tmp;
+		if (curr)
+			last_node = curr;
+	}
+	curr = last_node;
+	while (curr)
+	{
+		last_node = curr;
+		curr = curr->prev;
+	}
+	*env_list = last_node;
+	return (env_list);
 }
 void	ft_swapback_nodes(t_list *prev, t_list *curr)
 {
@@ -195,10 +217,10 @@ void	ft_swapback_nodes(t_list *prev, t_list *curr)
 
 	next_tmp = curr->next;
 	prev_tmp = prev->prev;
-    if (curr->next)
-    {
-        curr->next->prev = prev;
-    }
+	if (curr->next)
+	{
+		curr->next->prev = prev;
+	}
 	curr->next = prev;
 	curr->prev = prev_tmp;
 	if (prev->prev)
@@ -207,21 +229,21 @@ void	ft_swapback_nodes(t_list *prev, t_list *curr)
 	prev->prev = curr;
 }
 
-int ft_is_prev_greater(char *curr_var, char *prev_var)
+int	ft_is_prev_greater(char *curr_var, char *prev_var)
 {
-    int i;
+	int i;
 
-    i = 0;
-    if (!prev_var)
-        return (0);
-    while (curr_var[i] && prev_var[i])
-    {
-        if (curr_var[i] == prev_var[i])
-            i++;
-        else if (prev_var[i] > curr_var[i])
-            return (1);
-        else
-            return (0);
-    }
-    return (1337);
+	i = 0;
+	if (!prev_var)
+		return (0);
+	while (curr_var[i] && prev_var[i])
+	{
+		if (curr_var[i] == prev_var[i])
+			i++;
+		else if (prev_var[i] > curr_var[i])
+			return (1);
+		else
+			return (0);
+	}
+	return (1337);
 }

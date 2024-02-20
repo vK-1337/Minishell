@@ -6,6 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/02/20 14:13:52 by vda-conc         ###   ########.fr       */
 /*   Updated: 2024/02/19 19:23:54 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -14,23 +15,24 @@
 
 int	main(int ac, char **av, char **env)
 {
+
 	char				*input;
 	char				*prompt;
 	t_list				*env_list;
-	struct sigaction	signals;
 
 	(void)ac;
 	(void)av;
+    rl_catch_signals = 0;
 	if (!env[0])
 		return (0);
-	ft_init_signals(&signals);
-	signal(SIGQUIT, SIG_IGN);
 	rl_bind_key('\t', rl_complete);
 	env_list = ft_convert_env(env);
 	prompt = ft_build_prompt(&env_list);
 	while (1)
 	{
+        ft_init_signals();
 		input = readline(prompt);
+        printf("Input: %s\n", input);
 		if (input == NULL)
 		{
 			printf("exit\n");
@@ -39,9 +41,12 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
+    ft_change_signals();
+		// ft_lexer(input, &env_list);
+    printf("Input: %s\n", input);
+    printf("Input[7]: %s\n", &input[7]);
 		t_ast *test;
 		test = NULL;
-		
 		create_ast_list(&test, ft_lexer(input, &env_list));
 		read_ast(test, 0);
 		if (ft_strncmp("env", input, 3) == 0)
@@ -69,27 +74,4 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	free(prompt);
 	return (0);
-}
-
-void	ft_init_signals(struct sigaction *signals)
-{
-	signals->sa_flags = SA_SIGINFO;
-	signals->sa_sigaction = sig_handler;
-	sigemptyset(&signals->sa_mask);
-	sigaddset(&signals->sa_mask, SIGQUIT);
-	sigaction(SIGINT, signals, NULL);
-	sigaction(SIGQUIT, signals, NULL);
-}
-
-void	sig_handler(int signum, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
 }

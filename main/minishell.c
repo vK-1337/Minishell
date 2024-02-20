@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 21:36:49 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:13:52 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int ac, char **av, char **env)
 	{
         ft_init_signals();
 		input = readline(prompt);
+        printf("Input: %s\n", input);
 		if (input == NULL)
 		{
 			printf("exit\n");
@@ -40,7 +41,9 @@ int	main(int ac, char **av, char **env)
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
         ft_change_signals();
-		ft_lexer(input, &env_list);
+		// ft_lexer(input, &env_list);
+        printf("Input: %s\n", input);
+        printf("Input[7]: %s\n", &input[7]);
 		if (ft_strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
 		else if (ft_strncmp("unset", input, 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 21:06:10 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:20:29 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_export(t_list **env_list, char *new_var)
 {
 	if (!new_var || !env_list)
 		return ;
+    printf("New_var: %s\n", new_var);
 	if (new_var[0] == '\0')
 		ft_display_export(env_list);
 	if (ft_correct_format(new_var))
@@ -138,8 +139,10 @@ void	ft_display_export(t_list **env_list)
 	curr = *sorted_list;
 	while (curr)
 	{
-        // ! Gerer le cas ou env_print est egal a 0 et il n'y a surement pas de egal dans le var name
-		printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
+        if (curr->content)
+            printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
+        else
+            printf("declare -x %s\n", curr->var_name);
 		curr = curr->next;
 	}
 }
@@ -149,10 +152,10 @@ t_list	**ft_copy_env_list(t_list **env_list)
 	t_list	*curr;
 	t_list	**copy;
 	t_list	*node_copy;
-    
+
 	curr = *env_list;
-	copy = malloc(sizeof(t_list *));
-    (*copy)->next = NULL;
+	// copy = malloc(sizeof(t_list *));
+    copy = NULL;
 	while (curr)
 	{
 		node_copy = ft_copy_env_node(curr);

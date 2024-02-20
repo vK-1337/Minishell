@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/19 14:30:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:55:02 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ t_list	*ft_lstnew(void *content, int build_env, int env_print)
 		new_node->var_name = malloc((i + 1) * sizeof(char));
 		ft_strlcpy(new_node->var_name, content, i + 1);
 		j = ft_after_equal(content);
-		new_node->content = malloc((j + 1) * sizeof(char));
-		ft_strlcpy(new_node->content, content + i + 1, j);
+        if (j)
+        {
+		    new_node->content = malloc((j + 1) * sizeof(char));
+		    ft_strlcpy(new_node->content, content + i + 1, j);
+        }
 	}
 	if (env_print)
 		new_node->env_print = 1;

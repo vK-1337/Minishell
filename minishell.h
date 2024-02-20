@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 21:26:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:56:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_ast
+{
+	t_token			*token;
+
+	struct s_ast	*daddy;
+	struct s_ast	*right;
+	struct s_ast	*left;
+}					t_ast;
+
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
@@ -67,6 +76,21 @@ int					CDPATH_FIND(char *path, t_list **env);
 /*******************************************************************************/
 
 void				ft_print_expandables(int *vars, int vars_number);
+t_token				*ft_lexer(char *input, t_list **env);
+int					ft_count_tokens(char const *s);
+char				**ft_token_split(char const *s);
+void				ft_add_token(char *element, const char *src, size_t index,
+						size_t len);
+int					ft_tokenlen(const char *str, int index);
+void				ft_print_tokens(char **tokens);
+int					ft_is_separator(char c);
+int					ft_is_operator(char c);
+int					ft_go_next(const char *str, int index);
+t_token				*ft_convert_tokens(char **tokens);
+t_ttype				ft_define_ttype(char *token, char *previous_token);
+char				*ft_print_type(t_ttype type);
+int					ft_is_option(char *token);
+int					ft_is_file(char *token);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -264,4 +288,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                             		AST					                         */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+void				create_ast_list(t_ast **node, t_token *token_list);
+void read_ast(t_ast* node, int depth);
 #endif

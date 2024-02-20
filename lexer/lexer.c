@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/16 16:10:44 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:47:37 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	*ft_lexer(char *input, t_list **env)
+t_token	*ft_lexer(char *input, t_list **env)
 {
 	char	*expanded_input;
 	char	**tokens;
@@ -24,7 +24,7 @@ t_list	*ft_lexer(char *input, t_list **env)
 	ft_print_tokens(tokens);
 	listed_tokens = ft_convert_tokens(tokens);
 	ft_print_token_list(&listed_tokens);
-	return (NULL);
+	return (listed_tokens);
 }
 
 t_token	*ft_convert_tokens(char **tokens)

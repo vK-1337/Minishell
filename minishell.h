@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/17 17:57:32 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:56:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_ast
+{
+	t_token			*token;
+
+	struct s_ast	*daddy;
+	struct s_ast	*right;
+	struct s_ast	*left;
+}					t_ast;
+
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
@@ -63,7 +72,7 @@ char				*ft_build_prompt(t_list **env);
 /*                                                                             */
 /*******************************************************************************/
 
-t_list				*ft_lexer(char *input, t_list **env);
+t_token				*ft_lexer(char *input, t_list **env);
 int					ft_count_tokens(char const *s);
 char				**ft_token_split(char const *s);
 void				ft_add_token(char *element, const char *src, size_t index,
@@ -260,4 +269,13 @@ int					exec_shell_command(char *command, t_list *env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                             		AST					                         */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+void				create_ast_list(t_ast **node, t_token *token_list);
+void read_ast(t_ast* node, int depth);
 #endif

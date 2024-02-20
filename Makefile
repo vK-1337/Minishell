@@ -24,6 +24,7 @@ SRCS =			env/env.c \
 				tokens/token_utils.c \
 				lexer/lexer.c \
 				lexer/lexer_utils.c \
+				ast/create_ast_list.c \
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

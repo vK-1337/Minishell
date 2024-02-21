@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/18 17:56:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/21 09:16:05 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ int					ft_not_double_quoted(char *input, int char_index);
 /*                                                                             */
 /*******************************************************************************/
 
-t_list				*ft_lexer(char *input, t_list **env);
 int					ft_count_tokens(char const *s);
 char				**ft_token_split(char const *s);
 void				ft_add_token(char *element, const char *src, size_t index,
@@ -291,10 +290,13 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST					                         */
+/*                             		AST						                      */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 void				create_ast_list(t_ast **node, t_token *token_list);
-void read_ast(t_ast* node, int depth);
+void				read_ast(t_ast *node, int depth);
+int					is_or(char *token);
+int					is_and(char *token);
+int					is_pipe(char *token);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/16 16:47:37 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:12:52 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,62 @@ t_token	*ft_lexer(char *input, t_list **env)
 	tokens = ft_token_split(expanded_input);
 	ft_print_tokens(tokens);
 	listed_tokens = ft_convert_tokens(tokens);
+	ft_reunite_tokens(&listed_tokens);
 	ft_print_token_list(&listed_tokens);
 	return (listed_tokens);
+}
+
+void	ft_reunite_tokens(t_token **tokens)
+{
+	t_token	*curr;
+	t_token	*next;
+
+	curr = *tokens;
+	while (curr)
+	{
+		next = curr->next;
+		if (next && curr->type == OPTION && next->type == OPTION)
+		{
+			ft_join_options(tokens, curr, next);
+			curr = *tokens;
+		}
+		else if (next && curr->type == OPERATOR && next->type == PATH_FILE)
+		{
+			ft_join_file_path(curr, next);
+			curr = *tokens;
+		}
+		else
+			curr = curr->next;
+	}
+}
+
+void	ft_join_options(t_token **tokens, t_token *curr, t_token *next)
+{
+	char	*new_token;
+	t_token	*new_node;
+
+	new_token = ft_strjoin(curr->token, " ", 0);
+	new_token = ft_strjoin(new_token, next->token, 1);
+	new_node = ft_tokenlstnew(new_token, OPTION);
+	new_node->next = next->next;
+	if (curr->prev)
+	{
+		curr->prev->next = new_node;
+		new_node->prev = curr->prev;
+	}
+	else
+		*tokens = new_node;
+	free(curr);
+	free(next);
+}
+
+void	ft_join_file_path(t_token *curr, t_token *next)
+{
+	curr->file_redir = next->token;
+	curr->next = next->next;
+	if (next->next)
+		next->next->prev = curr;
+	free(next);
 }
 
 t_token	*ft_convert_tokens(char **tokens)

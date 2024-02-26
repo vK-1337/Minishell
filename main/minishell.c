@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/20 14:13:52 by vda-conc         ###   ########.fr       */
-/*   Updated: 2024/02/19 19:23:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:02:41 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -41,14 +41,14 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
-    ft_change_signals();
-		// ft_lexer(input, &env_list);
-    printf("Input: %s\n", input);
-    printf("Input[7]: %s\n", &input[7]);
-		t_ast *test;
-		test = NULL;
-		create_ast_list(&test, ft_lexer(input, &env_list));
-		read_ast(test, 0);
+        ft_change_signals();
+        printf("Input: %s\n", input);
+        printf("Input[7]: %s\n", &input[7]);
+        ft_lexer(input, &env_list);
+		// t_ast *test;
+		// test = NULL;
+		// create_ast_list(&test, ft_lexer(input, &env_list));
+		// read_ast(test, 0);
 		if (ft_strncmp("env", input, 3) == 0)
 			ft_print_env(env_list);
 		else if (ft_strncmp("unset", input, 5) == 0)

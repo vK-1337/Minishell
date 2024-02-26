@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/16 16:12:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:03:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_print_token_list(t_token **tokens)
 		printf("\nNoeud numero |%d|\n", i++);
 		printf("Token => |%s|\n", curr->token);
 		printf("Type => |%s|\n", ft_print_type(curr->type));
+        if (curr->file_redir)
+            printf("File redir => |%s|\n", curr->file_redir);
 		curr = curr->next;
 	}
 }

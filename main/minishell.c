@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/27 18:06:32 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:30:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ int	main(int ac, char **av, char **env)
 		// }
 		// else if (ft_strncmp("pwd", input, 3) == 0)
 		// 	ft_pwd();
+		// else
+		// 	exec_shell_command(input, env_list);
+
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

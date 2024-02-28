@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   token_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 16:40:20 by vda-conc         ###   ########.fr       */
-/*   Updated: 2024/02/19 16:42:15 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:43:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -37,6 +37,7 @@ char	**ft_token_split(char const *s)
 		}
 		i++;
 	}
+    printf("WORDS NUMBER => |%zu|", words_nbr);
 	words[words_nbr] = NULL;
 	return (words);
 }

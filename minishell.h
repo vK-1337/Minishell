@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/18 17:56:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:29:21 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ typedef struct s_ast
 	struct s_ast	*left;
 }					t_ast;
 
+typedef struct s_exec
+{
+	int				fd_in;
+	int				fd_out;
+
+	char			*command;
+	char			*cmd_split;
+	struct s_exec	*next;
+}					t_exec;
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
@@ -111,9 +120,11 @@ void				ft_print_env(t_list *env);
 /*                                                                             */
 /*******************************************************************************/
 
-int					exec_shell_command(char *command, t_list *env);
+int					exec_shell_command(char *command, char **env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
+char				**redo_env(t_list *env);
+int					exec_command(char *command, char **env);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -176,7 +187,6 @@ int					ft_not_double_quoted(char *input, int char_index);
 /*                                                                             */
 /*******************************************************************************/
 
-t_list				*ft_lexer(char *input, t_list **env);
 int					ft_count_tokens(char const *s);
 char				**ft_token_split(char const *s);
 void				ft_add_token(char *element, const char *src, size_t index,
@@ -291,10 +301,30 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST					                         */
+/*                             		AST											  */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
+
 void				create_ast_list(t_ast **node, t_token *token_list);
-void read_ast(t_ast* node, int depth);
+void				read_ast(t_ast *node, int depth);
+int					is_or(char *token);
+int					is_and(char *token);
+int					is_pipe(char *token);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                             		AST											  */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+int					launch_ast(char *input, t_list *env_list);
+int					launch_ast_recursive(t_ast *ast, t_list *env_list);
+int					create_redirection(t_ast *node, t_list *env_list);
+char				*build_command(t_ast *node);
+int					right_pipe(t_ast *node, t_list *env_list);
+int					left_pipe(t_ast *node, t_list *env_list);
+int					pipe_chain(char **env, char *av);
 #endif

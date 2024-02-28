@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/20 16:44:13 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:48:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,21 @@ int	is_and(char *token)
 
 int	is_pipe(char *token)
 {
-	if (ft_strncmp(token, "|", 1))
+    if (ft_strncmp(token, "| ", 2) == 0)
+		return (1);
+	return (0);
+}
+
+int	is_fd_out(char *token)
+{
+	if (ft_strncmp(token, ">", 1) == 0)
+		return (1);
+	return (0);
+}
+
+int	is_fd_in(char *token)
+{
+	if (ft_strncmp(token, "<", 1) == 0)
 		return (1);
 	return (0);
 }
@@ -71,9 +85,7 @@ t_token *get_first_strongest_operator(t_token *token_list)
     while (travel)
     {
         if (travel->type == 3)
-        {
             return (travel);
-        }
         travel = travel->next;
     }
     return (strongest);
@@ -144,14 +156,6 @@ t_ast    *build_tree(t_ast **node, t_token *strongest)
     return *node;
 }
 
-// void    read_ast(t_ast *node)
-// {
-//     if (node == NULL)
-//         return ;
-//     printf("MAIN Token: %s\n", node->token->token);
-//     printf("LEFT Token: %s\n", node->left->token->token);
-// }
-
 void read_ast(t_ast* node, int depth) 
 {
     for(int i = 0; i < depth; i++) {
@@ -209,8 +213,15 @@ void    create_ast_list(t_ast **node, t_token *token_list)
 	t_token	*strongest;
 	t_ast	*tree;
 
-    
-	if (*node == NULL)
+    if (get_last_strongest_operator(token_list) == NULL)
+    {
+        *node = malloc(sizeof(t_ast));
+        (*node)->token = token_list;
+        (*node)->daddy = NULL;
+        (*node)->left = NULL;
+        (*node)->right = NULL;
+    }
+	else if (*node == NULL)
 	{
 		strongest = get_last_strongest_operator(token_list);
         tree = new_tree(strongest);

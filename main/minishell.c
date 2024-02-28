@@ -41,12 +41,10 @@ int	main(int ac, char **av, char **env)
 		while (ft_unclosed_input(input))
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
-        ft_change_signals();
-        ft_lexer(input, &env_list);
-		// t_ast *test;
-		// test = NULL;
-		// create_ast_list(&test, ft_lexer(input, &env_list));
-		// read_ast(test, 0);
+    	ft_change_signals();
+		launch_ast(input, env_list);
+		free(prompt);
+		prompt = ft_build_prompt(&env_list);
 		// if (ft_strncmp("env", input, 3) == 0)
 		// 	ft_print_env(env_list);
 		// else if (ft_strncmp("unset", input, 5) == 0)
@@ -67,6 +65,7 @@ int	main(int ac, char **av, char **env)
 		// 	ft_pwd();
 		// else
 		// 	exec_shell_command(input, env_list);
+
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

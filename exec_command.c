@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/27 19:06:19 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:31:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,35 @@ int	exec_command(char *command, char **env)
 	}
 	return (ft_free_char_tab(cmd_split), 0);
 }
-
-int	exec_shell_command(char *command, char **env)
+int check_command(char **command, t_list *env_list)
+{
+	int exit_status;
+	
+	if (ft_strncmp("env", command[0], 3) == 0)
+			exit_status = ft_print_env(env_list);
+	else if (ft_strncmp("unset", command[0], 5) == 0)
+		ft_unset(&env_list, &input[6]);
+	else if (ft_strncmp("export", input, 6) == 0)
+			ft_export(&env_list, &input[7]);
+		else if (ft_strncmp(input, "exit", 4) == 0)
+			break ;
+		else if (ft_strncmp("unset", input, 5) == 0)
+			env_list = *ft_unset(&env_list, &input[6]);
+		else if (ft_strncmp("cd", input, 2) == 0)
+		{
+			ft_cd(&input[3], &env_list);
+			free(prompt);
+			prompt = ft_build_prompt(&env_list);
+		}
+		else if (ft_strncmp("pwd", input, 3) == 0)
+			ft_pwd();
+}
+int	exec_shell_command(char *command, t_list *env_list)
 {
 	int	id;
 	int	exit_status;
 	
+	exit_status = check_command(ft_split(command, ' '), env_list);
 	id = fork();
 	if (id == -1)
 	{
@@ -148,7 +171,7 @@ int	exec_shell_command(char *command, char **env)
 	}
 	if (id == 0)
 	{
-		exec_command(command, env);
+		exec_command(command, redo_env(env_list));
 		exit(EXIT_SUCCESS);
 	}
 	else

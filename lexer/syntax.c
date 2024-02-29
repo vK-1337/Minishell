@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:21:00 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 21:01:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:15:54 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,31 @@ int	check_syntax(char *input)
 		return (0);
 	if (!ft_syntax_pipes(input))
 	    return (0);
-	// if (!ft_syntax_redir(input))
-	//     return (0);
+	if (!ft_syntax_redir(input))
+	    return (0);
     return (1);
 }
+
+int ft_syntax_redir(char *input)
+{
+    int i;
+
+    i = 0;
+    while (ft_is_space(input[i]))
+        i++;
+    if (input[i] == '>')
+    {
+        if (!input[i + 1] || (input[i + 1] == '>' && !input[i + 2]))
+            return (printf("minishell: syntax error near unexpected token `newline'\n"), 0);
+    }
+    else if (input[i] == '<')
+    {
+        if (!input[i + 1] || (input[i + 1] == '<' && !input[i + 2]))
+            return (printf("minishell: syntax error near unexpected token `newline'\n"), 0);
+    }
+    return (1);
+}
+
 int ft_syntax_pipes(char *input)
 {
     int i;
@@ -64,13 +85,12 @@ int ft_only_spaces_behind(char *input, int index)
     int i;
 
     i = index;
+    if (input[i + 1] == input[i])
+        i--;
     while (i > 0 && ft_is_space(input[i]))
         i--;
-    if (input[i] == '|')
-    {
-        printf("Input[i] => |%c|", input[i]);
+    if (ft_is_operator(input[i]))
         return (1);
-    }
     return (0);
 }
 

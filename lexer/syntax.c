@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:21:00 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 11:38:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:17:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	ft_syntax_parenthesis(char *input)
 	{
 		if (input[i] == 40 && ft_not_quoted(input, i))
         {
-            if (ft_spaces_parenthesis(input[i + 1]) == 1)
+            if (ft_spaces_parenthesis(&input[i + 1]) == 1)
                 return (printf("minishell: syntax error near unexpected token `('\n"), 0);
             parenthesis++;
         }

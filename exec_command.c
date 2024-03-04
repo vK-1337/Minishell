@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/28 17:31:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 11:21:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 	{
 		temp = add_slash(path_split[i]);
 		path = ft_strjoin(temp, cmd_split[0], 0);
-		
+
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
 			return (ft_free_char_tab(path_split),
@@ -115,7 +115,7 @@ int	exec_command(char *command, char **env)
 {
 	char	*instruct;
 	char 	**cmd_split;
-	
+
 	cmd_split = ft_split(command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
 	if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
@@ -137,7 +137,7 @@ int	exec_command(char *command, char **env)
 int check_command(char **command, t_list *env_list)
 {
 	int exit_status;
-	
+
 	if (ft_strncmp("env", command[0], 3) == 0)
 			exit_status = ft_print_env(env_list);
 	else if (ft_strncmp("unset", command[0], 5) == 0)
@@ -161,7 +161,7 @@ int	exec_shell_command(char *command, t_list *env_list)
 {
 	int	id;
 	int	exit_status;
-	
+
 	exit_status = check_command(ft_split(command, ' '), env_list);
 	id = fork();
 	if (id == -1)

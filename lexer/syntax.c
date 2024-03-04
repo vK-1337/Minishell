@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:21:00 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/29 17:28:47 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:38:58 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,11 @@ int	ft_syntax_parenthesis(char *input)
 	while (input[i])
 	{
 		if (input[i] == 40 && ft_not_quoted(input, i))
-			parenthesis++;
+        {
+            if (ft_spaces_parenthesis(input[i + 1]) == 1)
+                return (printf("minishell: syntax error near unexpected token `('\n"), 0);
+            parenthesis++;
+        }
 		else if (input[i] == 41 && ft_not_quoted(input, i))
 			parenthesis--;
 		i++;
@@ -158,4 +162,18 @@ int	ft_syntax_parenthesis(char *input)
 	if (parenthesis < 0)
 		return (printf("minishell: syntax error near unexpected token `)'\n"), 0);
 	return (1);
+}
+
+int ft_spaces_parenthesis(char *str)    
+{
+    int i;
+
+    i = 0;
+    while (str[i] != ')')
+    {
+        if (!ft_is_space(str[i]))
+            return (0);
+        i++;
+    }
+    return (1);
 }

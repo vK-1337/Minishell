@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/29 18:15:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 11:21:09 by vda-conc         ###   ########.fr       */ 
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 	{
 		temp = add_slash(path_split[i]);
 		path = ft_strjoin(temp, cmd_split[0], 0);
-		
+
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
 			return (ft_free_char_tab(path_split),

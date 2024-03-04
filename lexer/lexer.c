@@ -192,22 +192,31 @@ t_token	*ft_convert_tokens(char **tokens)
 {
 	int		i;
 	t_ttype	type;
+    int first_type_redir_in;
 	char	*previous_token;
 	t_ttype	previous_type;
 	t_token	*tokens_list;
 
 	i = 0;
+    first_type_redir_in = 0;
 	previous_token = NULL;
 	tokens_list = NULL;
 	while (tokens[i])
 	{
 		if (i == 0)
 		{
+            if (tokens[i] && tokens[i][0] == '<')
+            {
+                first_type_redir_in = 1;
+                type = OPERATOR;
+            }
             if (tokens[i] && tokens[i][0] == '(')
                 type = PARENTHESIS;
 			if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
 				type = COMMAND;
 		}
+        else if (first_type_redir_in == 1 && i == 2)
+            type = COMMAND;
 		else
 			type = ft_define_ttype(tokens[i], previous_token);
 		ft_tokenlstadd_back(&tokens_list, ft_tokenlstnew(tokens[i], type));

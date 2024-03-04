@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:38:55 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/02 16:32:13 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	main(int ac, char **av, char **env)
 			input = ft_strjoin(input, readline(">"), 1);
 		add_history(input);
     	ft_change_signals();
-		launch_ast(input, env_list);
+		if (launch_ast(input, env_list) == 1917)
+			break;
 		free(prompt);
 		prompt = ft_build_prompt(&env_list);
 		// if (ft_strncmp("env", input, 3) == 0)
@@ -65,7 +66,6 @@ int	main(int ac, char **av, char **env)
 		// 	ft_pwd();
 		// else
 		// 	exec_shell_command(input, env_list);
-
 	}
 	ft_free_list(&env_list);
 	rl_clear_history();

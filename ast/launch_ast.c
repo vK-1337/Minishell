@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/28 17:23:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/02 16:51:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	launch_ast(char *input, t_list *env_list)
 	t_ast	*ast;
 
 	exit_status = 0;
-	ast = NULL;
-	create_ast_list(&ast, ft_lexer(input, &env_list));
+	ast = NULL; 
+	create_ast_list(&ast, ft_lexer(input, &env_list));	
 	read_ast(ast, 0);
 	if (!ast)
 	{
@@ -27,6 +27,7 @@ int	launch_ast(char *input, t_list *env_list)
 		return (-1);
 	}
 	exit_status = launch_ast_recursive(ast, env_list);
+	ft_free_ast(ast);
 	return (exit_status);
 }
 
@@ -44,7 +45,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 	else if (ast->token->type == 3 && is_pipe(ast->token->token) == 1)
 		exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-		exit_status = exec_shell_command(build_command(ast), env_list);
+		exit_status = exec_shell_command(build_command(ast), env_list, redo_env(env_list));
 	return (exit_status);
 }
 
@@ -65,7 +66,7 @@ char	*build_command(t_ast *node)
 	return (command);
 }
 
-int	last_pipe(char **env, char *av, int fd_out)
+int	last_pipe(char **env, char *av, int fd_out, t_list *env_list)
 {
 	int	id;
 	int exit_status;
@@ -78,7 +79,7 @@ int	last_pipe(char **env, char *av, int fd_out)
 			dup2(fd_out, 1);
 			close(fd_out);
 		}
-		exec_command(av, env);
+		exec_command(av, env, env_list);
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -103,8 +104,8 @@ int	create_redirection(t_ast *node, t_list *env_list)
         exit_status = right_pipe(node, env_list);
     else
     {
-        exit_status = pipe_chain(redo_env(env_list), build_command(node->left));
-        exit_status = last_pipe(redo_env(env_list), build_command(node->right), 1);
+        exit_status = pipe_chain(redo_env(env_list), build_command(node->left), env_list);
+        exit_status = last_pipe(redo_env(env_list), build_command(node->right), 1, env_list);
     }
 	dup2(saved_stdin, 0);
 	close(saved_stdin);
@@ -114,18 +115,17 @@ int	create_redirection(t_ast *node, t_list *env_list)
 
 int right_pipe(t_ast *node, t_list *env_list)
 {
-	
     t_ast   *travel;
     int     exit_status;
     travel = node;
     
     while (is_pipe(travel->right->token->token) == 1)
     {
-        exit_status = pipe_chain(redo_env(env_list), build_command(node->left));
+        exit_status = pipe_chain(redo_env(env_list), build_command(node->left), env_list);
         travel = travel->left;
     }
-    exit_status = pipe_chain(redo_env(env_list), build_command(node->left));
-	last_pipe(redo_env(env_list), build_command(node->right), 1);
+    exit_status = pipe_chain(redo_env(env_list), build_command(node->left), env_list);
+	last_pipe(redo_env(env_list), build_command(node->right), 1, env_list);
     return (exit_status);
 }
 
@@ -139,17 +139,17 @@ int left_pipe(t_ast *node, t_list *env_list)
 	{
         travel = travel->left;
 	}
-    exit_status = pipe_chain(redo_env(env_list), build_command(travel->left));
+    exit_status = pipe_chain(redo_env(env_list), build_command(travel->left), env_list);
     while (travel != node)
     {
-        exit_status = pipe_chain(redo_env(env_list), build_command(travel->right));
+        exit_status = pipe_chain(redo_env(env_list), build_command(travel->right), env_list);
 		travel = travel->daddy;
     }
-    exit_status = last_pipe(redo_env(env_list), build_command(travel->right), 1);
+    exit_status = last_pipe(redo_env(env_list), build_command(travel->right), 1, env_list);
 	
     return (exit_status);
 }
-int	pipe_chain(char **env, char *av)
+int	pipe_chain(char **env, char *av, t_list *env_list)
 {
 	int	fd[2];
 	int	id;
@@ -172,7 +172,7 @@ int	pipe_chain(char **env, char *av)
 		close(fd[0]);
 		dup2(fd[1], 1);
 		close(fd[1]);
-		exec_command(av, env);
+		exec_command(av, env, env_list);
 		exit(EXIT_FAILURE);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:42:02 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/02 16:15:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@
 
 typedef struct s_token
 {
+	t_ttype			type;
 	char			*token;
 	char			*file_redir;
-	t_ttype			type;
 	struct s_token	*next;
 	struct s_token	*prev;
+	struct s_token	*file_redir_in;
+	struct s_token	*file_redir_out;
 }					t_token;
 
 typedef struct s_ast
@@ -121,11 +123,12 @@ int					ft_print_env(t_list *env);
 /*                                                                             */
 /*******************************************************************************/
 
-int					exec_shell_command(char *command, t_list *env);
+int					exec_shell_command(char *command, t_list *env_list,
+						char **env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char *command, char **env);
+int					exec_command(char *command, char **env, t_list *env_list);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -162,7 +165,7 @@ t_list				**ft_sort_nodes(t_list **env_list);
 t_list				**ft_copy_env_list(t_list **env_list);
 void				ft_replace_var(t_list **env_list, char *new_var);
 int					ft_var_exists(t_list **env_list, char *var);
-void				ft_export(t_list **env_list, char *new_var);
+int					ft_export(t_list **env_list, char *new_var);
 int					ft_correct_format(char *new_var);
 int					ft_forbidden_char(char c);
 int					ft_contain_equal(char *new_var);
@@ -207,6 +210,7 @@ void				ft_reunite_tokens(t_token **tokens);
 void				ft_join_options(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_join_file_path(t_token *curr, t_token *next);
+void				ft_reunite_redirection(t_token **tokens);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -283,7 +287,7 @@ void				ft_print_token_list(t_token **tokens);
 /*                                                                             */
 /*******************************************************************************/
 
-int	ft_unset(t_list **env_list, char *var_to_del);
+int					ft_unset(t_list **env_list, char *var_to_del);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -307,7 +311,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST								                          */
+/*                             		AST															     */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -317,6 +321,9 @@ void				read_ast(t_ast *node, int depth);
 int					is_or(char *token);
 int					is_and(char *token);
 int					is_pipe(char *token);
+int					is_fd_in(char *token);
+int					is_fd_out(char *token);
+void				ft_free_ast(t_ast *ast);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -332,5 +339,5 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list);
 int					left_pipe(t_ast *node, t_list *env_list);
-int					pipe_chain(char **env, char *av);
+int					pipe_chain(char **env, char *av, t_list *env_list);
 #endif

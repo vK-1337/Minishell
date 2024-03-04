@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 13:57:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 14:05:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ int ft_syntax_pipes(char *input);
 int ft_syntax_redir(char *input);
 int ft_pipes_synt_error(char *input, int index);
 int ft_rredir_synt_err(char *input, int index, char redir_char);
+int ft_spaces_parenthesis(char *str);
 
 /*******************************************************************************/
 /*                                                                             */

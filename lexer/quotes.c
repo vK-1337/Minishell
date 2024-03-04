@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 10:10:11 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:56:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_unclosed_input(char *input)
 			simple_quotes++;
 		else if (input[i] == 40 && ft_not_quoted(input, i))
 			parenthesis++;
-		else if (input[i] == 41 && ft_not_quoted(input, i))
+		else if (input[i] == 41 && ft_not_quoted(input, i) && parenthesis > 0)
 			parenthesis--;
 	}
 	if (double_quotes % 2 != 0 || simple_quotes % 2 != 0)

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:36:23 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:58:40 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,24 @@ void				ft_join_file_path(t_token *curr, t_token *next);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
+/*                                  SYNTAX                                     */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
+
+int					check_syntax(char *input);
+int					ft_syntax_parenthesis(char *input);
+int	ft_only_spaces(char *input);
+int ft_is_space(char c);
+int ft_only_spaces_behind(char *input, int index);
+int ft_syntax_pipes(char *input);
+int ft_syntax_redir(char *input);
+int ft_pipes_synt_error(char *input, int index);
+int ft_rredir_synt_err(char *input, int index, char redir_char);
+
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
 /*                                 LST UTILS                                   */
 /*                                                                             */
 /*                                                                             */
@@ -283,7 +301,7 @@ void				ft_print_token_list(t_token **tokens);
 /*                                                                             */
 /*******************************************************************************/
 
-int	ft_unset(t_list **env_list, char *var_to_del);
+int					ft_unset(t_list **env_list, char *var_to_del);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -307,7 +325,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST							                             */
+/*                             		AST										                    */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -321,7 +339,7 @@ int					is_pipe(char *token);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST											  */
+/*                             		AST												*/
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

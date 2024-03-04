@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:21:00 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 14:17:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 15:35:02 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int	ft_syntax_parenthesis(char *input)
 	return (1);
 }
 
-int ft_spaces_parenthesis(char *str)    
+int ft_spaces_parenthesis(char *str)
 {
     int i;
 

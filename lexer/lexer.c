@@ -6,13 +6,27 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 15:34:02 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 17:39:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
+void	ft_initialize_redirection(t_token **tokens)
+{
+	t_token *curr;
+	
+	curr = *tokens;
+	while (curr)
+	{
+		if (curr->type == COMMAND)
+		{
+			curr->file_redir_in = NULL;
+			curr->file_redir_out = NULL;
+		}
+		curr = curr->next;
+	}
+}
 
 t_token	*ft_lexer(char *input, t_list **env)
 {
@@ -25,18 +39,126 @@ t_token	*ft_lexer(char *input, t_list **env)
 	tokens = ft_token_split(expanded_input);
 	ft_print_tokens(tokens);
 	listed_tokens = ft_convert_tokens(tokens);
-	
 	ft_reunite_tokens(&listed_tokens);
-	
 	ft_initialize_redirection(&listed_tokens);
 	ft_reunite_redirection(&listed_tokens);
 	ft_print_token_list(&listed_tokens);
-	
 	return (listed_tokens);
 }
 
+void	ft_front(t_token **command)
+{
+	t_token	*curr;
+	t_token	*temp;
 
+	curr = (*command)->next;
+	while (curr->type == OPERATOR && (is_fd_in(curr->token) == 1
+			|| is_fd_out(curr->token) == 1))
+	{
+		if (is_fd_in(curr->token) == 1)
+		{
+			if (curr->next)
+			{
+				temp = curr->next;
+				ft_tokenlstadd_back(&(*command)->file_redir_in, curr);
+				curr = temp;
+			}
+			else
+			{
+				ft_tokenlstadd_back(&(*command)->file_redir_in, curr);
+				curr = NULL;
+			}
+		}
+		else
+		{
+			if (curr->next)
+			{
+				temp = curr->next;
+				ft_tokenlstadd_back(&(*command)->file_redir_out, curr);
+				curr = temp;
+			}
+			else
+			{
+				ft_tokenlstadd_back(&(*command)->file_redir_out, curr);
+				curr = NULL;
+			}
+		}
+		(*command)->next = curr;
+		if (curr == NULL)
+			break ;
+	}
+}
 
+void	ft_back(t_token **command)
+{
+	t_token	*curr;
+	t_token	*temp;
+
+	curr = (*command)->prev;
+	while (curr->type == 3 && (is_fd_in(curr->token) == 1
+			|| is_fd_out(curr->token) == 1))
+	{
+		if (is_fd_in(curr->token) == 1)
+		{
+			if (curr->prev)
+			{
+				temp = curr->prev;
+				ft_tokenlstadd_front(&(*command)->file_redir_in, curr);
+				curr = temp;
+			}
+			else
+			{
+				ft_tokenlstadd_front(&(*command)->file_redir_in, curr);
+				curr = NULL;
+			}
+		}
+		else
+		{
+			if (curr->prev)
+			{
+				temp = curr->prev;
+				ft_tokenlstadd_front(&(*command)->file_redir_out, curr);
+				curr = temp;
+			}
+			else
+			{
+				ft_tokenlstadd_front(&(*command)->file_redir_out, curr);
+				curr = NULL;
+			}
+		}
+		(*command)->prev = curr;
+		if (curr == NULL)
+			break ;
+	}
+}
+void	ft_reunite_redirection(t_token **tokens)
+{
+	t_token	*curr;
+	t_token	*temp;
+
+	curr = *tokens;
+	while (curr)
+	{
+		if (curr->type == COMMAND)
+		{
+			if (curr->next != NULL)
+				ft_front(&curr);
+			if (curr->prev != NULL)
+			{
+				temp = curr->prev;
+				while (temp->type != 0 && temp->prev != NULL)
+				{
+					printf("temp->token = %s\n", temp->token);
+					temp = temp->prev;
+				}
+				if (temp->prev == NULL && temp->type != COMMAND)
+					*tokens = curr;
+				ft_back(&curr);
+			}
+		}
+		curr = curr->next;
+	}
+}
 
 void	ft_reunite_tokens(t_token **tokens)
 {
@@ -95,31 +217,32 @@ t_token	*ft_convert_tokens(char **tokens)
 {
 	int		i;
 	t_ttype	type;
-    int first_type_redir_in;
+	int		first_type_redir_in;
 	char	*previous_token;
 	t_ttype	previous_type;
 	t_token	*tokens_list;
 
 	i = 0;
-    first_type_redir_in = 0;
+	first_type_redir_in = 0;
 	previous_token = NULL;
 	tokens_list = NULL;
 	while (tokens[i])
 	{
 		if (i == 0)
 		{
-            if (tokens[i] && tokens[i][0] == '<')
-            {
-                first_type_redir_in = 1;
-                type = OPERATOR;
-            }
-            if (tokens[i] && tokens[i][0] == '(')
-                type = PARENTHESIS;
+			if (tokens[i] && tokens[i][0] == '<')
+			{
+				first_type_redir_in = 1;
+				type = OPERATOR;
+			}
+			if (tokens[i] && tokens[i][0] == '(')
+				type = PARENTHESIS;
 			if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
 				type = COMMAND;
 		}
-        else if (first_type_redir_in == 1 && i == 2)
-            type = COMMAND;
+		else if (first_type_redir_in == 1 && !ft_is_operator(tokens[i][0])
+			&& previous_type != OPERATOR)
+			type = COMMAND;
 		else
 			type = ft_define_ttype(tokens[i], previous_token);
 		ft_tokenlstadd_back(&tokens_list, ft_tokenlstnew(tokens[i], type));

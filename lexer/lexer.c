@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 16:38:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:43:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_token	*ft_lexer(char *input, t_list **env)
 	ft_print_tokens(tokens);
 	listed_tokens = ft_convert_tokens(tokens);
 	ft_reunite_tokens(&listed_tokens);
+    printf("\nAPRES REUNITE\n");
+    ft_print_token_list(&listed_tokens);
 	ft_initialize_redirection(&listed_tokens);
 	ft_reunite_redirection(&listed_tokens);
 	ft_print_token_list(&listed_tokens);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/04 11:21:09 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:21:09 by vda-conc         ###   ########.fr       */ 
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char	**redo_env(t_list *env)
 	char	*temp;
 	char	**split_env;
 
+	printf("redo_env\n");
 	env_node = env;
 	while (env_node)
 	{
@@ -110,12 +111,41 @@ char	**redo_env(t_list *env)
 	free(env_str);
 	return (split_env);
 }
+int check_command(char **command, t_list *env_list)
+{
+	int exit_status;
+	
+	exit_status = 1871;
+	
+	if (ft_strncmp("env", command[0], 3) == 0)
+		exit_status = ft_print_env(env_list);
+	else if (ft_strncmp("unset", command[0], 5) == 0)
+		exit_status = ft_unset(&env_list, command[1]);
+	else if (ft_strncmp("export", command[0], 6) == 0)
+		exit_status = ft_export(&env_list, command[1]);
+	else if (ft_strncmp("exit", command[0], 4) == 0)
+		exit_status = 1917;
+	else if (ft_strncmp("cd", command[0] , 2) == 0)
+	{
+		if (command[1] == NULL)
+			exit_status = ft_cd(NULL, &env_list);
+		else
+			exit_status = ft_cd(command[1], &env_list);
+	}
+	else if (ft_strncmp("pwd", command[0], 3) == 0)
+		exit_status = ft_pwd();
+	return (ft_free_char_tab(command), exit_status);
+}
 
-int	exec_command(char *command, char **env)
+int	exec_command(char *command, char **env, t_list *env_list)
 {
 	char	*instruct;
 	char 	**cmd_split;
+	int 	exit_status;
 
+	exit_status = check_command(ft_split(command, ' '), env_list);
+	if (exit_status != 1871)
+		exit(exit_status);
 	cmd_split = ft_split(command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
 	if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
@@ -134,35 +164,17 @@ int	exec_command(char *command, char **env)
 	}
 	return (ft_free_char_tab(cmd_split), 0);
 }
-int check_command(char **command, t_list *env_list)
-{
-	int exit_status;
 
-	if (ft_strncmp("env", command[0], 3) == 0)
-			exit_status = ft_print_env(env_list);
-	else if (ft_strncmp("unset", command[0], 5) == 0)
-		ft_unset(&env_list, &input[6]);
-	else if (ft_strncmp("export", input, 6) == 0)
-			ft_export(&env_list, &input[7]);
-		else if (ft_strncmp(input, "exit", 4) == 0)
-			break ;
-		else if (ft_strncmp("unset", input, 5) == 0)
-			env_list = *ft_unset(&env_list, &input[6]);
-		else if (ft_strncmp("cd", input, 2) == 0)
-		{
-			ft_cd(&input[3], &env_list);
-			free(prompt);
-			prompt = ft_build_prompt(&env_list);
-		}
-		else if (ft_strncmp("pwd", input, 3) == 0)
-			ft_pwd();
-}
-int	exec_shell_command(char *command, t_list *env_list)
+int	exec_shell_command(char *command, t_list *env_list, char **env)
 {
 	int	id;
 	int	exit_status;
-
+	
+	exit_status = 1871;
 	exit_status = check_command(ft_split(command, ' '), env_list);
+	printf("exit_status: %d\n", exit_status);
+	if (exit_status != 1871)
+		return (exit_status);
 	id = fork();
 	if (id == -1)
 	{
@@ -171,8 +183,9 @@ int	exec_shell_command(char *command, t_list *env_list)
 	}
 	if (id == 0)
 	{
-		exec_command(command, redo_env(env_list));
-		exit(EXIT_SUCCESS);
+		exec_command(command, env, env_list);
+		printf("execve error\n");
+		exit(EXIT_FAILURE);
 	}
 	else
         waitpid(id, &exit_status, 0);

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/20 14:20:29 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:47:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_export(t_list **env_list, char *new_var)
+int	ft_export(t_list **env_list, char *new_var)
 {
 	if (!new_var || !env_list)
-		return ;
+		return (1);
     printf("New_var: %s\n", new_var);
 	if (new_var[0] == '\0')
 		ft_display_export(env_list);
@@ -27,9 +27,10 @@ void	ft_export(t_list **env_list, char *new_var)
 			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 1));
 		else
 			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 0));
+		return (0);
 	}
 	else
-		return ;
+		return 1;
 }
 
 int	ft_contain_equal(char *new_var)

@@ -1,6 +1,7 @@
 SRCS =			cd/cd.c \
         		ast/create_ast_list.c \
 				ast/launch_ast.c \
+				ast/ast_utils.c \
 				cd/cd_utils.c \
 				env/env.c \
 				env/export.c \

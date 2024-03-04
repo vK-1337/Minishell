@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 14:05:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:35:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,14 +222,14 @@ void				ft_reunite_redirection(t_token **tokens);
 
 int					check_syntax(char *input);
 int					ft_syntax_parenthesis(char *input);
-int	ft_only_spaces(char *input);
-int ft_is_space(char c);
-int ft_only_spaces_behind(char *input, int index);
-int ft_syntax_pipes(char *input);
-int ft_syntax_redir(char *input);
-int ft_pipes_synt_error(char *input, int index);
-int ft_rredir_synt_err(char *input, int index, char redir_char);
-int ft_spaces_parenthesis(char *str);
+int					ft_only_spaces(char *input);
+int					ft_is_space(char c);
+int					ft_only_spaces_behind(char *input, int index);
+int					ft_syntax_pipes(char *input);
+int					ft_syntax_redir(char *input);
+int					ft_pipes_synt_error(char *input, int index);
+int					ft_rredir_synt_err(char *input, int index, char redir_char);
+int					ft_spaces_parenthesis(char *str);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -306,7 +306,7 @@ void				ft_print_token_list(t_token **tokens);
 /*                                                                             */
 /*******************************************************************************/
 
-int									ft_unset(t_list **env_list, char *var_to_del);
+int					ft_unset(t_list **env_list, char *var_to_del);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -330,7 +330,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST								                           */
+/*                             		AST									                        */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -343,15 +343,6 @@ int					is_pipe(char *token);
 int					is_fd_in(char *token);
 int					is_fd_out(char *token);
 void				ft_free_ast(t_ast *ast);
-
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                             		AST												*/
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
-
 int					launch_ast(char *input, t_list *env_list);
 int					launch_ast_recursive(t_ast *ast, t_list *env_list);
 int					create_redirection(t_ast *node, t_list *env_list);

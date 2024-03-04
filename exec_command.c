@@ -164,14 +164,58 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	}
 	return (ft_free_char_tab(cmd_split), 0);
 }
+void	handle_error(int err, char *msg)
+{
+	if (err == -1)
+	{
+		perror(msg);
+		exit(EXIT_FAILURE);
+	}
+}
 
-int	exec_shell_command(char *command, t_list *env_list, char **env)
+void	do_redirections(t_ast *command)
+{
+	t_token	*travel;
+	int		fd_out;
+	int		fd_in;
+
+	travel = command->token->file_redir_in;
+	fd_out = 1;
+	fd_in = 0;
+	while (travel->next)
+		travel = travel->next;
+	while (travel)
+	{
+		if (fd_in != 0)
+			close (fd_in);
+		fd_in = open(travel->file_redir, O_RDONLY);
+		travel = travel->prev;
+	}
+	travel = command->token->file_redir_out;
+	while (travel)
+	{
+		if (fd_out != 1)
+			close (fd_out);
+		fd_out = open(travel->file_redir, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		handle_error(fd_out, travel->file_redir);
+		travel = travel->next;
+	}
+	
+	if (fd_out != 1)
+		dup2(fd_out, 1);
+	if (fd_in != 0)
+		dup2(fd_in, 0);
+}
+
+int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 {
 	int	id;
 	int	exit_status;
+	char *command_str;
 	
+	command_str = build_command(command);
 	exit_status = 1871;
-	exit_status = check_command(ft_split(command, ' '), env_list);
+	exit_status = check_command(ft_split(command_str, ' '), env_list);
 	printf("exit_status: %d\n", exit_status);
 	if (exit_status != 1871)
 		return (exit_status);
@@ -183,7 +227,8 @@ int	exec_shell_command(char *command, t_list *env_list, char **env)
 	}
 	if (id == 0)
 	{
-		exec_command(command, env, env_list);
+		do_redirections(command);
+		exec_command(command_str, env, env_list);
 		printf("execve error\n");
 		exit(EXIT_FAILURE);
 	}

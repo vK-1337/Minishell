@@ -15,6 +15,7 @@ SRCS =			cd/cd.c \
 				lexer/lexer_utils.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
+				lexer/handle_redirections.c \
 				lst_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \

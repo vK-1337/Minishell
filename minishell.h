@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/29 16:58:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:42:02 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int					ft_is_file(char *token);
 /*******************************************************************************/
 
 t_list				*ft_convert_env(char **env);
-void				ft_print_env(t_list *env);
+int					ft_print_env(t_list *env);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -121,7 +121,7 @@ void				ft_print_env(t_list *env);
 /*                                                                             */
 /*******************************************************************************/
 
-int					exec_shell_command(char *command, char **env);
+int					exec_shell_command(char *command, t_list *env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
@@ -325,7 +325,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST										                    */
+/*                             		AST								                           */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

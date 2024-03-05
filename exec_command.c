@@ -92,7 +92,6 @@ char	**redo_env(t_list *env)
 	char	*temp;
 	char	**split_env;
 
-	printf("redo_env\n");
 	env_node = env;
 	while (env_node)
 	{
@@ -182,14 +181,13 @@ void	do_redirections(t_ast *command)
 	travel = command->token->file_redir_in;
 	fd_out = 1;
 	fd_in = 0;
-	while (travel->next)
-		travel = travel->next;
+
 	while (travel)
 	{
 		if (fd_in != 0)
 			close (fd_in);
 		fd_in = open(travel->file_redir, O_RDONLY);
-		travel = travel->prev;
+		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
 	while (travel)

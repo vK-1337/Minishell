@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/04 17:33:52 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 11:21:28 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,20 @@ void	ft_back(t_token **command)
 			}
 		}
 		(*command)->prev = curr;
-			if (curr == NULL)
-				break ;
+		if (curr == NULL)
+			break ;
 	}
 }
 void	ft_reunite_redirection(t_token **tokens)
 {
 	t_token *curr;
-	t_token	*temp;
 	
 	curr = *tokens;
+	if ((*tokens)->type != COMMAND)
+	{
+		while ((*tokens)->type != COMMAND)
+			(*tokens) = (*tokens)->next;
+	}	
 	while (curr)
 	{
 		if (curr->type == COMMAND)
@@ -109,21 +113,13 @@ void	ft_reunite_redirection(t_token **tokens)
 			if (curr->next != NULL)
 				ft_front(&curr);
 			if (curr->prev != NULL)
-			{
-				temp = curr->prev;
-				while (temp->type != 0 && temp->prev != NULL)
-				{
-					printf("temp->token = %s\n", temp->token);
-					temp = temp->prev;
-				}
-					
-				if (temp->prev == NULL && temp->type != COMMAND)
-					*tokens = curr;
 				ft_back(&curr);
-			}
+			if (curr->next != NULL)
+				curr->next->prev = curr;
 		}
 		curr = curr->next;
 	}
+	(*tokens)->prev = NULL;
 }
 
 void	ft_initialize_redirection(t_token **tokens)

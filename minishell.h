@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 17:40:05 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:18:31 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
+void				do_redirections(t_ast *command);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -331,7 +332,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST										                     */
+/*                             		AST													            */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -350,5 +351,6 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list);
 int					left_pipe(t_ast *node, t_list *env_list);
-int					pipe_chain(char **env, char *av, t_list *env_list);
+int					pipe_chain(char **env, t_ast *command, t_list *env_list);
+void				handle_error(int err, char *msg);
 #endif

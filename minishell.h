@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 15:35:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:09:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # define SIZE 4096
+# include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <dirent.h>
 # include <fcntl.h>
@@ -123,12 +124,17 @@ int					ft_print_env(t_list *env);
 /*                                                                             */
 /*******************************************************************************/
 
-int					exec_shell_command(char *command, t_list *env_list,
+int					exec_shell_command(t_ast *command, t_list *env_list,
 						char **env);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
+void				do_redirections(t_ast *command);
+int					configure_fd_out(int fd_out, char *token, char *file);
+int					configure_fd_in(int fd_in, char *token, char *file);
+int					launch_here_doc(char *limiter);
+void				here_doc(char *limiter, int fd[2]);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -211,6 +217,7 @@ void				ft_join_options(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_join_file_path(t_token *curr, t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
+void				ft_initialize_redirection(t_token **tokens);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -330,7 +337,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST									                        */
+/*                             		AST														         */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -349,5 +356,6 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list);
 int					left_pipe(t_ast *node, t_list *env_list);
-int					pipe_chain(char **env, char *av, t_list *env_list);
+int					pipe_chain(char **env, t_ast *command, t_list *env_list);
+void				handle_error(int err, char *msg);
 #endif

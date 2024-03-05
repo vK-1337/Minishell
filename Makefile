@@ -11,10 +11,13 @@ SRCS =			cd/cd.c \
 				expand/expand_utils.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
+				get_next_line/get_next_line.c \
+				get_next_line/get_next_line_utils.c \
 				lexer/lexer.c \
 				lexer/lexer_utils.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
+				lexer/handle_redirections.c \
 				lst_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \

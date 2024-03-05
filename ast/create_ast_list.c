@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/04 15:07:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 10:31:10 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void	read_ast(t_ast *node, int depth)
 	{
 		printf("    ");
 		printf("file_redir_in%d: %s\n", i, temp->token);
+		printf("file_redir : %s\n", temp->file_redir);
 		temp = temp->next;
 		i++;
 	}
@@ -201,6 +202,7 @@ void	read_ast(t_ast *node, int depth)
 	{
 		printf("    ");
 		printf("file_redir_out%d: %s\n", i, temp->token);
+		printf("file_redir : %s\n", temp->file_redir);
 		temp = temp->next;
 		i++;
 	}
@@ -219,12 +221,12 @@ void	send_to_build(t_ast **node, int direction)
 		if (strongest == NULL)
 			return ;
 		tree = build_tree(node, strongest);
-		read_ast(tree->right, 0);
 		send_to_build(&(tree->right), 1);
 		send_to_build(&(tree->left), 2);
 	}
 	else if (direction == 2)
 	{
+		ft_print_token_list(&(*node)->token);
 		strongest = get_last_strongest_operator((*node)->token);
 		if (strongest == NULL)
 			return ;

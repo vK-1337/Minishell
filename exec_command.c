@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/04 11:21:09 by vda-conc         ###   ########.fr       */ 
+/*   Updated: 2024/03/05 16:07:11 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ char	*check_valid_command(char **cmd_split, char *path)
 	{
 		temp = add_slash(path_split[i]);
 		path = ft_strjoin(temp, cmd_split[0], 0);
-
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
-			return (ft_free_char_tab(path_split),
-				path);
+			return (ft_free_char_tab(path_split), path);
 		free(path);
 		i++;
 	}
@@ -110,12 +108,11 @@ char	**redo_env(t_list *env)
 	free(env_str);
 	return (split_env);
 }
-int check_command(char **command, t_list *env_list)
+int	check_command(char **command, t_list *env_list)
 {
-	int exit_status;
-	
+	int	exit_status;
+
 	exit_status = 1871;
-	
 	if (ft_strncmp("env", command[0], 3) == 0)
 		exit_status = ft_print_env(env_list);
 	else if (ft_strncmp("unset", command[0], 5) == 0)
@@ -124,7 +121,7 @@ int check_command(char **command, t_list *env_list)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strncmp("exit", command[0], 4) == 0)
 		exit_status = 1917;
-	else if (ft_strncmp("cd", command[0] , 2) == 0)
+	else if (ft_strncmp("cd", command[0], 2) == 0)
 	{
 		if (command[1] == NULL)
 			exit_status = ft_cd(NULL, &env_list);
@@ -139,8 +136,8 @@ int check_command(char **command, t_list *env_list)
 int	exec_command(char *command, char **env, t_list *env_list)
 {
 	char	*instruct;
-	char 	**cmd_split;
-	int 	exit_status;
+	char	**cmd_split;
+	int		exit_status;
 
 	exit_status = check_command(ft_split(command, ' '), env_list);
 	if (exit_status != 1871)
@@ -173,6 +170,72 @@ void	handle_error(int err, char *msg)
 	}
 }
 
+void	here_doc(char *limiter, int fd[2])
+{
+	char	*line;
+
+	printf("limiter: %s\n", limiter);
+	while (1)
+	{
+		ft_putstr_fd("pipe heredoc> ", 2);
+		line = get_next_line(0, 1);
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		{
+			close(fd[1]);
+			close(fd[0]);
+			get_next_line(0, 0);
+			free(line);
+			exit(0);
+		}
+		ft_putstr_fd(line, fd[1]);
+		free(line);
+	}
+}
+int	launch_here_doc(char *limiter)
+{
+	int	fd[2];
+	int	id;
+
+	pipe(fd);
+		// handle_error(-1, "pipe", 0);
+	id = fork();
+	// handle_error(id, "fork", 0);
+	if (id == 0)
+	{
+		close(fd[0]);
+		here_doc(limiter, fd);
+	}
+	else
+	{
+		close(fd[1]);
+		wait(&id);
+	}
+	return (fd[0]);
+}
+
+int	configure_fd_in(int fd_in, char *token, char *file)
+{
+	if (fd_in != 0)
+		close(fd_in);
+	if (ft_strncmp(token, "<", 1) == 0)
+		fd_in = open(file, O_RDWR, 0777);
+	if (ft_strncmp(token, "<<", 2) == 0)
+		fd_in = launch_here_doc(file);
+	return (fd_in);
+}
+int	configure_fd_out(int fd_out, char *token, char *file)
+{
+	if (fd_out != 0)
+		close(fd_out);
+	if (ft_strcmp(token, ">") == 0)
+		fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (ft_strncmp(token, ">>", 2) == 0)
+		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd_out == -1)
+		handle_error(fd_out, file);
+	return (fd_out);
+}
+
 void	do_redirections(t_ast *command)
 {
 	t_token	*travel;
@@ -182,24 +245,17 @@ void	do_redirections(t_ast *command)
 	travel = command->token->file_redir_in;
 	fd_out = 1;
 	fd_in = 0;
-
 	while (travel)
 	{
-		if (fd_in != 0)
-			close (fd_in);
-		fd_in = open(travel->file_redir, O_RDONLY);
+		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
 	while (travel)
 	{
-		if (fd_out != 1)
-			close (fd_out);
-		fd_out = open(travel->file_redir, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		handle_error(fd_out, travel->file_redir);
+		configure_fd_out(fd_out, travel->token, travel->file_redir);
 		travel = travel->next;
 	}
-	
 	if (fd_out != 1)
 		dup2(fd_out, 1);
 	if (fd_in != 0)
@@ -208,11 +264,12 @@ void	do_redirections(t_ast *command)
 
 int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 {
-	int	id;
-	int	exit_status;
-	char *command_str;
-	
+	int		id;
+	int		exit_status;
+	char	*command_str;
+
 	command_str = build_command(command);
+	printf("command_str: %s\n", command_str);
 	exit_status = 1871;
 	exit_status = check_command(ft_split(command_str, ' '), env_list);
 	printf("exit_status: %d\n", exit_status);
@@ -232,6 +289,6 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 		exit(EXIT_FAILURE);
 	}
 	else
-        waitpid(id, &exit_status, 0);
+		waitpid(id, &exit_status, 0);
 	return (exit_status);
 }

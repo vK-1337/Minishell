@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 11:21:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 14:20:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@ void	ft_front(t_token **command)
 {
 	t_token *curr;
 	t_token *temp;
+	t_token *temp2;
 	
 	curr = (*command)->next;
-	while (curr->type == OPERATOR && (is_fd_in(curr->token) == 1 || is_fd_out(curr->token) == 1))
+	while (curr && (curr->type == CMD_ARG || curr->type == OPTION))
+		curr = curr->next;
+	if (curr == NULL)
+		return ;
+	temp2 = curr->prev;
+	while (curr && (curr->type == OPERATOR && (is_fd_in(curr->token) == 1 || is_fd_out(curr->token) == 1)))
 	{
 		if (is_fd_in(curr->token) == 1)
 		{
@@ -26,7 +32,6 @@ void	ft_front(t_token **command)
 			{
 				temp = curr->next;
 				ft_tokenlstadd_back(&(*command)->file_redir_in, curr);
-				
 				curr = temp;
 			}
 			else
@@ -49,7 +54,7 @@ void	ft_front(t_token **command)
 				curr = NULL;
 			}
 		}
-		(*command)->next = curr;
+		temp2->next = curr;
 		if (curr == NULL)
 			break ;
 	}	

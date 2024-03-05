@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 18:18:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 16:09:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # define SIZE 4096
+# include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <dirent.h>
 # include <fcntl.h>
@@ -130,6 +131,10 @@ void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
 void				do_redirections(t_ast *command);
+int					configure_fd_out(int fd_out, char *token, char *file);
+int					configure_fd_in(int fd_in, char *token, char *file);
+int					launch_here_doc(char *limiter);
+void				here_doc(char *limiter, int fd[2]);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -332,7 +337,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST													            */
+/*                             		AST														         */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

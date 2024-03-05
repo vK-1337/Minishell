@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 11:49:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 16:10:04 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,15 @@ void	do_pipe_redirections(t_ast *command, int fd[2])
 	fd_in = fd[1];
 	while (travel)
 	{
-		if (fd_in != fd[1])
-			close (fd_in);
-		fd_in = open(travel->file_redir, O_RDONLY);
+		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
 	while (travel)
 	{
-		if (fd_out != fd[0])
-			close (fd_out);
-		fd_out = open(travel->file_redir, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		handle_error(fd_out, travel->file_redir);
+		configure_fd_out(fd_out, travel->token, travel->file_redir);
 		travel = travel->next;
 	}
-	printf("fd_out = %d\n", fd_out);
-	printf("fd_in = %d\n", fd_in);
-	printf ("fd[0] = %d\n", fd[0]);
-	printf ("fd[1] = %d\n", fd[1]);
 	if (fd_out != fd[0])
 		dup2(fd_out, 1);
 	if (fd_in != fd[1])

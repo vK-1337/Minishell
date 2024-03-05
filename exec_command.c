@@ -161,6 +161,7 @@ int	exec_command(char *command, char **env, t_list *env_list)
 		printf("execve error\n");
 		exit(EXIT_FAILURE);
 	}
+	free(command);
 	return (ft_free_char_tab(cmd_split), 0);
 }
 void	handle_error(int err, char *msg)

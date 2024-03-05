@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 10:58:53 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 11:49:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,92 +65,6 @@ char	*build_command(t_ast *node)
 	}
 	return (command);
 }
-
-int	last_pipe(char **env, char *av, int fd_out, t_list *env_list)
-{
-	int	id;
-	int exit_status;
-	
-	id = fork();
-	if (id == 0)
-	{
-		if (fd_out != 1)
-		{
-			dup2(fd_out, 1);
-			close(fd_out);
-		}
-		exec_command(av, env, env_list);
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		waitpid(id, &exit_status, 0);
-		if (fd_out != 1)
-			close(fd_out);
-	}
-	while (wait(NULL) > 0)
-		continue ;
-	return (exit_status);
-}
-
-int	create_redirection(t_ast *node, t_list *env_list)
-{
-	int	exit_status;
-    int saved_stdin = dup(0); 
-	
-	if (is_pipe(node->left->token->token) == 1)
-        exit_status = left_pipe(node, env_list);
-    else if (is_pipe(node->right->token->token) == 1)
-        exit_status = right_pipe(node, env_list);
-    else
-    {
-        exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
-        exit_status = last_pipe(redo_env(env_list), build_command(node->right), 1, env_list);
-    }
-	dup2(saved_stdin, 0);
-	close(saved_stdin);
-	return (exit_status);
-}
-
-
-int right_pipe(t_ast *node, t_list *env_list)
-{
-    t_ast   *travel;
-    int     exit_status;
-    travel = node;
-    
-    while (is_pipe(travel->right->token->token) == 1)
-    {
-        exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
-        travel = travel->left;
-    }
-    exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
-	last_pipe(redo_env(env_list), build_command(node->right), 1, env_list);
-    return (exit_status);
-}
-
-int left_pipe(t_ast *node, t_list *env_list)
-{
-    t_ast   *travel;
-    int     exit_status;
-	
-    travel = node;
-    while (is_pipe(travel->left->token->token) == 1)
-	{
-        travel = travel->left;
-	}
-    exit_status = pipe_chain(redo_env(env_list), travel->left, env_list);
-    while (travel != node)
-    {
-        exit_status = pipe_chain(redo_env(env_list), travel->right, env_list);
-		travel = travel->daddy;
-    }
-    exit_status = last_pipe(redo_env(env_list), build_command(node->right), 1, env_list);
-	
-    return (exit_status);
-}
-
-
 void	do_pipe_redirections(t_ast *command, int fd[2])
 {
 	t_token	*travel;
@@ -191,8 +105,93 @@ void	do_pipe_redirections(t_ast *command, int fd[2])
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-
 }
+
+int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list)
+{
+	int	id;
+	int exit_status;
+	char	*command_str;
+	
+	command_str = build_command(command);
+	id = fork();
+	if (id == 0)
+	{
+		do_pipe_redirections(command, (int[2]){0, 1});
+		exec_command(command_str, env, env_list);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(id, &exit_status, 0);
+		if (fd_out != 1)
+			close(fd_out);
+	}
+	while (wait(NULL) > 0)
+		continue ;
+	free(command_str);
+	return (exit_status);
+}
+
+int	create_redirection(t_ast *node, t_list *env_list)
+{
+	int	exit_status;
+    int saved_stdin = dup(0); 
+	
+	if (is_pipe(node->left->token->token) == 1)
+        exit_status = left_pipe(node, env_list);
+    else if (is_pipe(node->right->token->token) == 1)
+        exit_status = right_pipe(node, env_list);
+    else
+    {
+        exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
+        exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list);
+    }
+	dup2(saved_stdin, 0);
+	close(saved_stdin);
+	return (exit_status);
+}
+
+
+int right_pipe(t_ast *node, t_list *env_list)
+{
+    t_ast   *travel;
+    int     exit_status;
+    travel = node;
+    
+    while (is_pipe(travel->right->token->token) == 1)
+    {
+        exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
+        travel = travel->left;
+    }
+    exit_status = pipe_chain(redo_env(env_list), node->left, env_list);
+	last_pipe(redo_env(env_list), node->right, 1, env_list);
+    return (exit_status);
+}
+
+int left_pipe(t_ast *node, t_list *env_list)
+{
+    t_ast   *travel;
+    int     exit_status;
+	
+    travel = node;
+    while (is_pipe(travel->left->token->token) == 1)
+	{
+        travel = travel->left;
+	}
+    exit_status = pipe_chain(redo_env(env_list), travel->left, env_list);
+    while (travel != node)
+    {
+        exit_status = pipe_chain(redo_env(env_list), travel->right, env_list);
+		travel = travel->daddy;
+    }
+    exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list);
+	
+    return (exit_status);
+}
+
+
+
 int	pipe_chain(char **env, t_ast *command, t_list *env_list)
 {
 	int	fd[2];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:47:09 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/05 11:31:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	ft_export(t_list **env_list, char *new_var)
 {
-	if (!new_var || !env_list)
+	if (!env_list)
 		return (1);
-    printf("New_var: %s\n", new_var);
-	if (new_var[0] == '\0')
-		ft_display_export(env_list);
+	printf("New_var: %s\n", new_var);
+	if (!new_var)
+		return (ft_display_export(env_list), 1);
 	if (ft_correct_format(new_var))
 	{
 		if (ft_var_exists(env_list, new_var))
@@ -30,7 +30,7 @@ int	ft_export(t_list **env_list, char *new_var)
 		return (0);
 	}
 	else
-		return 1;
+		return (1);
 }
 
 int	ft_contain_equal(char *new_var)
@@ -52,6 +52,8 @@ int	ft_correct_format(char *new_var)
 	int	i;
 
 	i = 0;
+	if (!new_var)
+		return (0);
 	if (!(ft_isalpha(new_var[i])) && new_var[i] != '_')
 	{
 		printf("`%s': not a valid identifier\n", new_var);
@@ -140,10 +142,10 @@ void	ft_display_export(t_list **env_list)
 	curr = *sorted_list;
 	while (curr)
 	{
-        if (curr->content)
-            printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
-        else
-            printf("declare -x %s\n", curr->var_name);
+		if (curr->content)
+			printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
+		else
+			printf("declare -x %s\n", curr->var_name);
 		curr = curr->next;
 	}
 }
@@ -156,7 +158,7 @@ t_list	**ft_copy_env_list(t_list **env_list)
 
 	curr = *env_list;
 	// copy = malloc(sizeof(t_list *));
-    copy = NULL;
+	copy = NULL;
 	while (curr)
 	{
 		node_copy = ft_copy_env_node(curr);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:36:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 08:53:05 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:34:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_fill_element(char *element, const char *src, size_t index,
 	size_t	i;
 
 	i = 0;
+	if (!element)
+		return ;
 	while (i < len && src[index])
 		element[i++] = src[index++];
 	element[i] = '\0';
@@ -62,6 +64,8 @@ char	**ft_split(char *s, char c)
 
 	words_nbr = ft_count_words(s, c);
 	words = malloc((words_nbr + 1) * sizeof(char *));
+	if (!words)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i] != '\0')
@@ -70,6 +74,8 @@ char	**ft_split(char *s, char c)
 		{
 			word_len = ft_wordlen(s, c, i);
 			words[j] = malloc((word_len + 1) * sizeof(char));
+            if (!words[j])
+                return (free(words), NULL);
 			ft_fill_element(words[j], s, i, word_len);
 			i += (word_len - 1);
 			j++;

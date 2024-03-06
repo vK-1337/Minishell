@@ -6,10 +6,9 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 16:43:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:12:04 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -23,6 +22,8 @@ char	**ft_token_split(char const *s)
 
 	words_nbr = ft_count_tokens(s);
 	words = malloc((words_nbr + 1) * sizeof(char *));
+	if (!words)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -31,13 +32,14 @@ char	**ft_token_split(char const *s)
 		{
 			word_len = ft_tokenlen(s, i);
 			words[j] = malloc((word_len + 1) * sizeof(char));
+			if (!words[j])
+				return (free(words), NULL);
 			ft_add_token(words[j], s, i, word_len);
 			i += (word_len - 1);
 			j++;
 		}
 		i++;
 	}
-    printf("WORDS NUMBER => |%zu|", words_nbr);
 	words[words_nbr] = NULL;
 	return (words);
 }
@@ -58,8 +60,8 @@ int	ft_define_delimiter(char c)
 		return (c);
 	else if (c == 34 || c == 39)
 		return (c);
-    else if (c == 40)
-        return (c);
+	else if (c == 40)
+		return (c);
 	else
 		return (32);
 }
@@ -80,15 +82,15 @@ int	ft_tokenlen(const char *str, int index)
 			i++;
 		}
 	}
-    else if (delimiter == 40)
-    {
-        index++;
-        while (str[index] != 41)
-        {
-            index++;
-            i++;
-        }
-    }
+	else if (delimiter == 40)
+	{
+		index++;
+		while (str[index] != 41)
+		{
+			index++;
+			i++;
+		}
+	}
 	else if (delimiter != 32)
 	{
 		if (str[index + 1] && str[index + 1] == delimiter)

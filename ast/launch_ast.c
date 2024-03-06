@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/06 17:23:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:42:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	launch_ast(char *input, t_list *env_list)
 	if (!env_list)
 		return (-1917);
 	if (create_ast_list(&ast, ft_lexer(input, &env_list)) == NULL)
-        return (-1917);
+		return (-1917);
 	// read_ast(ast, 0);
 	if (!ast)
 	{
@@ -38,9 +38,12 @@ int	launch_ast(char *input, t_list *env_list)
 
 int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 {
-	int	exit_status;
+	int		exit_status;
+	char	**env;
+	int		free_env;
 
 	exit_status = 0;
+	env = NULL;
 	if (ast == NULL)
 		return (0);
 	else if (is_and(ast->token->token) == 1 && launch_ast_recursive(ast->left,
@@ -53,7 +56,9 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 		exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
 	{
-		exit_status = exec_shell_command(ast, env_list, redo_env(env_list));
+		free_env = 0;
+		env = redo_env(env_list);
+		exit_status = exec_shell_command(ast, env_list, env);
 		if (exit_status == -1917)
 			return (-1917);
 	}

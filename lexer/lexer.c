@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/06 16:46:49 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:13:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 t_token	*ft_lexer(char *input, t_list **env)
 {
-	char	*expanded_input;
+	// char	*expanded_input;
 	char	**tokens;
 	t_token	*listed_tokens;
 
+    (void)env;
 	listed_tokens = NULL;
-	expanded_input = ft_expand(input, env);
-	tokens = ft_token_split(expanded_input);
+	// expanded_input = ft_expand(input, env);
+	tokens = ft_token_split(input);
 	if (!tokens)
 		return (NULL);
 	listed_tokens = ft_convert_tokens(tokens);
+    free(tokens);
 	if (!listed_tokens)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);

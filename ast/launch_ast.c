@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/06 18:42:50 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:46:42 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 		if (exit_status == -1917)
 			return (-1917);
 	}
+    free(env);
 	return (exit_status);
 }
 

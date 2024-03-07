@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/06 19:06:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:53:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,24 @@ char	**redo_env(t_list *env)
 	if (!env)
 		return (NULL);
 	env_node = env;
-    env_str = ft_strdup("");
+	env_str = ft_strdup("");
+	if (!env_str)
+		return (NULL);
 	while (env_node)
 	{
 		temp = ft_strjoin(env_node->var_name, "=", 0);
+        if (!temp)
+            return (free(env_str), NULL);
 		env_str = ft_strjoin(env_str, temp, 1);
-        free(temp);
+		free(temp);
 		env_str = ft_strjoin(env_str, env_node->content, 1);
 		env_str = ft_strjoin(env_str, "\n", 1);
+		if (!env_str)
+			return (NULL);
 		env_node = env_node->next;
 	}
 	split_env = ft_split(env_str, '\n');
-    free(env_str);
+	free(env_str);
 	return (split_env);
 }
 

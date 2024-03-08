@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 09:50:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:52:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_reunite_redirection(t_token **tokens)
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND)
 	{
-		while ((*tokens) && (*tokens)->type != COMMAND)
+		while ((*tokens)->next && (*tokens)->type != COMMAND)
 			(*tokens) = (*tokens)->next;
 	}
 	while (curr)

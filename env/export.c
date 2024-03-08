@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 14:51:31 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:45:45 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ int	ft_var_exists(t_list **env_list, char *var)
 	i = 0;
 	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_' || var[i + 1] == '?')
 		i++;
-	var++;
+    if (var[0] == '$')
+    	var++;
+    else
+        i++;
 	while (curr)
 	{
-		if (ft_strncmp(curr->var_name, var, i) == 0
-			&& curr->var_name[i] == '\0')
+		if (ft_strncmp(curr->var_name, var, i) == 0 && curr->var_name[i] == '\0')
 			return (1);
 		curr = curr->next;
 	}
@@ -124,7 +126,7 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 		if (strncmp(curr->var_name, new_var, i) == 0
 			&& curr->var_name[i] == '\0')
 		{
-			curr->content = new_var + i + 1;
+			curr->content = ft_strdup(new_var + i + 1);
 			return ;
 		}
 		curr = curr->next;

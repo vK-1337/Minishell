@@ -6,15 +6,15 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 15:00:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:21:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	launch_ast(char *input, t_list *env_list)
+int	launch_ast(char *input, t_list *env_list, int *exit_status);
 {
-	int		exit_status;
+	//int		exit_status;
 	t_ast	*ast;
 
 	exit_status = 0;

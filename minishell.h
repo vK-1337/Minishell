@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 14:58:00 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:04:50 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int					ft_is_file(char *token);
 t_list				*ft_convert_env(char **env);
 int					ft_print_env(t_list *env);
 t_list				*ft_exit_variable(void);
+void				ft_update_xstatus(t_list **env, int x_status);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -340,7 +341,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST										     */
+/*                             		AST											  */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -356,7 +357,8 @@ int					is_here_doc(char *token);
 int					is_append(char *token);
 void				ft_free_ast(t_ast *ast);
 int					launch_ast(char *input, t_list *env_list);
-int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status);
+int					launch_ast_recursive(t_ast *ast, t_list *env_list,
+						int *exit_status);
 int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
@@ -364,5 +366,5 @@ int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
 int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 						int save_std[2]);
 void				handle_error(int err, char *msg);
-void					parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
+void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
 #endif

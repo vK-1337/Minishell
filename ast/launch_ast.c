@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 15:32:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:52:46 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 	//int		exit_status;
 	t_ast	*ast;
 
-	exit_status = 0;
 	ast = NULL;
 	if (!env_list)
 		return (-1917);
@@ -28,9 +27,9 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 		printf("Memory error\n");
 		return (-1);
 	}
-	launch_ast_recursive(ast, env_list, &exit_status);
+	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(ast);
-	return (exit_status);
+	return (*exit_status);
 }
 
 int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
@@ -38,6 +37,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 	char	**env;
 
 	env = NULL;
+	
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)

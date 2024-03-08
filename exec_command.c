@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 12:33:11 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 16:07:22 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	check_command(char **command, t_list *env_list)
 	else if (ft_strncmp("export", command[0], 6) == 0)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strncmp("exit", command[0], 4) == 0)
-		exit_status = 1917;
+		exit_status = -1917;
 	else if (ft_strncmp("cd", command[0], 2) == 0)
 	{
 		if (command[1] == NULL)

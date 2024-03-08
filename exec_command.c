@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 10:22:50 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 12:33:11 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int	launch_here_doc(char *limiter, int saved_std[2])
 	int	id;
 
 	pipe(fd);
-		// handle_error(-1, "pipe", 0);
+	dup2(saved_std[0], 0);
 	id = fork();
 	handle_error(id, "fork");
 	if (id == 0)
@@ -285,10 +285,8 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	char	*command_str;
 
 	command_str = build_command(command);
-	printf("command_str: %s\n", command_str);
 	exit_status = 1871;
 	exit_status = check_command(ft_split(command_str, ' '), env_list);
-	printf("exit_status: %d\n", exit_status);
 	if (exit_status != 1871)
 		return (ft_free_char_tab(env), exit_status);
 	id = fork();

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 09:58:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 11:34:13 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void	ft_reunite_redirection(t_token **tokens)
 	t_token *curr;
 	
 	curr = *tokens;
-	if ((*tokens)->type != COMMAND)
+	if ((*tokens)->type != COMMAND && (*tokens)->type != PARENTHESIS)
 	{
-		while ((*tokens)->next && (*tokens)->type != COMMAND)
+		while ((*tokens)->next && ((*tokens)->type != COMMAND))
 			(*tokens) = (*tokens)->next;
 	}
 	while (curr)

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 10:26:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 12:23:55 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,38 @@ int	launch_ast(char *input, t_list *env_list)
 		return (-1917);
 	if (create_ast_list(&ast, ft_lexer(input, &env_list)) == NULL)
 		return (-1917);
-	// read_ast(ast, 0);
 	if (!ast)
 	{
 		printf("Memory error\n");
 		return (-1);
 	}
-	exit_status = launch_ast_recursive(ast, env_list);
-	if (exit_status == -1917)
-		return (ft_free_ast(ast), -1917);
+	launch_ast_recursive(ast, env_list, &exit_status);
 	ft_free_ast(ast);
 	return (exit_status);
 }
 
-int	launch_ast_recursive(t_ast *ast, t_list *env_list)
+int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 {
-	int		exit_status;
 	char	**env;
-	int		free_env;
 
-	exit_status = 0;
 	env = NULL;
-	printf("ast: %s\n", ast->token->token);
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)
-		exit_status = parenthesis(ast, env_list);
-	else if (is_and(ast->token->token) == 1 && launch_ast_recursive(ast->left, env_list) == 0)
-		exit_status = launch_ast_recursive(ast->right, env_list);
+		parenthesis(ast, env_list, exit_status);
+	else if (is_and(ast->token->token) == 1 && launch_ast_recursive(ast->left, env_list, exit_status) == 0)
+		launch_ast_recursive(ast->right, env_list, exit_status);
 	else if (is_or(ast->token->token) == 1 && launch_ast_recursive(ast->left,
-			env_list) != 0)
-		exit_status = launch_ast_recursive(ast->right, env_list);
+			env_list, exit_status) != 0)
+		launch_ast_recursive(ast->right, env_list, exit_status);
 	else if (ast->token->type == 3 && is_pipe(ast->token->token) == 1)
-		exit_status = create_redirection(ast, env_list);
+		*exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
 	{
-		free_env = 0;
 		env = redo_env(env_list);
-		exit_status = exec_shell_command(ast, env_list, env);
-		if (exit_status == -1917)
-			return (-1917);
+		*exit_status = exec_shell_command(ast, env_list, env);
 	}
-    free(env);
-	return (exit_status);
+	return (*exit_status);
 }
 
 char	*build_command(t_ast *node)

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 10:24:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 12:23:15 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST								           */
+/*                             		AST										     */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -355,7 +355,7 @@ int					is_here_doc(char *token);
 int					is_append(char *token);
 void				ft_free_ast(t_ast *ast);
 int					launch_ast(char *input, t_list *env_list);
-int					launch_ast_recursive(t_ast *ast, t_list *env_list);
+int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status);
 int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
@@ -363,5 +363,5 @@ int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
 int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 						int save_std[2]);
 void				handle_error(int err, char *msg);
-int					parenthesis(t_ast *ast, t_list *env_list);
+void					parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
 #endif

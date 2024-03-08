@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 10:24:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 11:39:58 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	read_ast(t_ast *node, int depth)
 {
 	t_token	*token;
 	int		i;
-	t_token	*temp;
+	//t_token	*temp;
 
 	for (int i = 0; i < depth; i++)
 	{
@@ -194,31 +194,34 @@ void	read_ast(t_ast *node, int depth)
 	i = 0;
 	while (token != NULL)
 	{
-		printf("    ");
-		printf("arg%d: %s\n", i, token->token);
+		if (token->token != NULL)
+		{
+			printf("    ");
+			printf("arg%d: %s\n", i, token->token);
+		}
 		token = token->next;
 		i++;
 	}
-	temp = node->token->file_redir_in;
-	i = 0;
-	while (temp != NULL)
-	{
-		printf("    ");
-		printf("file_redir_in%d: %s\n", i, temp->token);
-		printf("file_redir : %s\n", temp->file_redir);
-		temp = temp->next;
-		i++;
-	}
-	temp = node->token->file_redir_out;
-	i = 0;
-	while (temp != NULL)
-	{
-		printf("    ");
-		printf("file_redir_out%d: %s\n", i, temp->token);
-		printf("file_redir : %s\n", temp->file_redir);
-		temp = temp->next;
-		i++;
-	}
+	// temp = node->token->file_redir_in;
+	// i = 0;
+	// while (temp != NULL)
+	// {
+	// 	printf("    ");
+	// 	printf("file_redir_in%d: %s\n", i, temp->token);
+	// 	printf("file_redir : %s\n", temp->file_redir);
+	// 	temp = temp->next;
+	// 	i++;
+	// }
+	// temp = node->token->file_redir_out;
+	// i = 0;
+	// while (temp != NULL)
+	// {
+	// 	printf("    ");
+	// 	printf("file_redir_out%d: %s\n", i, temp->token);
+	// 	printf("file_redir : %s\n", temp->file_redir);
+	// 	temp = temp->next;
+	// 	i++;
+	// }
 	read_ast(node->left, depth + 1);
 	read_ast(node->right, depth + 1);
 }
@@ -269,6 +272,7 @@ void	*create_ast_list(t_ast **node, t_token *token_list)
 	else if (*node == NULL)
 	{
 		strongest = get_last_strongest_operator(token_list);
+		printf("strongest: %s\n", strongest->token);
 		tree = new_tree(strongest);
 		*node = tree;
 		if (tree == NULL)

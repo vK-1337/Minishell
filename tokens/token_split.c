@@ -6,10 +6,9 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 16:43:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:34:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -37,7 +36,7 @@ char	**ft_token_split(char const *s)
 		}
 		i++;
 	}
-    printf("WORDS NUMBER => |%zu|", words_nbr);
+	printf("WORDS NUMBER => |%zu|", words_nbr);
 	words[words_nbr] = NULL;
 	return (words);
 }
@@ -58,8 +57,8 @@ int	ft_define_delimiter(char c)
 		return (c);
 	else if (c == 34 || c == 39)
 		return (c);
-    else if (c == 40)
-        return (c);
+	else if (c == 40)
+		return (c);
 	else
 		return (32);
 }
@@ -80,15 +79,17 @@ int	ft_tokenlen(const char *str, int index)
 			i++;
 		}
 	}
-    else if (delimiter == 40)
-    {
-        index++;
-        while (str[index] != 41)
-        {
-            index++;
-            i++;
-        }
-    }
+	else if (delimiter == 40)
+	{
+		index++;
+		while (str[index] != 41)
+		{
+			if (str[index] == 40)
+				i++;
+			index++;
+			i++;
+		}
+	}
 	else if (delimiter != 32)
 	{
 		if (str[index + 1] && str[index + 1] == delimiter)

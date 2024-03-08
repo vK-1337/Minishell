@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:54:23 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 16:49:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:32:41 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	ft_count_tokens(char const *s)
 				i += ft_go_next(s, i);
 			count++;
 		}
+        else if (s[i] == 40)
+        {
+            i += ft_go_next_parenthesis(s, i);
+            count++;
+        }
 		else if (s[i] != ' ' && ft_is_separator(s[i + 1]))
 		{
 			i++;
@@ -43,6 +48,25 @@ int	ft_count_tokens(char const *s)
 			i++;
 	}
 	return (count);
+}
+
+int	ft_go_next_parenthesis(const char *str, int index)
+{
+    int i;
+    int opening_parenthesis;
+
+    i = 0;
+    opening_parenthesis = 0;
+    while (str[index] != 41)
+    {
+        if (str[index] == 40)
+        {
+            opening_parenthesis++;
+        }
+        index++;
+        i++;
+    }
+    return (i + 1 + opening_parenthesis);
 }
 
 int	ft_go_next(const char *str, int index)

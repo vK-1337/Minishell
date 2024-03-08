@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 11:13:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 20:40:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 t_token	*ft_lexer(char *input, t_list **env)
 {
-	// char	*expanded_input;
 	char	**tokens;
 	t_token	*listed_tokens;
 
-    (void)env;
+	(void)env;
 	listed_tokens = NULL;
-	// expanded_input = ft_expand(input, env);
 	tokens = ft_token_split(input);
 	if (!tokens)
 		return (NULL);
 	listed_tokens = ft_convert_tokens(tokens);
-    free(tokens);
+	free(tokens);
 	if (!listed_tokens)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
@@ -44,7 +42,7 @@ void	*ft_reunite_tokens(t_token **tokens)
 	while (curr)
 	{
 		next = curr->next;
-		if (next && curr->type == OPTION && next->type == OPTION)
+	    if (next && curr->type == OPTION && next->type == OPTION)
 		{
 			if (ft_join_options(tokens, curr, next) == NULL)
 				return (NULL);
@@ -60,7 +58,7 @@ void	*ft_reunite_tokens(t_token **tokens)
 		else
 			curr = curr->next;
 	}
-    return ((void *)1);
+	return ((void *)1);
 }
 
 void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
@@ -85,7 +83,7 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 		*tokens = new_node;
 	free(curr);
 	free(next);
-    return ((void *)1);
+	return ((void *)1);
 }
 
 void	ft_join_file_path(t_token *curr, t_token *next)

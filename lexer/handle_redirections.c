@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 09:55:47 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:58:31 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_back(t_token **command)
 {
 	t_token *curr;
 	t_token *temp;
-	
+	t_token *temp2;
 	curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is_fd_in(temp2->token) == 1

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/07 15:53:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:07:22 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	check_command(char **command, t_list *env_list)
 	else if (ft_strncmp("export", command[0], 6) == 0)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strncmp("exit", command[0], 4) == 0)
-		exit_status = 1917;
+		exit_status = -1917;
 	else if (ft_strncmp("cd", command[0], 2) == 0)
 	{
 		if (command[1] == NULL)
@@ -186,10 +186,9 @@ void	here_doc(char *limiter, int fd[2])
 {
 	char	*line;
 
-	printf("limiter: %s\n", limiter);
 	while (1)
 	{
-		ft_putstr_fd("pipe heredoc> ", 2);
+		ft_putstr_fd("pipe heredoc> ", 1);
 		line = get_next_line(0, 1);
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
@@ -203,18 +202,17 @@ void	here_doc(char *limiter, int fd[2])
 		free(line);
 	}
 }
-int	launch_here_doc(char *limiter)
+int	launch_here_doc(char *limiter, int saved_std[2])
 {
-	int	fd[2];
+	int fd[2];
 	int	id;
 
 	pipe(fd);
-	// handle_error(-1, "pipe", 0);
+	dup2(saved_std[0], 0);
 	id = fork();
-	// handle_error(id, "fork", 0);
+	handle_error(id, "fork");
 	if (id == 0)
 	{
-		close(fd[0]);
 		here_doc(limiter, fd);
 	}
 	else
@@ -225,14 +223,15 @@ int	launch_here_doc(char *limiter)
 	return (fd[0]);
 }
 
-int	configure_fd_in(int fd_in, char *token, char *file)
+int	configure_fd_in(int fd_in, char *token, char *file, int saved_std[2])
 {
 	if (fd_in != 0)
 		close(fd_in);
 	if (ft_strncmp(token, "<", 1) == 0)
 		fd_in = open(file, O_RDWR, 0777);
 	if (ft_strncmp(token, "<<", 2) == 0)
-		fd_in = launch_here_doc(file);
+		fd_in = launch_here_doc(file, saved_std);
+	handle_error(fd_in, file);
 	return (fd_in);
 }
 int	configure_fd_out(int fd_out, char *token, char *file)
@@ -243,8 +242,7 @@ int	configure_fd_out(int fd_out, char *token, char *file)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (ft_strncmp(token, ">>", 2) == 0)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (fd_out == -1)
-		handle_error(fd_out, file);
+	handle_error(fd_out, file);
 	return (fd_out);
 }
 
@@ -259,7 +257,7 @@ void	do_redirections(t_ast *command)
 	fd_in = 0;
 	while (travel)
 	{
-		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
+		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir, (int[2]){0, 1});
 		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
@@ -269,9 +267,15 @@ void	do_redirections(t_ast *command)
 		travel = travel->next;
 	}
 	if (fd_out != 1)
+	{
 		dup2(fd_out, 1);
+		close(fd_out);
+	}
 	if (fd_in != 0)
+	{
 		dup2(fd_in, 0);
+		close(fd_in);
+	}
 }
 
 int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
@@ -281,22 +285,12 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	char	*command_str;
 
 	command_str = build_command(command);
-	if (!command_str || !env)
-		return (-1917);
-	printf("command_str: %s\n", command_str);
 	exit_status = 1871;
 	exit_status = check_command(ft_split(command_str, ' '), env_list);
-	if (exit_status == -1917)
-		return (-1917);
-	printf("exit_status: %d\n", exit_status);
 	if (exit_status != 1871)
 		return (ft_free_char_tab(env), exit_status);
 	id = fork();
-	if (id == -1)
-	{
-		perror("failure fork");
-		return (-1);
-	}
+	handle_error(id, "fork");
 	if (id == 0)
 	{
 		do_redirections(command);

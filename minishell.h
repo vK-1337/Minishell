@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:04:36 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:32:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
 void				do_redirections(t_ast *command);
 int					configure_fd_out(int fd_out, char *token, char *file);
-int					configure_fd_in(int fd_in, char *token, char *file);
-int					launch_here_doc(char *limiter);
+int					configure_fd_in(int fd_in, char *token, char *file,
+						int saved_std[2]);
+int					launch_here_doc(char *limiter, int saved_std[2]);
 void				here_doc(char *limiter, int fd[2]);
 
 /*******************************************************************************/
@@ -352,13 +353,18 @@ int					is_and(char *token);
 int					is_pipe(char *token);
 int					is_fd_in(char *token);
 int					is_fd_out(char *token);
+int					is_here_doc(char *token);
+int					is_append(char *token);
 void				ft_free_ast(t_ast *ast);
-int					launch_ast(char *input, t_list *env_list);
-int					launch_ast_recursive(t_ast *ast, t_list *env_list);
+int					launch_ast(char *input, t_list *env_list, int *exit_status);
+int					launch_ast_recursive(t_ast *ast, t_list *env_list,
+						int *exit_status);
 int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
-int					right_pipe(t_ast *node, t_list *env_list);
-int					left_pipe(t_ast *node, t_list *env_list);
-int					pipe_chain(char **env, t_ast *command, t_list *env_list);
+int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
+int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
+int					pipe_chain(char **env, t_ast *command, t_list *env_list,
+						int save_std[2]);
 void				handle_error(int err, char *msg);
+void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
 #endif

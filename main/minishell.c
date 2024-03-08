@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/06 17:37:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:25:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
 		if (check_syntax(input) == 0)
 			continue ;
+        input = ft_expand(input, &env_list);
+        printf("New input => |%s|\n", input);
 		ft_change_signals();
 		if (launch_ast(input, env_list) == 1917 || launch_ast(input, env_list) == -1917)
 			break ;

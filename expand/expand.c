@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 10:08:08 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:51:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_contain_variables(char *input)
 	j = 0;
 	while (input[i])
 	{
-		if (input[i] == '$' && (ft_isalpha(input[i + 1])))
+		if (input[i] == '$' && (ft_isalpha(input[i + 1]) || (input[i
+					+ 1] == '?')))
 			variable_count++;
 		if (input[i] == '$' && input[i + 1] == '{')
 		{
@@ -58,7 +59,8 @@ int	*ft_is_expandable(char *input, int variable_count)
 			single_quotes += ft_decr_incr(single_quotes);
 		else if (input[i] == 34 && single_quotes == 0)
 			double_quotes += ft_decr_incr(double_quotes);
-		else if (input[i] == 36 && ft_isalpha(input[i + 1]))
+		else if (input[i] == 36 && (ft_isalpha(input[i + 1]) || input[i
+				+ 1] == '?'))
 		{
 			expand_infos[index] = ft_should_expand(single_quotes,
 					double_quotes);
@@ -110,19 +112,21 @@ char	*ft_expand(char *input, t_list **env)
 	i = 0;
 	var_idx = 0;
 	vars_number = ft_contain_variables(input);
+	if (!vars_number)
+		return (input);
 	vars = ft_is_expandable(input, vars_number);
 	final_input = NULL;
 	while (input[i])
 	{
 		if (input[i] != 36)
 			final_input = ft_char_join(final_input, input[i]);
-		else if (input[i] == 36 && ft_isalpha(input[i + 1]))
+		else if (input[i] == 36 && (ft_isalpha(input[i + 1]) || input[i + 1] == '?'))
 		{
 			if (var_idx < vars_number && vars[var_idx] == 1)
 			{
 				if (ft_var_exists(env, &input[i]))
 					final_input = ft_join_var(env, final_input, &input[i]);
-				while (input[i + 1] && (ft_isalnum(input[i + 1])))
+				while (input[i + 1] && (ft_isalnum(input[i + 1]) || input[i + 1] == '?'))
 					i++;
 			}
 			else

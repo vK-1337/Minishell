@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/05 11:31:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:51:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_export(t_list **env_list, char *new_var)
 {
 	if (!env_list)
 		return (1);
-	printf("New_var: %s\n", new_var);
 	if (!new_var)
 		return (ft_display_export(env_list), 1);
 	if (ft_correct_format(new_var))
@@ -94,7 +93,7 @@ int	ft_var_exists(t_list **env_list, char *var)
 
 	curr = *env_list;
 	i = 0;
-	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_')
+	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_' || var[i + 1] == '?')
 		i++;
 	var++;
 	while (curr)
@@ -144,6 +143,11 @@ void	ft_display_export(t_list **env_list)
 	{
 		if (curr->content)
 			printf("declare -x %s=\"%s\"\n", curr->var_name, curr->content);
+        else if (curr->var_name[0] == '?')
+        {
+            curr = curr->next;
+            continue;
+        }
 		else
 			printf("declare -x %s\n", curr->var_name);
 		curr = curr->next;
@@ -157,7 +161,6 @@ t_list	**ft_copy_env_list(t_list **env_list)
 	t_list	*node_copy;
 
 	curr = *env_list;
-	// copy = malloc(sizeof(t_list *));
 	copy = NULL;
 	while (curr)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 09:41:33 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:08:50 by vda-conc         ###   ########.fr       *
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	ft_initialize_redirection(&listed_tokens);
 	ft_reunite_redirection(&listed_tokens);
 	ft_print_token_list(&listed_tokens);
-	
+
 	return (listed_tokens);
 }
 
@@ -108,9 +108,9 @@ t_token	*ft_convert_tokens(char **tokens)
 				first_type_redir = 1;
 				type = OPERATOR;
 			}
-			if (tokens[i] && tokens[i][0] == '(')
+			else if (tokens[i] && tokens[i][0] == '(')
 				type = PARENTHESIS;
-			if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
+			else if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
 				type = COMMAND;
 		}
 		else if (first_type_redir == 1 && !ft_is_operator(tokens[i][0])

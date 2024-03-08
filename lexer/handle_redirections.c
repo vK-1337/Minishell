@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 09:50:14 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:55:47 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_front(t_token **command)
 {
-	t_token	*curr;
-	t_token	*temp;
-	t_token	*temp2;
-
+	t_token *curr;
+	t_token *temp;
+	t_token *temp2;
+	
 	curr = (*command)->next;
 	while (curr && (curr->type == CMD_ARG || curr->type == OPTION))
 		curr = curr->next;
@@ -64,9 +64,8 @@ void	ft_front(t_token **command)
 
 void	ft_back(t_token **command)
 {
-	t_token	*curr;
-	t_token	*temp;
-	t_token *temp2;
+	t_token *curr;
+	t_token *temp;
 	
 	curr = (*command)->prev;
 	temp2 = curr;
@@ -116,12 +115,12 @@ void	ft_back(t_token **command)
 }
 void	ft_reunite_redirection(t_token **tokens)
 {
-	t_token	*curr;
-
+	t_token *curr;
+	
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND)
 	{
-		while ((*tokens)->type != COMMAND)
+		while ((*tokens)->next && (*tokens)->type != COMMAND)
 			(*tokens) = (*tokens)->next;
 	}
 	while (curr)

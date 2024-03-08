@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 14:02:36 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:54:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void				ft_print_tokens(char **tokens);
 int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
+int					ft_go_next_parenthesis(const char *str, int index);
 t_token				*ft_convert_tokens(char **tokens);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
@@ -338,7 +339,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																	*/
+/*                             		AST																           */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

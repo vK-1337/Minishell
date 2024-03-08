@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 14:20:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:52:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_front(t_token **command)
 	t_token *curr;
 	t_token *temp;
 	t_token *temp2;
-	
+
 	curr = (*command)->next;
 	while (curr && (curr->type == CMD_ARG || curr->type == OPTION))
 		curr = curr->next;
@@ -57,14 +57,14 @@ void	ft_front(t_token **command)
 		temp2->next = curr;
 		if (curr == NULL)
 			break ;
-	}	
+	}
 }
 
 void	ft_back(t_token **command)
 {
 	t_token *curr;
 	t_token *temp;
-	
+
 	curr = (*command)->prev;
 	while (curr->type == 3 && (is_fd_in(curr->token) == 1 || is_fd_out(curr->token) == 1))
 	{
@@ -104,13 +104,13 @@ void	ft_back(t_token **command)
 void	ft_reunite_redirection(t_token **tokens)
 {
 	t_token *curr;
-	
+
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND)
 	{
-		while ((*tokens)->type != COMMAND)
+		while ((*tokens)->next && (*tokens)->type != COMMAND)
 			(*tokens) = (*tokens)->next;
-	}	
+	}
 	while (curr)
 	{
 		if (curr->type == COMMAND)
@@ -130,7 +130,7 @@ void	ft_reunite_redirection(t_token **tokens)
 void	ft_initialize_redirection(t_token **tokens)
 {
 	t_token *curr;
-	
+
 	curr = *tokens;
 	while (curr)
 	{

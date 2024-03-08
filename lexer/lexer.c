@@ -120,9 +120,9 @@ t_token	*ft_convert_tokens(char **tokens)
 				first_type_redir = 1;
 				type = OPERATOR;
 			}
-			if (tokens[i] && tokens[i][0] == '(')
+			else if (tokens[i] && tokens[i][0] == '(')
 				type = PARENTHESIS;
-			if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
+			else if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
 				type = COMMAND;
 		}
 		else if (first_type_redir == 1 && !ft_is_operator(tokens[i][0])

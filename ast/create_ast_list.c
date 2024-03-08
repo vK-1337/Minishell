@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 10:31:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/06 17:22:36 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	read_ast(t_ast *node, int depth)
 {
 	t_token	*token;
 	int		i;
+	t_token	*temp;
 
 	for (int i = 0; i < depth; i++)
 	{
@@ -186,7 +187,7 @@ void	read_ast(t_ast *node, int depth)
 		token = token->next;
 		i++;
 	}
-	t_token *temp = node->token->file_redir_in;
+	temp = node->token->file_redir_in;
 	i = 0;
 	while (temp != NULL)
 	{
@@ -236,14 +237,18 @@ void	send_to_build(t_ast **node, int direction)
 	}
 }
 
-void	create_ast_list(t_ast **node, t_token *token_list)
+void	*create_ast_list(t_ast **node, t_token *token_list)
 {
 	t_token	*strongest;
 	t_ast	*tree;
 
+	if (token_list == NULL)
+		return (NULL);
 	if (get_last_strongest_operator(token_list) == NULL)
 	{
 		*node = malloc(sizeof(t_ast));
+		if (*node == NULL)
+			return (NULL);
 		(*node)->token = token_list;
 		(*node)->daddy = NULL;
 		(*node)->left = NULL;
@@ -255,8 +260,9 @@ void	create_ast_list(t_ast **node, t_token *token_list)
 		tree = new_tree(strongest);
 		*node = tree;
 		if (tree == NULL)
-			return ;
+			return (NULL);
 		send_to_build(&(tree->right), 1);
 		send_to_build(&(tree->left), 2);
 	}
+	return ((void *)1);
 }

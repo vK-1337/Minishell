@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 16:07:11 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/07 15:53:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,14 @@ char	*check_valid_command(char **cmd_split, char *path)
 	if (path == NULL)
 		return (NULL);
 	path_split = ft_split(path + 5, ':');
+	if (!path_split)
+		return (NULL);
 	while (path_split[i])
 	{
 		temp = add_slash(path_split[i]);
 		path = ft_strjoin(temp, cmd_split[0], 0);
+		if (!path)
+			return (ft_free_char_tab(path_split), NULL);
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
 			return (ft_free_char_tab(path_split), path);
@@ -90,29 +94,37 @@ char	**redo_env(t_list *env)
 	char	*temp;
 	char	**split_env;
 
+	if (!env)
+		return (NULL);
 	env_node = env;
+	env_str = ft_strdup("");
+	if (!env_str)
+		return (NULL);
 	while (env_node)
 	{
 		temp = ft_strjoin(env_node->var_name, "=", 0);
-		env_str = ft_strjoin(env_str, temp, 0);
+        if (!temp)
+            return (free(env_str), NULL);
+		env_str = ft_strjoin(env_str, temp, 1);
 		free(temp);
-		temp = ft_strjoin(env_str, env_node->content, 0);
-		free(env_str);
-		env_str = temp;
-		temp = ft_strjoin(env_str, "\n", 0);
-		free(env_str);
-		env_str = temp;
+		env_str = ft_strjoin(env_str, env_node->content, 1);
+		env_str = ft_strjoin(env_str, "\n", 1);
+		if (!env_str)
+			return (NULL);
 		env_node = env_node->next;
 	}
 	split_env = ft_split(env_str, '\n');
 	free(env_str);
 	return (split_env);
 }
+
 int	check_command(char **command, t_list *env_list)
 {
 	int	exit_status;
 
 	exit_status = 1871;
+	if (!command)
+		return (-1917);
 	if (ft_strncmp("env", command[0], 3) == 0)
 		exit_status = ft_print_env(env_list);
 	else if (ft_strncmp("unset", command[0], 5) == 0)
@@ -197,7 +209,7 @@ int	launch_here_doc(char *limiter)
 	int	id;
 
 	pipe(fd);
-		// handle_error(-1, "pipe", 0);
+	// handle_error(-1, "pipe", 0);
 	id = fork();
 	// handle_error(id, "fork", 0);
 	if (id == 0)
@@ -269,12 +281,16 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	char	*command_str;
 
 	command_str = build_command(command);
+	if (!command_str || !env)
+		return (-1917);
 	printf("command_str: %s\n", command_str);
 	exit_status = 1871;
 	exit_status = check_command(ft_split(command_str, ' '), env_list);
+	if (exit_status == -1917)
+		return (-1917);
 	printf("exit_status: %d\n", exit_status);
 	if (exit_status != 1871)
-		return (exit_status);
+		return (ft_free_char_tab(env), exit_status);
 	id = fork();
 	if (id == -1)
 	{
@@ -285,10 +301,13 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	{
 		do_redirections(command);
 		exec_command(command_str, env, env_list);
+		ft_free_char_tab(env);
 		printf("execve error\n");
 		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(id, &exit_status, 0);
+	ft_free_char_tab(env);
+	free(command_str);
 	return (exit_status);
 }

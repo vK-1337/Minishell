@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:21:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/06 16:04:26 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ t_list	*ft_convert_env(char **env)
 {
 	int		i;
 	t_list	*env_list;
+    t_list  *tmp_new;
 
 	i = 0;
 	env_list = NULL;
 	while (env[i])
 	{
-		ft_lstadd_back(&env_list, ft_lstnew((char *)env[i], 1, 1));
+        tmp_new = ft_lstnew((char *)env[i], 1, 1);
+        if (!tmp_new)
+            return (NULL);
+		ft_lstadd_back(&env_list, tmp_new);
 		i++;
 	}
 	return (env_list);

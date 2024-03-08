@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenadd_back.c                                 :+:      :+:    :+:   */
+/*   ft_tokenlstadd_back.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 23:26:06 by vk                #+#    #+#             */
-/*   Updated: 2024/02/12 19:59:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:31:53 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@ void	ft_tokenlstadd_back(t_token **lst, t_token *new)
 		tmp->next = new;
 		new->prev = tmp;
 		new->next = NULL;
+		new->file_redir = NULL;
+		new->file_redir_in = NULL;
+		new->file_redir_out = NULL;
+		
 	}
 	else
 	{
 		new->next = NULL;
 		new->prev = NULL;
+		new->file_redir_in = NULL;
+		new->file_redir_out = NULL;
 		*lst = new;
 	}
 }

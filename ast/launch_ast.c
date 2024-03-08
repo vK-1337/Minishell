@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 15:52:46 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 19:28:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,43 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 		printf("Memory error\n");
 		return (-1);
 	}
+	//read_ast(ast, 0);	
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(ast);
 	return (*exit_status);
+}
+void	export_and_wildcard(t_ast *ast, t_list *env_list)
+{
+	t_token	*travel;
+	
+	if (ast == NULL)
+		return ;
+	travel = ast->token;
+	while (travel)
+	{
+		travel->token = ft_expand(travel->token, &env_list);
+		travel = travel->next;
+	}
+	if (ast->token->file_redir_in)
+	{
+		travel = ast->token->file_redir_in;
+		while (travel)
+		{
+			travel->file_redir = ft_expand(travel->file_redir, &env_list);
+			travel = travel->next;
+		}
+	}
+	if (ast->token->file_redir_out)
+	{
+		travel = ast->token->file_redir_out;
+		while (travel)
+		{
+			travel->file_redir = ft_expand(travel->file_redir, &env_list);
+			travel = travel->next;
+		}
+	}
+	export_and_wildcard(ast->left, env_list);
+	export_and_wildcard(ast->right, env_list);
 }
 
 int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
@@ -38,6 +72,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 
 	env = NULL;
 	
+	export_and_wildcard(ast, env_list);
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)

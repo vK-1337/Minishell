@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:44:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 17:29:27 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
 		if (check_syntax(input) == 0)
 			continue ;
-        input = ft_expand(input, &env_list);
-        printf("New input => |%s|\n", input);
 		ft_change_signals();
 		launch_ast(input, env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->xit_status == -1917)

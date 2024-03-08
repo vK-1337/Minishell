@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 17:08:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 19:45:48 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,4 @@ t_list	*ft_exit_variable(void)
 	exit_variable->prev = NULL;
     exit_variable->xit_status = 0;
 	return (exit_variable);
-}
-void ft_update_xstatus(t_list **env, int x_status)
-{
-    static int count;
-    t_list *curr;
-
-    curr = *env;
-    while (curr)
-    {
-        if (curr->var_name[0] == '?' && !curr->var_name[1])
-        {
-            if (count > 0)
-                free(curr->content);
-            curr->content = ft_itoa(x_status);
-            curr->xit_status = x_status;
-            break;
-        }
-        curr = curr->next;
-    }
-    count++;
 }

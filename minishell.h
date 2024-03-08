@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:32:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 17:07:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ char				*ft_char_join(char *base_str, char to_join);
 t_list				*ft_find_var(t_list **env, char *input);
 char				*ft_join_var(t_list **env, char *final_input, char *input);
 char				*ft_expand(char *input, t_list **env);
+char				*ft_join_xstatus(char *final_input, t_list *x_var);
+char				*ft_join_other_var(char *final_input, t_list *env_var);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -341,7 +343,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																	        */
+/*                             		AST																		     */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 12:23:15 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 14:58:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int					ft_is_file(char *token);
 
 t_list				*ft_convert_env(char **env);
 int					ft_print_env(t_list *env);
+t_list				*ft_exit_variable(void);
 
 /*******************************************************************************/
 /*                                                                             */

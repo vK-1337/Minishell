@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:45:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 09:45:49 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:41:50 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	**ft_unset(t_list **env_list, char *var_to_del)
+int	ft_unset(t_list **env_list, char *var_to_del)
 {
 	t_list	*curr;
 
@@ -24,14 +24,14 @@ t_list	**ft_unset(t_list **env_list, char *var_to_del)
 			if (curr->prev == NULL)
 			{
 				env_list = &curr->next;
-				return (env_list);
+				return (0);
 			}
 			else if (curr->next == NULL)
-				return (ft_delete_last(curr), env_list);
+				return (ft_delete_last(curr), 0);
 			else
-				return (ft_delete_connect(curr), env_list);
+				return (ft_delete_connect(curr), 0);
 		}
 		curr = curr->next;
 	}
-	return (NULL);
+	return (1);
 }

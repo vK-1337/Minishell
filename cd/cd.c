@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/13 15:49:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/02/28 18:48:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int    ft_cd (char *path, t_list **env)
 {
     int status;
     
+    // if (path == NULL)
+    //     go_home(env);
     if (ft_set_pwd(env) == 0)
         return (0);
     status = old_pwd_use(path, env);
@@ -45,6 +47,8 @@ int old_pwd_use(char *path, t_list **env)
     t_list *old_pwd;
     char *old_pwd_content;
 
+    if (path == NULL)
+        return (1);
     while (*path == ' ')
         (*path)++;
     if (ft_strncmp(path, "-", 1) == 0)
@@ -71,6 +75,8 @@ int back_home(char *path, t_list **env)
 {
     t_list *home;
     
+    if (path == NULL)
+        return (1);
     while (*path == ' ')
         (*path)++;
     if (ft_strncmp(path, "~", 1) == 0)

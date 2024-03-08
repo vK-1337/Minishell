@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 14:24:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:21:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_print_env(t_list *env)
+int	ft_print_env(t_list *env)
 {
+	if (env == NULL)
+		return (0);
 	while (env)
 	{
         if (env->env_print == 1)
@@ -24,6 +26,7 @@ void	ft_print_env(t_list *env)
         }
         env = env->next;
 	}
+	return (1);
 }
 
 t_list	*ft_convert_env(char **env)

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/05 10:31:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/06 19:07:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,35 @@ int	is_and(char *token)
 
 int	is_pipe(char *token)
 {
-	if (ft_strncmp(token, "|", 1) == 0)
-		return (1);
-	if (ft_strncmp(token, "| ", 2) == 0)
+	if (ft_strcmp(token, "|") == 0)
 		return (1);
 	return (0);
 }
 
 int	is_fd_out(char *token)
 {
-	if (ft_strncmp(token, ">", 1) == 0)
+	if (ft_strcmp(token, ">") == 0)
 		return (1);
 	return (0);
 }
 
 int	is_fd_in(char *token)
 {
-	if (ft_strncmp(token, "<", 1) == 0)
+	if (ft_strcmp(token, "<") == 0)
+		return (1);
+	return (0);
+}
+
+int is_here_doc(char *token)
+{
+	if (ft_strcmp(token, "<<") == 0)
+		return (1);
+	return (0);
+}
+
+int is_append(char *token)
+{
+	if (ft_strcmp(token, ">>") == 0)
 		return (1);
 	return (0);
 }

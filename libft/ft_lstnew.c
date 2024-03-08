@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/03/08 12:43:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:28:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_list	*ft_lstnew(void *content, int build_env, int env_print)
 		new_node->env_print = 1;
 	else
 		new_node->env_print = 0;
+    new_node->xit_status = 0;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);

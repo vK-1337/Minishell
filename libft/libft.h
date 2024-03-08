@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/05 16:13:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:26:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_list
 	struct s_list	*next;
 	struct s_list	*prev;
 	int				env_print;
+	int				xit_status;
 }					t_list;
 
 // BONUS

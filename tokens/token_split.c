@@ -87,6 +87,8 @@ int	ft_tokenlen(const char *str, int index)
 		index++;
 		while (str[index] != 41)
 		{
+			if (str[index] == 40)
+				i++;
 			index++;
 			i++;
 		}

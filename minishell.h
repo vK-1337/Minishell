@@ -207,6 +207,7 @@ void				ft_print_tokens(char **tokens);
 int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
+int					ft_go_next_parenthesis(const char *str, int index);
 t_token				*ft_convert_tokens(char **tokens);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
@@ -337,7 +338,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																   */
+/*                             		AST																           */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

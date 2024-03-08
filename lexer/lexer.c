@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 09:40:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/08 09:44:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ t_token	*ft_convert_tokens(char **tokens)
 				first_type_redir = 1;
 				type = OPERATOR;
 			}
-			if (tokens[i] && tokens[i][0] == '(')
+			else if (tokens[i] && tokens[i][0] == '(')
 				type = PARENTHESIS;
-			if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
+			else if (tokens[i] && tokens[i][0] && !ft_is_operator(tokens[i][0]))
 				type = COMMAND;
 		}
 		else if (first_type_redir == 1 && !ft_is_operator(tokens[i][0])

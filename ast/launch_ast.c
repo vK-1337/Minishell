@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 10:02:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 10:26:22 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	launch_ast(char *input, t_list *env_list)
 	t_ast	*ast;
 
 	exit_status = 0;
-	ast = NULL; 
-	create_ast_list(&ast, ft_lexer(input, &env_list));	
+	ast = NULL;
+	if (!env_list)
+		return (-1917);
+	if (create_ast_list(&ast, ft_lexer(input, &env_list)) == NULL)
+		return (-1917);
 	// read_ast(ast, 0);
 	if (!ast)
 	{
@@ -27,6 +30,8 @@ int	launch_ast(char *input, t_list *env_list)
 		return (-1);
 	}
 	exit_status = launch_ast_recursive(ast, env_list);
+	if (exit_status == -1917)
+		return (ft_free_ast(ast), -1917);
 	ft_free_ast(ast);
 	return (exit_status);
 }
@@ -34,8 +39,11 @@ int	launch_ast(char *input, t_list *env_list)
 int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 {
 	int		exit_status;
+	char	**env;
+	int		free_env;
 
 	exit_status = 0;
+	env = NULL;
 	printf("ast: %s\n", ast->token->token);
 	if (ast == NULL)
 		return (0);
@@ -43,12 +51,20 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list)
 		exit_status = parenthesis(ast, env_list);
 	else if (is_and(ast->token->token) == 1 && launch_ast_recursive(ast->left, env_list) == 0)
 		exit_status = launch_ast_recursive(ast->right, env_list);
-	else if (is_or(ast->token->token) == 1 && launch_ast_recursive(ast->left, env_list) != 0)
+	else if (is_or(ast->token->token) == 1 && launch_ast_recursive(ast->left,
+			env_list) != 0)
 		exit_status = launch_ast_recursive(ast->right, env_list);
 	else if (ast->token->type == 3 && is_pipe(ast->token->token) == 1)
 		exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-		exit_status = exec_shell_command(ast, env_list, redo_env(env_list));
+	{
+		free_env = 0;
+		env = redo_env(env_list);
+		exit_status = exec_shell_command(ast, env_list, env);
+		if (exit_status == -1917)
+			return (-1917);
+	}
+    free(env);
 	return (exit_status);
 }
 
@@ -56,14 +72,18 @@ char	*build_command(t_ast *node)
 {
 	t_token	*travel;
 	char	*command;
-	
+
 	travel = node->token;
 	command = ft_strdup(node->token->token);
+	if (!command)
+		return (NULL);
 	travel = travel->next;
 	while (travel != NULL)
 	{
 		command = ft_strjoin(command, " ", 1);
 		command = ft_strjoin(command, travel->token, 1);
+		if (!command)
+			return (NULL);
 		travel = travel->next;
 	}
 	return (command);
@@ -90,10 +110,10 @@ void	do_pipe_redirections(t_ast *command, int fd[2], int saved_std[2])
 
 int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list, int saved_std[2])
 {
-	int	id;
-	int exit_status;
+	int		id;
+	int		exit_status;
 	char	*command_str;
-	
+
 	command_str = build_command(command);
 	id = fork();
 	handle_error(id, "fork");
@@ -160,7 +180,7 @@ int left_pipe(t_ast *node, t_list *env_list, int saved_std[2])
     travel = node;
     while (is_pipe(travel->left->token->token) == 1)
 	{
-        travel = travel->left;
+		travel = travel->left;
 	}
     exit_status = pipe_chain(redo_env(env_list), travel->left, env_list, saved_std);
     while (travel != node)
@@ -196,7 +216,7 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 		waitpid(id, &exit_status, 0);
 		dup2(fd[0], 0);
 		close(fd[0]);
-		close (fd[1]);
+		close(fd[1]);
 	}
 	return (exit_status);
 }

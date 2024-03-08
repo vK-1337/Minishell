@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/13 10:09:12 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:46:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_build_prompt(t_list **env)
 	char	*final_prompt;
 
 	hostname = ft_extract_hostname(getenv("SESSION_MANAGER"));
+	if (!hostname)
+		return (NULL);
 	username = getenv("USER"); // TODO Change to get the USER VAR.
 	pwd = ft_find_var(env, "$PWD");
 	final_prompt = ft_strjoin(username, "@", 0);
@@ -28,6 +30,8 @@ char	*ft_build_prompt(t_list **env)
 	final_prompt = ft_strjoin(final_prompt, "~", 1);
 	final_prompt = ft_strjoin(final_prompt, trim_pwd(pwd->content), 1);
 	final_prompt = ft_strjoin(final_prompt, "$ ", 1);
+	if (!final_prompt)
+		return (NULL);
 	free(hostname);
 	return (final_prompt);
 }
@@ -49,6 +53,8 @@ char	*ft_extract_hostname(char *session_manager)
 		end_of_hostname++;
 	}
 	hostname = malloc((i + 1) * sizeof(char));
+	if (!hostname)
+		return (NULL);
 	i = 0;
 	while (session_manager != end_of_hostname)
 	{
@@ -62,9 +68,11 @@ char	*ft_extract_hostname(char *session_manager)
 
 char	*trim_pwd(char *pwd)
 {
-	char *home;
+	char	*home;
 
 	home = getenv("HOME");
+	if (!home)
+		return (NULL);
 	while (*pwd == *home)
 	{
 		pwd++;

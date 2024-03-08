@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 09:57:24 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 10:27:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 t_token	*ft_lexer(char *input, t_list **env)
 {
-	char	*expanded_input;
+	// char	*expanded_input;
 	char	**tokens;
 	t_token	*listed_tokens;
 
+    (void)env;
 	listed_tokens = NULL;
-	expanded_input = ft_expand(input, env);
-	tokens = ft_token_split(expanded_input);
+	// expanded_input = ft_expand(input, env);
+	tokens = ft_token_split(input);
+	if (!tokens)
+		return (NULL);
 	listed_tokens = ft_convert_tokens(tokens);
+    free(tokens);
+	if (!listed_tokens)
+		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
 	ft_print_token_list(&listed_tokens);
 	ft_initialize_redirection(&listed_tokens);
 	ft_reunite_redirection(&listed_tokens);
 	ft_print_token_list(&listed_tokens);
-
 	return (listed_tokens);
 }
 
-void	ft_reunite_tokens(t_token **tokens)
+void	*ft_reunite_tokens(t_token **tokens)
 {
 	t_token	*curr;
 	t_token	*next;
@@ -42,7 +47,8 @@ void	ft_reunite_tokens(t_token **tokens)
 		next = curr->next;
 		if (next && curr->type == OPTION && next->type == OPTION)
 		{
-			ft_join_options(tokens, curr, next);
+			if (ft_join_options(tokens, curr, next) == NULL)
+				return (NULL);
 			curr = *tokens;
 		}
 		else if (next && curr->type == OPERATOR && next->type == PATH_FILE)
@@ -55,16 +61,21 @@ void	ft_reunite_tokens(t_token **tokens)
 		else
 			curr = curr->next;
 	}
+    return ((void *)1);
 }
 
-void	ft_join_options(t_token **tokens, t_token *curr, t_token *next)
+void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 {
 	char	*new_token;
 	t_token	*new_node;
 
 	new_token = ft_strjoin(curr->token, " ", 0);
 	new_token = ft_strjoin(new_token, next->token, 1);
+	if (!new_token)
+		return (NULL);
 	new_node = ft_tokenlstnew(new_token, OPTION);
+	if (!new_node)
+		return (NULL);
 	new_node->next = next->next;
 	if (curr->prev)
 	{
@@ -75,6 +86,7 @@ void	ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 		*tokens = new_node;
 	free(curr);
 	free(next);
+    return ((void *)1);
 }
 
 void	ft_join_file_path(t_token *curr, t_token *next)
@@ -116,8 +128,8 @@ t_token	*ft_convert_tokens(char **tokens)
 		else if (first_type_redir == 1 && !ft_is_operator(tokens[i][0])
 			&& previous_type != OPERATOR)
 			type = COMMAND;
-        else
-		    type = ft_define_ttype(tokens[i], previous_token);
+		else
+			type = ft_define_ttype(tokens[i], previous_token);
 		ft_tokenlstadd_back(&tokens_list, ft_tokenlstnew(tokens[i], type));
 		previous_token = tokens[i];
 		previous_type = type;
@@ -152,7 +164,7 @@ t_ttype	ft_define_ttype(char *token, char *previous_token)
 		if (previous_token[j] == 38 || previous_token[j] == 124)
 			return (COMMAND);
 	}
-	return (CMD_ARG);
+	return (COMMAND);
 }
 
 int	ft_is_file(char *token)

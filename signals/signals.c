@@ -6,13 +6,11 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:19:24 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/19 21:27:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:01:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//! NEED TO FIX SIGNALS IN CHILDS
 
 void	ft_init_signals()
 {

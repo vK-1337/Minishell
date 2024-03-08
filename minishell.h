@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 09:41:14 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 10:24:23 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,8 +214,8 @@ t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
-void				ft_reunite_tokens(t_token **tokens);
-void				ft_join_options(t_token **tokens, t_token *curr,
+void				*ft_reunite_tokens(t_token **tokens);
+void				*ft_join_options(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_join_file_path(t_token *curr, t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
@@ -339,12 +339,12 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST														         */
+/*                             		AST								           */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
 
-void				create_ast_list(t_ast **node, t_token *token_list);
+void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
 int					is_or(char *token);
 int					is_and(char *token);

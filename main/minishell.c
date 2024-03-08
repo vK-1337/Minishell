@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:29:01 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:32:02 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
         input = ft_expand(input, &env_list);
         printf("New input => |%s|\n", input);
 		ft_change_signals();
-		ft_update_xstatus(env_list, launch_ast(input, env_list));
+		launch_ast(input, env_list);
 		if ( == -1917)
 			break ;
 		free(prompt);

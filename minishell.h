@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:30:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 15:32:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																           */
+/*                             		AST																	        */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -356,7 +356,7 @@ int					is_fd_out(char *token);
 int					is_here_doc(char *token);
 int					is_append(char *token);
 void				ft_free_ast(t_ast *ast);
-int					launch_ast(char *input, t_list *env_list);
+int					launch_ast(char *input, t_list *env_list, int *exit_status);
 int					launch_ast_recursive(t_ast *ast, t_list *env_list,
 						int *exit_status);
 int					create_redirection(t_ast *node, t_list *env_list);

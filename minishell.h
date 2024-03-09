@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 20:10:11 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/09 13:11:10 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,8 @@ void				*ft_reunite_tokens(t_token **tokens);
 void				*ft_join_options(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_join_file_path(t_token *curr, t_token *next);
+void				*ft_join_export(t_token **tokens, t_token *curr,
+						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
 
@@ -343,7 +345,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																		     */
+/*                             		AST																			  */
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

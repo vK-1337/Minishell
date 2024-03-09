@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 19:47:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/09 13:12:17 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ int	ft_var_exists(t_list **env_list, char *var)
 	if (var[0] == '$')
 		var++;
 	else
-	{
 		i++;
-	}
 	while (curr)
 	{
 		if (ft_strncmp(curr->var_name, var, i) == 0

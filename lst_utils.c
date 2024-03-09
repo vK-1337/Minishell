@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:51:47 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 17:07:25 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 20:04:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_free_list(t_list **list)
 		return ;
 	while (*list)
 	{
-		printf("freeing %s\n", (*list)->var_name);
 		tmp = (*list)->next;
 		free((*list)->var_name);
 		free((*list)->content);

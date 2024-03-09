@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 19:28:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 20:26:13 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 		printf("Memory error\n");
 		return (-1);
 	}
-	//read_ast(ast, 0);	
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(ast);
 	return (*exit_status);
@@ -152,6 +151,8 @@ int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list, int save
 		waitpid(id, &exit_status, 0);
 		if (fd_out != 1)
 			close(fd_out);
+		while (wait(NULL) > 0)
+			continue ;
 	}
 	free(command_str);
 	return (exit_status);
@@ -170,7 +171,7 @@ int	create_redirection(t_ast *node, t_list *env_list)
         exit_status = right_pipe(node, env_list, saved_std);
     else
     {
-        exit_status = pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
+        pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
         exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list, saved_std);
     }
 	dup2(saved_std[0], 0);
@@ -188,11 +189,11 @@ int right_pipe(t_ast *node, t_list *env_list, int saved_std[2])
     
     while (is_pipe(travel->right->token->token) == 1)
     {
-        exit_status = pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
+    	pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
         travel = travel->left;
     }
-    exit_status = pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
-	last_pipe(redo_env(env_list), node->right, 1, env_list, saved_std);
+	pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
+	exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list, saved_std);
     return (exit_status);
 }
 
@@ -206,24 +207,22 @@ int left_pipe(t_ast *node, t_list *env_list, int saved_std[2])
 	{
 		travel = travel->left;
 	}
-    exit_status = pipe_chain(redo_env(env_list), travel->left, env_list, saved_std);
+    pipe_chain(redo_env(env_list), travel->left, env_list, saved_std);
     while (travel != node)
     {
-        exit_status = pipe_chain(redo_env(env_list), travel->right, env_list, saved_std);
+        pipe_chain(redo_env(env_list), travel->right, env_list, saved_std);
 		travel = travel->daddy;
     }
     exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list, saved_std);
-	
     return (exit_status);
 }
 
 
 
-int	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
+void	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 {
 	int	fd[2];
 	int	id;
-	int	exit_status;
 
 	if (pipe(fd) == -1)
 		handle_error(-1, "pipe");
@@ -237,10 +236,8 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 	}
 	else
 	{
-		waitpid(id, &exit_status, 0);
 		dup2(fd[0], 0);
 		close(fd[0]);
 		close(fd[1]);
 	}
-	return (exit_status);
 }

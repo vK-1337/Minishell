@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 17:29:27 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 19:54:07 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		ft_change_signals();
 		launch_ast(input, env_list, &ft_find_var(&env_list, "$?")->xit_status);
-		if (ft_find_var(&env_list, "$?")->xit_status == -1917)
+		if (ft_find_var(&env_list, "$?")->xit_status == -1917 || ft_find_var(&env_list, "$?")->xit_status == 127) 
 			break ;
 		free(prompt);
 		prompt = ft_build_prompt(&env_list);

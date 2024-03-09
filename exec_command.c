@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 19:39:16 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 20:29:11 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,15 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	{
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit_status = 127;
+		exit_status = -1917;
 	}
 	else
 	{
 		execve(instruct, cmd_split, env);
 		printf("execve error\n");
-		exit_status = 1917;
+		exit_status = -1917;
 	}
-	return (free(command), ft_free_char_tab(cmd_split), 0);
+	return (ft_free_char_tab(cmd_split), exit_status);
 }
 void	handle_error(int err, char *msg)
 {
@@ -224,6 +224,7 @@ int	launch_here_doc(char *limiter, int saved_std[2])
 
 int	configure_fd_in(int fd_in, char *token, char *file, int saved_std[2])
 {
+	printf("file: %s\n", file);
 	if (fd_in != 0)
 		close(fd_in);
 	if (ft_strncmp(token, "<", 1) == 0)
@@ -252,6 +253,7 @@ void	do_redirections(t_ast *command)
 	int		fd_in;
 
 	travel = command->token->file_redir_in;
+	printf("travel: %s\n", travel->token);
 	fd_out = 1;
 	fd_in = 0;
 	while (travel)

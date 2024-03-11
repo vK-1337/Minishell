@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 20:26:13 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 15:47:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	launch_ast(char *input, t_list *env_list, int *exit_status)
 {
-	//int		exit_status;
 	t_ast	*ast;
 
 	ast = NULL;
@@ -25,7 +24,7 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 	if (!ast)
 	{
 		printf("Memory error\n");
-		return (-1);
+		*exit_status = -1917;
 	}
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(ast);
@@ -111,14 +110,18 @@ char	*build_command(t_ast *node)
 	}
 	return (command);
 }
-void	do_pipe_redirections(t_ast *command, int fd[2], int saved_std[2])
+int	do_pipe_redirections(t_ast *command, int fd[2], int saved_std[2])
 {
 	t_token	*travel;
 
 	travel = command->token->file_redir_in;
 	while (travel)
 	{
-		fd[0] = configure_fd_in(fd[0], travel->token, travel->file_redir, saved_std);
+		fd[0] = configure_fd_in(fd[0], travel->token, travel->file_redir);
+		if (ft_strncmp(travel->token, "<<", 2) == 0)
+				fd[0] = launch_here_doc(travel->file_redir, saved_std);
+		if (fd[0] == -1)
+			return (-1917);
 		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
@@ -129,6 +132,7 @@ void	do_pipe_redirections(t_ast *command, int fd[2], int saved_std[2])
 	}
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
+	return (0);
 }
 
 int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list, int saved_std[2])
@@ -142,7 +146,8 @@ int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list, int save
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		do_pipe_redirections(command, (int[2]){0, 1}, saved_std);
+		if(do_pipe_redirections(command, (int[2]){0, 1}, saved_std) == -1917)
+			return (free(command_str), -1917);
 		exec_command(command_str, env, env_list);
 		exit(EXIT_FAILURE);
 	}
@@ -154,8 +159,8 @@ int	last_pipe(char **env, t_ast *command, int fd_out, t_list *env_list, int save
 		while (wait(NULL) > 0)
 			continue ;
 	}
-	free(command_str);
-	return (exit_status);
+	
+	return (free(command_str), exit_status);
 }
 
 int	create_redirection(t_ast *node, t_list *env_list)
@@ -219,7 +224,7 @@ int left_pipe(t_ast *node, t_list *env_list, int saved_std[2])
 
 
 
-void	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
+int 	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 {
 	int	fd[2];
 	int	id;
@@ -230,9 +235,10 @@ void	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		do_pipe_redirections(command, fd, saved_std);
+		if (do_pipe_redirections(command, fd, saved_std) == -1917)
+			return (-1917);
 		exec_command(build_command(command), env, env_list);
-		exit(EXIT_FAILURE);
+		return (-1917);
 	}
 	else
 	{
@@ -240,4 +246,5 @@ void	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2])
 		close(fd[0]);
 		close(fd[1]);
 	}
+	return (-1917);
 }

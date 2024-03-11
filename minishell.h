@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 16:32:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:24:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,10 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
 int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
+void				pipe_chain(char **env, t_ast *command, t_list *env_list,
+						int save_std[2]);
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
-int	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2]);
+void					pipe_chain(char **env, t_ast *command, t_list *env_list,
+						int saved_std[2]);
 #endif

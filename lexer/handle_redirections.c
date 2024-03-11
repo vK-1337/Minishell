@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+    /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 03:06:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:23:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_front(t_token **command)
 	t_token	*temp2;
 
 	curr = (*command)->next;
-	while (curr && (curr->type == CMD_ARG || curr->type == OPTION))
+	while (curr && (curr->type == COMMAND || curr->type == OPTION))
 		curr = curr->next;
 	if (curr == NULL)
 		return ;
@@ -79,7 +79,6 @@ void	ft_back(t_token **command)
 			|| is_fd_out(curr->token) == 1 || is_here_doc(curr->token) == 1
 			|| is_append(curr->token) == 1))
 	{
-		printf("curr->token = %s\n", curr->token);
 		if (is_fd_in(curr->token) == 1 || is_here_doc(curr->token) == 1)
 		{
 			if (curr->prev)

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 08:48:18 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 17:55:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:32:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,31 @@ void	ft_handle_classic_variables(int *i, char *input, t_list **env,
 		*final_input = ft_join_var(env, *final_input, &input[*i]);
 	while (input[*i + 1] && (ft_isalnum(input[*i + 1]) || input[*i + 1] == '?'))
 		*i = *i + 1;
+}
+
+void	ft_expand_helper1(t_norme *vars, char *input, t_list **env)
+{
+	if (vars->j < vars->k && vars->tab[vars->j] == 1)
+		ft_handle_classic_variables((int *)&vars->i, input, env, &vars->str);
+	else
+		vars->str = ft_char_join(vars->str, input[vars->i]);
+	vars->j++;
+}
+
+void	ft_expand_helper2(t_norme *vars, char *input, t_list **env)
+{
+	if (vars->j < vars->k && vars->tab[vars->j] == 1)
+		ft_handle_brackets((int *)&vars->i, input, env, &vars->str);
+	else
+		vars->str = ft_char_join(vars->str, input[vars->i]);
+	vars->j++;
+}
+
+void	is_expandable_helper(t_norme *vars, char *input)
+{
+	vars->j = vars->i + 2;
+	while ((ft_isalnum(input[vars->j]) || input[vars->j] == '_'))
+		vars->j++;
+	if (input[vars->j] == '}')
+		vars->tab[vars->index] = ft_should_expand(vars->k, vars->l);
 }

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:21:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
-int				do_redirections(t_ast *command);
+int					do_redirections(t_ast *command);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
@@ -157,7 +157,10 @@ char				*ft_join_var(t_list **env, char *final_input, char *input);
 char				*ft_expand(char *input, t_list **env);
 char				*ft_join_xstatus(char *final_input, t_list *x_var);
 char				*ft_join_other_var(char *final_input, t_list *env_var);
-void	ft_join_helper(int *j, char *new_str, char *final_input);
+void				ft_join_helper(int *j, char *new_str, char *final_input);
+void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
+void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
+void				is_expandable_helper(t_norme *vars, char *input);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -180,6 +183,9 @@ int					ft_export(t_list **env_list, char *new_var);
 int					ft_correct_format(char *new_var);
 int					ft_forbidden_char(char c);
 int					ft_contain_equal(char *new_var);
+void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
+void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
+void				is_expandable_helper(t_norme *vars, char *input);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -345,7 +351,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																			  */
+/*                             		AST																				*/
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/
@@ -371,6 +377,6 @@ int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 						int save_std[2]);
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
-void	ft_clean_tokens(t_token *tokens);
-int file_redir(t_token *token);
+void				ft_clean_tokens(t_token *tokens);
+int					file_redir(t_token *token);
 #endif

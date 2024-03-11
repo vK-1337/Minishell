@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:26:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:59:37 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,17 @@ typedef struct s_list
 	int				env_print;
 	int				xit_status;
 }					t_list;
+
+typedef struct s_norme
+{
+	uintptr_t		i;
+	uintptr_t		j;
+	uintptr_t		k;
+	uintptr_t		l;
+	uintptr_t		index;
+	int				*tab;
+	char			*str;
+}					t_norme;
 
 // BONUS
 

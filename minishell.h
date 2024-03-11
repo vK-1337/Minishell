@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 17:24:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:37:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,9 @@ char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
-void				do_redirections(t_ast *command);
+int				do_redirections(t_ast *command);
 int					configure_fd_out(int fd_out, char *token, char *file);
-int					configure_fd_in(int fd_in, char *token, char *file,
-						int saved_std[2]);
+int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
 void				here_doc(char *limiter, int fd[2]);
 char				*take_path(char **env);
@@ -340,7 +339,7 @@ void				wait_p_handler(int signum);
 void				ft_tokenlstclear(t_token **lst, void (*del)(void *));
 void				ft_tokenlstadd_back(t_token **lst, t_token *new);
 void				ft_tokenlstadd_front(t_token **lst, t_token *new);
-void				ft_tokenlstdelone(t_token *lst, void (*del)(void *));
+void				ft_tokenlstdelone(t_token *lst);
 void				ft_tokenlstiter(t_token *lst, void (*f)(void *));
 t_token				*ft_tokenlstlast(t_token *lst);
 t_token				*ft_tokenlstmap(t_token *lst, void *(*f)(void *),
@@ -407,10 +406,8 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
 int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
-void				pipe_chain(char **env, t_ast *command, t_list *env_list,
+int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 						int save_std[2]);
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
-void					pipe_chain(char **env, t_ast *command, t_list *env_list,
-						int saved_std[2]);
 #endif

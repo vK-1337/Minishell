@@ -6,39 +6,47 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/17 17:10:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:52:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_replace_wildcards(char *token)
+int	ft_join_matching_dir(char *token, int (*ft_match)(char *, char *))
 {
 	struct dirent	*de;
 	DIR				*dr;
-	int				contain_wc;
+	int				count;
 
+	count = 0;
 	dr = opendir(".");
 	if (dr == NULL)
-		return (printf("Could not open current directory"), 0);
+		return (0);
+	de = readdir(dr);
+	while (de != NULL)
+	{
+		if (ft_match(token, de->d_name))
+		{
+			token = ft_strjoin(de->d_name, " ", 0);
+			count++;
+		}
+		de = readdir(dr);
+	}
+	if (!count)
+		return (closedir(dr), 1);
+	return (closedir(dr), 0);
+}
+
+int	ft_replace_wildcards(char *token)
+{
+	int	contain_wc;
+
 	contain_wc = ft_contain_wildcards(token);
 	if (contain_wc == 1)
-	{
-		while ((de = readdir(dr)) != NULL)
-		{
-			if (ft_match_single_wc(token, de->d_name))
-				printf("%s ", de->d_name);
-		}
-	}
+		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)
-	{
-		while ((de = readdir(dr)) != NULL)
-		{
-			if (ft_match_multiple_wc(token, de->d_name))
-				printf("%s ", de->d_name);
-		}
-	}
-	return (closedir(dr), 0);
+		return (ft_join_matching_dir(token, ft_match_multiple_wc));
+	return (0);
 }
 
 int	ft_contain_wildcards(char *input)
@@ -111,46 +119,4 @@ int	ft_match_single_wc(char *pattern, char *name)
 		return (ft_ending_match(pattern, name));
 	else
 		return (ft_both_match(pattern, name));
-}
-
-int	ft_starting_match(char *pattern, char *name)
-{
-	int	i;
-
-	i = 0;
-	if (name[0] == '.')
-		return (0);
-	while (pattern[i] != '*' && name[i])
-	{
-		if (pattern[i] != name[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_ending_match(char *pattern, char *name)
-{
-	int	patt_len;
-	int	name_len;
-
-	name_len = ft_strlen(name) - 1;
-	patt_len = ft_strlen(pattern) - 1;
-	if (name[0] == '.')
-		return (0);
-	while (pattern[patt_len] != '*' && name[name_len])
-	{
-		if (pattern[patt_len] != name[name_len])
-			return (0);
-		patt_len--;
-		name_len--;
-	}
-	return (1);
-}
-
-int	ft_both_match(char *pattern, char *name)
-{
-	if (ft_starting_match(pattern, name) && ft_ending_match(pattern, name))
-		return (1);
-	return (0);
 }

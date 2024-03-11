@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 16:57:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:46:54 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_front(t_token **command)
 	t_token *curr;
 	t_token *temp;
 	t_token *temp2;
-	
+
 	curr = (*command)->next;
 	while (curr && (curr->type == COMMAND || curr->type == OPTION))
 		curr = curr->next;
@@ -115,7 +115,7 @@ void	ft_back(t_token **command)
 void	ft_reunite_redirection(t_token **tokens)
 {
 	t_token *curr;
-	
+
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND && (*tokens)->type != PARENTHESIS)
 	{
@@ -143,7 +143,7 @@ int       ft_open_solo_fd(t_token **tokens)
 	t_token	*curr;
 	t_token *tmp;
 	int	fd;
-	
+
 	curr = *tokens;
 	while (curr != NULL)
 	{
@@ -159,7 +159,7 @@ int       ft_open_solo_fd(t_token **tokens)
 		if (fd == -1917)
 			return (-1917);
 		if (fd == -1)
-			return (ft_clean_tokens(tokens), 0);
+			return (ft_clean_tokens(*tokens), 0);
 		close (fd);
 		ft_tokenlstdelone(curr);
 		curr = tmp;
@@ -187,8 +187,8 @@ void	ft_clean_tokens(t_token *tokens)
 int file_redir(t_token *token)
 {
 	char *file;
-	int	fd;
-	
+	int	fd = 0;
+
 	file = token->file_redir;
 	if (is_fd_out(token->token) == 1)
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -203,5 +203,5 @@ int file_redir(t_token *token)
 			return (-1917);
 	}
 	return (fd);
-	
+
 }

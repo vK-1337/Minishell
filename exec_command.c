@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 16:36:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:48:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ char	**redo_env(t_list *env)
 	while (env_node)
 	{
 		temp = ft_strjoin(env_node->var_name, "=", 0);
-        if (!temp)
-            return (free(env_str), NULL);
+		if (!temp)
+			return (free(env_str), NULL);
 		env_str = ft_strjoin(env_str, temp, 1);
 		free(temp);
 		env_str = ft_strjoin(env_str, env_node->content, 1);
@@ -202,7 +202,7 @@ void	here_doc(char *limiter, int fd[2])
 }
 int	launch_here_doc(char *limiter, int saved_std[2])
 {
-	int fd[2];
+	int	fd[2];
 	int	id;
 
 	printf("limiter: %s\n", limiter);
@@ -249,13 +249,12 @@ int	do_redirections(t_ast *command)
 	t_token	*travel;
 	int		fd_out;
 	int		fd_in;
-	
+
 	fd_out = 1;
 	fd_in = 0;
 	if (command->token->file_redir_in != NULL)
 	{
 		travel = command->token->file_redir_in;
-		
 		while (travel)
 		{
 			fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);

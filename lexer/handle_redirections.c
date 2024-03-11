@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 11:34:13 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:57:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_front(t_token **command)
 	t_token *temp2;
 	
 	curr = (*command)->next;
-	while (curr && (curr->type == CMD_ARG || curr->type == OPTION))
+	while (curr && (curr->type == COMMAND || curr->type == OPTION))
 		curr = curr->next;
 	if (curr == NULL)
 		return ;
@@ -77,7 +77,6 @@ void	ft_back(t_token **command)
 			|| is_fd_out(curr->token) == 1 || is_here_doc(curr->token) == 1
 		|| is_append(curr->token) == 1))
 	{
-		printf("curr->token = %s\n", curr->token);
 		if (is_fd_in(curr->token) == 1 || is_here_doc(curr->token) == 1)
 		{
 			if (curr->prev)
@@ -139,18 +138,70 @@ void	ft_reunite_redirection(t_token **tokens)
 	(*tokens)->prev = NULL;
 }
 
-void	ft_initialize_redirection(t_token **tokens)
+int       ft_open_solo_fd(t_token **tokens)
 {
-	t_token *curr;
-
+	t_token	*curr;
+	t_token *tmp;
+	int	fd;
+	
 	curr = *tokens;
-	while (curr)
+	while (curr != NULL)
 	{
-		if (curr->type == COMMAND)
-		{
-			curr->file_redir_in = NULL;
-			curr->file_redir_out = NULL;
-		}
+		if ((curr->type != OPERATOR) ||(curr->type == OPERATOR && curr->file_redir == NULL))
+			return (1);
 		curr = curr->next;
 	}
+	curr = *tokens;
+	while (curr != NULL)
+	{
+		tmp = curr->next;
+		fd = file_redir(curr);
+		if (fd == -1917)
+			return (-1917);
+		if (fd == -1)
+			return (ft_clean_tokens(tokens), 0);
+		close (fd);
+		ft_tokenlstdelone(curr);
+		curr = tmp;
+	}
+	return(0);
+}
+
+void	ft_clean_tokens(t_token *tokens)
+{
+	t_token	*curr;
+	t_token	*tmp;
+
+	curr = tokens;
+	while (curr != NULL)
+	{
+		tmp = curr->next;
+		if (curr->file_redir != NULL)
+			free(curr->file_redir);
+		free(curr->token);
+		free(curr);
+		curr = tmp;
+	}
+}
+
+int file_redir(t_token *token)
+{
+	char *file;
+	int	fd;
+	
+	file = token->file_redir;
+	if (is_fd_out(token->token) == 1)
+		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (is_append(token->token) == 1)
+		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else if (is_fd_in(token->token) == 1)
+		fd = open(file, O_RDWR, 0777);
+	else if (is_here_doc(token->token) == 0)
+	{
+		fd = launch_here_doc(token->file_redir, (int[2]){0, 1});
+		if (fd == -1)
+			return (-1917);
+	}
+	return (fd);
+	
 }

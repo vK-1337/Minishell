@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 18:51:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:13:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
         input = ft_expand(input, &env_list);
 		ft_change_signals();
 		launch_ast(input, env_list, &ft_find_var(&env_list, "$?")->xit_status);
-		if (ft_find_var(&env_list, "$?")->xit_status == -1917)
+		if (ft_find_var(&env_list, "$?")->xit_status == -1917 || ft_find_var(&env_list, "$?")->xit_status == 127) 
 			break ;
 		free(prompt);
 		prompt = ft_build_prompt(&env_list);

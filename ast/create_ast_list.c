@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:25:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 11:39:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/08 18:29:38 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	read_ast(t_ast *node, int depth)
 {
 	t_token	*token;
 	int		i;
-	//t_token	*temp;
+	t_token	*temp;
 
 	for (int i = 0; i < depth; i++)
 	{
@@ -202,26 +202,26 @@ void	read_ast(t_ast *node, int depth)
 		token = token->next;
 		i++;
 	}
-	// temp = node->token->file_redir_in;
-	// i = 0;
-	// while (temp != NULL)
-	// {
-	// 	printf("    ");
-	// 	printf("file_redir_in%d: %s\n", i, temp->token);
-	// 	printf("file_redir : %s\n", temp->file_redir);
-	// 	temp = temp->next;
-	// 	i++;
-	// }
-	// temp = node->token->file_redir_out;
-	// i = 0;
-	// while (temp != NULL)
-	// {
-	// 	printf("    ");
-	// 	printf("file_redir_out%d: %s\n", i, temp->token);
-	// 	printf("file_redir : %s\n", temp->file_redir);
-	// 	temp = temp->next;
-	// 	i++;
-	// }
+	temp = node->token->file_redir_in;
+	i = 0;
+	while (temp != NULL)
+	{
+		printf("    ");
+		printf("file_redir_in%d: %s\n", i, temp->token);
+		printf("file_redir : %s\n", temp->file_redir);
+		temp = temp->next;
+		i++;
+	}
+	temp = node->token->file_redir_out;
+	i = 0;
+	while (temp != NULL)
+	{
+		printf("    ");
+		printf("file_redir_out%d: %s\n", i, temp->token);
+		printf("file_redir : %s\n", temp->file_redir);
+		temp = temp->next;
+		i++;
+	}
 	read_ast(node->left, depth + 1);
 	read_ast(node->right, depth + 1);
 }

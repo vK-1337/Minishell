@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 17:44:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:34:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
 	// ft_redirections(&listed_tokens);
-	//if (ft_open_solo_fd(&listed_tokens) == 1)
+	// if (ft_open_solo_fd(&listed_tokens) == 1)
 	ft_reunite_redirection(&listed_tokens);
 	return (listed_tokens);
 }
@@ -44,7 +44,7 @@ void	*ft_reunite_tokens(t_token **tokens)
 	while (curr)
 	{
 		next = curr->next;
-	    if (next && curr->type == OPTION && next->type == OPTION)
+		if (next && curr->type == OPTION && next->type == OPTION)
 		{
 			if (ft_join_options(tokens, curr, next) == NULL)
 				return (NULL);

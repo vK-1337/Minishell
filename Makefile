@@ -19,6 +19,7 @@ SRCS =			cd/cd.c \
 				lexer/lexer_utils.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
+				lexer/syntax_utils.c \
 				lexer/handle_redirections.c \
 				lst_utils.c \
 				main/minishell.c \
@@ -36,6 +37,7 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
 				tokens/token_utils.c \
+
 
 CFLAGS = -Wall -Werror -Wextra -g3
 

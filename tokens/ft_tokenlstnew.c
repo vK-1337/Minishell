@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/02/28 19:48:50 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 01:19:44 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ t_token	*ft_tokenlstnew(void *content, t_ttype type)
 	new_node->type = type;
 	new_node->next = NULL;
 	new_node->prev = NULL;
-    new_node->file_redir = NULL;
+	new_node->file_redir = NULL;
 	return (new_node);
 }

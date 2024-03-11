@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 18:56:22 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:01:53 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,24 @@
 
 int	ft_unclosed_input(char *input)
 {
-	int	i;
-	int	simple_quotes;
-	int	double_quotes;
-	int	parenthesis;
-
-	i = -1;
-	parenthesis = 0;
-	double_quotes = 0;
-	simple_quotes = 0;
+	t_norme(vars) = {0};
 	if (!input)
 		return (0);
-	while (input[++i])
+	while (input[++vars.i])
 	{
-		if (input[i] == 34 && ft_not_single_quoted(input, i))
-			double_quotes++;
-		else if (input[i] == 39 && ft_not_double_quoted(input, i))
-			simple_quotes++;
-		else if (input[i] == 40 && ft_not_quoted(input, i))
-			parenthesis++;
-		else if (input[i] == 41 && ft_not_quoted(input, i) && parenthesis > 0)
-			parenthesis--;
+		if (input[vars.i] == 34 && ft_not_single_quoted(input, vars.i))
+			vars.k++;
+		else if (input[vars.i] == 39 && ft_not_double_quoted(input, vars.i))
+			vars.j++;
+		else if (input[vars.i] == 40 && ft_not_quoted(input, vars.i))
+			vars.l++;
+		else if (input[vars.i] == 41 && ft_not_quoted(input, vars.i)
+			&& vars.l > 0)
+			vars.l--;
 	}
-	if (double_quotes % 2 != 0 || simple_quotes % 2 != 0)
+	if (vars.k % 2 != 0 || vars.j % 2 != 0)
 		return (1);
-	else if (parenthesis != 0)
+	else if (vars.l != 0)
 		return (1);
 	return (0);
 }
@@ -71,8 +64,8 @@ int	ft_not_single_quoted(char *input, int char_index)
 
 int	ft_not_double_quoted(char *input, int char_index)
 {
-	int i;
-	int double_quotes;
+	int	i;
+	int	double_quotes;
 
 	i = 0;
 	double_quotes = 0;

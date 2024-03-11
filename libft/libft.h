@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:26:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:57:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,17 @@ typedef struct s_list
 	int				xit_status;
 }					t_list;
 
+typedef struct s_norme
+{
+	uintptr_t		i;
+	uintptr_t		j;
+	uintptr_t		k;
+	uintptr_t		l;
+	uintptr_t		index;
+	int				*tab;
+	char			*str;
+}					t_norme;
+
 // BONUS
 
 t_list				*ft_lstnew(void *content, int build_env, int env_print);
@@ -97,5 +108,8 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_after_equal(char *str);
 int					ft_find_equal(char *str);
+void				initialize_node(struct s_list *node, void *content, int build_env,
+						int env_print);
+void				*init_node_env_variables(t_list *node, void *content);
 
 #endif

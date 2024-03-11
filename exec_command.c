@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 16:07:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:14:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,22 +125,22 @@ int	check_command(char **command, t_list *env_list)
 	exit_status = 1871;
 	if (!command)
 		return (-1917);
-	if (ft_strncmp("env", command[0], 3) == 0)
+	if (ft_strcmp("env", command[0]) == 0)
 		exit_status = ft_print_env(env_list);
-	else if (ft_strncmp("unset", command[0], 5) == 0)
+	else if (ft_strcmp("unset", command[0]) == 0)
 		exit_status = ft_unset(&env_list, command[1]);
-	else if (ft_strncmp("export", command[0], 6) == 0)
+	else if (ft_strcmp("export", command[0]) == 0)
 		exit_status = ft_export(&env_list, command[1]);
-	else if (ft_strncmp("exit", command[0], 4) == 0)
+	else if (ft_strcmp("exit", command[0]) == 0)
 		exit_status = -1917;
-	else if (ft_strncmp("cd", command[0], 2) == 0)
+	else if (ft_strcmp("cd", command[0]) == 0)
 	{
 		if (command[1] == NULL)
 			exit_status = ft_cd(NULL, &env_list);
 		else
 			exit_status = ft_cd(command[1], &env_list);
 	}
-	else if (ft_strncmp("pwd", command[0], 3) == 0)
+	else if (ft_strcmp("pwd", command[0]) == 0)
 		exit_status = ft_pwd();
 	return (ft_free_char_tab(command), exit_status);
 }
@@ -161,17 +161,16 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	if (instruct == NULL)
 	{
 		ft_putstr_fd(command, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (ft_free_char_tab(cmd_split), 0);
+		ft_putstr_fd(": command not found\n", 2);
+		exit_status = -1917;
 	}
 	else
 	{
 		execve(instruct, cmd_split, env);
 		printf("execve error\n");
-		exit(EXIT_FAILURE);
+		exit_status = -1917;
 	}
-	free(command);
-	return (ft_free_char_tab(cmd_split), 0);
+	return (ft_free_char_tab(cmd_split), exit_status);
 }
 void	handle_error(int err, char *msg)
 {
@@ -225,6 +224,7 @@ int	launch_here_doc(char *limiter, int saved_std[2])
 
 int	configure_fd_in(int fd_in, char *token, char *file, int saved_std[2])
 {
+	printf("file: %s\n", file);
 	if (fd_in != 0)
 		close(fd_in);
 	if (ft_strncmp(token, "<", 1) == 0)
@@ -253,6 +253,7 @@ void	do_redirections(t_ast *command)
 	int		fd_in;
 
 	travel = command->token->file_redir_in;
+	printf("travel: %s\n", travel->token);
 	fd_out = 1;
 	fd_in = 0;
 	while (travel)
@@ -294,14 +295,9 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	if (id == 0)
 	{
 		do_redirections(command);
-		exec_command(command_str, env, env_list);
-		ft_free_char_tab(env);
-		printf("execve error\n");
-		exit(EXIT_FAILURE);
+		exit_status = exec_command(command_str, env, env_list);
 	}
 	else
 		waitpid(id, &exit_status, 0);
-	ft_free_char_tab(env);
-	free(command_str);
-	return (exit_status);
+	return (ft_free_char_tab(env), free(command_str), exit_status);
 }

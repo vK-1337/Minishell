@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/29 17:25:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:30:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 void    free_token(t_token *token);
 void    free_ast_right(t_ast *ast);
 
@@ -43,7 +44,7 @@ void    free_ast_right(t_ast *ast)
 void    free_token(t_token *token)
 {
     t_token *next;
-    
+
     if (token == NULL)
         return ;
     while (token != NULL)

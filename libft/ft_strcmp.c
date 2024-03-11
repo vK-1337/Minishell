@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:06:51 by udumas            #+#    #+#             */
-/*   Updated: 2024/02/18 18:34:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 02:15:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!s2 || !s1)
-        return (-1);
-    while (s1[i] && s2[i])
-    {
-        if (s1[i] != s2[i])
-            return (s1[i] - s2[i]);
-        i++;
-    }
-    if (s1[i] != s2[i])
-        return (s1[i] - s2[i]);
-    return (0);
+	i = 0;
+	if (!s2 || !s1)
+		return (-1);
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	if (s1[i] != s2[i])
+		return (s1[i] - s2[i]);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/08 15:52:46 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 17:12:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 		return (-1);
 	}
 	launch_ast_recursive(ast, env_list, exit_status);
+    printf("Coucou\n");
 	ft_free_ast(ast);
 	return (*exit_status);
 }
@@ -37,7 +38,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 	char	**env;
 
 	env = NULL;
-	
+
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)
@@ -126,7 +127,7 @@ int	create_redirection(t_ast *node, t_list *env_list)
 {
 	int	exit_status;
     int saved_std[2];
-	
+
 	saved_std[0] = dup(0);
 	saved_std[1] = dup(1);
 	if (is_pipe(node->left->token->token) == 1)
@@ -150,7 +151,7 @@ int right_pipe(t_ast *node, t_list *env_list, int saved_std[2])
     t_ast   *travel;
     int     exit_status;
     travel = node;
-    
+
     while (is_pipe(travel->right->token->token) == 1)
     {
         exit_status = pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
@@ -178,7 +179,7 @@ int left_pipe(t_ast *node, t_list *env_list, int saved_std[2])
 		travel = travel->daddy;
     }
     exit_status = last_pipe(redo_env(env_list), node->right, 1, env_list, saved_std);
-	
+
     return (exit_status);
 }
 

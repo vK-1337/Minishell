@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:54:23 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 09:32:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 04:21:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,13 @@ int	ft_count_tokens(char const *s)
 	while (s[i])
 	{
 		if (ft_is_operator(s[i]))
-		{
-			i++;
-			if (s[i] == s[i - 1])
-				i++;
-			count++;
-		}
+			ft_helper1(&i, &count, s);
 		else if ((s[i] == 34 || s[i] == 39))
-		{
-			if (s[i + 1])
-				i += ft_go_next(s, i);
-			count++;
-		}
-        else if (s[i] == 40)
-        {
-            i += ft_go_next_parenthesis(s, i);
-            count++;
-        }
+			ft_helper2(&i, &count, s);
+		else if (s[i] == 40)
+			ft_helper3(&i, &count, s);
 		else if (s[i] != ' ' && ft_is_separator(s[i + 1]))
-		{
-			i++;
-			count++;
-		}
+			ft_helper4(&i, &count);
 		else
 			i++;
 	}
@@ -52,21 +37,21 @@ int	ft_count_tokens(char const *s)
 
 int	ft_go_next_parenthesis(const char *str, int index)
 {
-    int i;
-    int opening_parenthesis;
+	int	i;
+	int	opening_parenthesis;
 
-    i = 0;
-    opening_parenthesis = 0;
-    while (str[index] != 41)
-    {
-        if (str[index] == 40)
-        {
-            opening_parenthesis++;
-        }
-        index++;
-        i++;
-    }
-    return (i + 1 + opening_parenthesis);
+	i = 0;
+	opening_parenthesis = 0;
+	while (str[index] != 41)
+	{
+		if (str[index] == 40)
+		{
+			opening_parenthesis++;
+		}
+		index++;
+		i++;
+	}
+	return (i + 1 + opening_parenthesis);
 }
 
 int	ft_go_next(const char *str, int index)

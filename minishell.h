@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 19:44:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:32:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   STRUCT                                    */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   STRUCT                                   */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 typedef struct s_token
 {
@@ -66,28 +66,28 @@ typedef struct s_exec
 	struct s_exec	*next;
 }					t_exec;
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   CD                                        */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   CD                                       */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_cd(char *path, t_list **env);
 int					ft_replace_pwd(t_list **env);
 int					ft_set_pwd(t_list **env);
 int					old_pwd_use(char *path, t_list **env);
 int					back_home(char *path, t_list **env);
-int					CDPATH_FIND(char *path, t_list **env);
+int					ft_cd_path_find(char *path, t_list **env);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 DEBUG                                       */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                 DEBUG                                      */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				ft_print_expandables(int *vars, int vars_number);
 int					ft_count_tokens(char const *s);
@@ -105,26 +105,26 @@ char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  ENV                                        */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  ENV                                       */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 t_list				*ft_convert_env(char **env);
 int					ft_print_env(t_list *env);
 t_list				*ft_exit_variable(void);
 void				ft_update_xstatus(t_list **env, int x_status);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   EXEC                                      */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   EXEC                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					exec_shell_command(t_ast *command, t_list *env_list,
 						char **env);
@@ -138,14 +138,17 @@ int					configure_fd_in(int fd_in, char *token, char *file,
 						int saved_std[2]);
 int					launch_here_doc(char *limiter, int saved_std[2]);
 void				here_doc(char *limiter, int fd[2]);
+char				*take_path(char **env);
+char				*check_valid_command(char **cmd_split, char *path);
+int					check_command(char **command, t_list *env_list);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 EXPAND                                      */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                 EXPAND                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_contain_variables(char *input);
 int					*ft_is_expandable(char *input, int variable_count);
@@ -158,14 +161,22 @@ char				*ft_join_var(t_list **env, char *final_input, char *input);
 char				*ft_expand(char *input, t_list **env);
 char				*ft_join_xstatus(char *final_input, t_list *x_var);
 char				*ft_join_other_var(char *final_input, t_list *env_var);
+void				ft_join_helper(int *j, char *new_str, char *final_input);
+void				ft_handle_brackets(int *i, char *input, t_list **env,
+						char **final_input);
+void				ft_handle_classic_variables(int *i, char *input,
+						t_list **env, char **final_input);
+void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
+void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
+void				is_expandable_helper(t_norme *vars, char *input);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  EXPORT                                     */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  EXPORT                                    */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				ft_is_prev_greaterforbidden_char(char c);
 void				ft_display_export(t_list **env_list);
@@ -181,26 +192,26 @@ int					ft_correct_format(char *new_var);
 int					ft_forbidden_char(char c);
 int					ft_contain_equal(char *new_var);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                             INPUT TREATMENT                                 */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                             INPUT TREATMENT                                */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_unclosed_input(char *input);
 int					ft_not_quoted(char *input, int char_index);
 int					ft_not_single_quoted(char *input, int char_index);
 int					ft_not_double_quoted(char *input, int char_index);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  LEXER                                      */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  LEXER                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 t_token				*ft_lexer(char *input, t_list **env);
 int					ft_count_tokens(char const *s);
@@ -226,14 +237,36 @@ void				*ft_join_export(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
+void				ft_reunite_helper(t_token **tokens, t_token *curr,
+						t_token *next);
+t_ttype				define_first_token_type(char *token);
+t_ttype				determine_token_type(char **tokens, int i,
+						int first_type_redir, t_ttype previous_type,
+						char *previous_token);
+void				update_previous(char **previous_token,
+						t_ttype *previous_type, char *current_token,
+						t_ttype current_type);
+t_token				*initialize_tokens_list(int *i, int *first_type_redir,
+						char **previous_token);
+int					handle_quotes(const char *str, int index, int delimiter);
+int					handle_parentheses(const char *str, int index);
+int					handle_non_space_delimiter(const char *str, int index,
+						int delimiter);
+int					handle_space_delimiter(const char *str, int index,
+						int delimiter);
+int					determine_return_value(int delimiter, int i);
+int					should_join_export(t_token *curr);
+int					should_join_options(t_token *curr);
+int					should_join_file_path(t_token *curr);
+void				update_next_token_type(t_token *curr);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  SYNTAX                                     */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  SYNTAX                                    */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					check_syntax(char *input);
 int					ft_syntax_parenthesis(char *input);
@@ -246,60 +279,63 @@ int					ft_pipes_synt_error(char *input, int index);
 int					ft_rredir_synt_err(char *input, int index, char redir_char);
 int					ft_spaces_parenthesis(char *str);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 LST UTILS                                   */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                 LST UTILS                                  */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				ft_free_list(t_list **list);
 void				ft_delete_last(t_list *env_node);
 void				ft_delete_connect(t_list *env_node);
+void				initialize_node(struct s_list *node, void *content,
+						int build_env, int env_print);
+void				*init_node_env_variables(t_list *node, void *content);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  PROMPT                                     */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  PROMPT                                    */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 char				*ft_extract_hostname(char *session_manager);
 char				*trim_pwd(char *pwd);
 char				*ft_build_prompt(t_list **env);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                   PWD                                       */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   PWD                                      */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_pwd(void);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 SIGNALS                                     */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                 SIGNALS                                    */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				ft_init_signals(void);
 void				ft_change_signals(void);
 void				sig_handler(int signum);
 void				wait_p_handler(int signum);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                             TOKEN LST UTILS                                 */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                             TOKEN LST UTILS                                */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				ft_tokenlstclear(t_token **lst, void (*del)(void *));
 void				ft_tokenlstadd_back(t_token **lst, t_token *new);
@@ -312,24 +348,28 @@ t_token				*ft_tokenlstmap(t_token *lst, void *(*f)(void *),
 t_token				*ft_tokenlstnew(void *content, t_ttype type);
 int					ft_tokenlstsize(t_list *lst);
 void				ft_print_token_list(t_token **tokens);
+void				ft_helper1(int *i, int *count, char const *s);
+void				ft_helper2(int *i, int *count, char const *s);
+void				ft_helper3(int *i, int *count, char const *s);
+void				ft_helper4(int *i, int *count);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                  UNSET                                      */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                  UNSET                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_unset(t_list **env_list, char *var_to_del);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                                 WILDCARD                                    */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                 WILDCARD                                   */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 int					ft_contain_wildcards(char *input);
 int					ft_decr_incr(int condition);
@@ -342,13 +382,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                             		AST																			  */
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                             		AST											*/
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
@@ -367,8 +407,7 @@ int					create_redirection(t_ast *node, t_list *env_list);
 char				*build_command(t_ast *node);
 int					right_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
 int					left_pipe(t_ast *node, t_list *env_list, int saved_std[2]);
-int					pipe_chain(char **env, t_ast *command, t_list *env_list,
-						int save_std[2]);
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
+int	pipe_chain(char **env, t_ast *command, t_list *env_list, int saved_std[2]);
 #endif

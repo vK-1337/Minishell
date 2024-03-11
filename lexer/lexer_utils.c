@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/04 10:45:27 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:01:21 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,36 @@ int	ft_is_operator(char c)
 	if (c == 38 || c == 60 || c == 62 || c == 124)
 		return (1);
 	return (0);
+}
+
+int	ft_is_file(char *token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '.')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_is_option(char *token)
+{
+	int	i;
+
+	i = 0;
+	if (token[0] != '-')
+		return (0);
+	else
+		i++;
+	while (token[i])
+	{
+		if (!ft_isalnum(token[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

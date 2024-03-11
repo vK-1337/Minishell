@@ -6,19 +6,25 @@ SRCS =			cd/cd.c \
 				cd/cd_utils.c \
 				env/env.c \
 				env/export.c \
+				env/export_utils.c \
+				env/export_utils_two.c \
 				env/unset.c \
 				exec_command.c \
 				expand/expand.c \
 				expand/expand_utils.c \
+				expand/expand_utils_two.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				get_next_line/get_next_line.c \
 				get_next_line/get_next_line_utils.c \
+				lexer/handle_redirections.c \
 				lexer/lexer.c \
 				lexer/lexer_utils.c \
+				lexer/lexer_utils_two.c \
+				lexer/lexer_utils_three.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
-				lexer/handle_redirections.c \
+				lexer/syntax_utils.c \
 				lst_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \
@@ -34,7 +40,9 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstnew.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
+				tokens/helpers.c \
 				tokens/token_utils.c \
+				tokens/token_utils_two.c \
 
 CFLAGS = -Wall -Werror -Wextra -g3
 

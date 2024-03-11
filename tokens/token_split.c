@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 20:37:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:05:04 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,29 @@
 
 char	**ft_token_split(char const *s)
 {
-	size_t	i;
-	size_t	j;
-	size_t	words_nbr;
-	size_t	word_len;
 	char	**words;
 
-	words_nbr = ft_count_tokens(s);
-	words = malloc((words_nbr + 1) * sizeof(char *));
+	t_norme(vars) = {0};
+	vars.k = ft_count_tokens(s);
+	words = malloc((vars.k + 1) * sizeof(char *));
 	if (!words)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i])
+	while (s[(size_t)vars.i])
 	{
-		if (s[i] != ' ' && s[i])
+		if (s[(size_t)vars.i] != ' ' && s[(size_t)vars.i])
 		{
-			word_len = ft_tokenlen(s, i);
-			words[j] = malloc((word_len + 1) * sizeof(char));
-			if (!words[j])
+			vars.l = ft_tokenlen(s, vars.i);
+			words[(size_t)vars.j] = malloc(((size_t)vars.l + 1) * sizeof(char));
+			if (!words[(size_t)vars.j])
 				return (free(words), NULL);
-			ft_add_token(words[j], s, i, word_len);
-			i += (word_len - 1);
-			j++;
+			ft_add_token(words[(size_t)vars.j], s, (size_t)vars.i,
+				(size_t)vars.l);
+			vars.i += ((size_t)vars.l - 1);
+			vars.j++;
 		}
-		i++;
+		vars.i++;
 	}
-	words[words_nbr] = NULL;
+	words[(size_t)vars.k] = NULL;
 	return (words);
 }
 
@@ -74,61 +70,26 @@ int	ft_tokenlen(const char *str, int index)
 	i = 0;
 	delimiter = ft_define_delimiter(str[index]);
 	if (delimiter == 34 || delimiter == 39)
-	{
-		index++;
-		while (str[index] != delimiter)
-		{
-			index++;
-			i++;
-		}
-	}
+		i = handle_quotes(str, index, delimiter);
 	else if (delimiter == 40)
-	{
-		index++;
-		while (str[index] != 41)
-		{
-			if (str[index] == 40)
-				i++;
-			index++;
-			i++;
-		}
-	}
+		i = handle_parentheses(str, index);
 	else if (delimiter != 32)
-	{
-		if (str[index + 1] && str[index + 1] == delimiter)
-			i = 2;
-		else
-			i = 1;
-	}
+		i = handle_non_space_delimiter(str, index, delimiter);
 	else
-	{
-		while (str[index] && str[index] != delimiter)
-		{
-			if (str[index + 1] == 34 || str[index + 1] == 39
-				|| ft_is_operator(str[index + 1]))
-			{
-				i++;
-				index++;
-				break ;
-			}
-			i++;
-			index++;
-		}
-	}
-	if (delimiter == 34 || delimiter == 39 || delimiter == 40)
-		return (i + 2);
-	else
-		return (i);
+		i = handle_space_delimiter(str, index, delimiter);
+	return (determine_return_value(delimiter, i));
 }
 
-void	ft_print_tokens(char **tokens)
+int	handle_quotes(const char *str, int index, int delimiter)
 {
 	int	i;
 
 	i = 0;
-	while (tokens[i])
+	index++;
+	while (str[index] != delimiter)
 	{
-		printf("Token numero |%d| => |%s|\n", i + 1, tokens[i]);
+		index++;
 		i++;
 	}
+	return (i);
 }

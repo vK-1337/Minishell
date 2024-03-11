@@ -10,6 +10,7 @@ SRCS =			cd/cd.c \
 				exec_command.c \
 				expand/expand.c \
 				expand/expand_utils.c \
+				expand/expand_utils_two.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				get_next_line/get_next_line.c \

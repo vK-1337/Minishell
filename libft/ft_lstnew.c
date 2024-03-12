@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/03/12 12:44:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:52:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 t_list	*ft_lstnew(void *content, int build_env, int env_print)
 {
 	t_list	*new_node;
-	int		i;
-	int		j;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
@@ -27,21 +25,7 @@ t_list	*ft_lstnew(void *content, int build_env, int env_print)
 		new_node->content = content;
 	}
 	else
-	{
-		i = ft_find_equal(content);
-		new_node->var_name = malloc((i + 1) * sizeof(char));
-		if (!new_node->var_name)
-			return (NULL);
-		ft_strlcpy(new_node->var_name, content, i + 1);
-		j = ft_after_equal(content);
-		if (j)
-		{
-			new_node->content = malloc((j + 1) * sizeof(char));
-			if (!new_node->content)
-				return (NULL);
-			ft_strlcpy(new_node->content, content + i + 1, j);
-		}
-	}
+		ft_env_node(new_node, content);
 	if (env_print)
 		new_node->env_print = 1;
 	else
@@ -50,6 +34,26 @@ t_list	*ft_lstnew(void *content, int build_env, int env_print)
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
+}
+
+void	ft_env_node(t_list *node, void *content)
+{
+	int	i;
+	int	j;
+
+	i = ft_find_equal(content);
+	node->var_name = malloc((i + 1) * sizeof(char));
+	if (!node->var_name)
+		return ;
+	ft_strlcpy(node->var_name, content, i + 1);
+	j = ft_after_equal(content);
+	if (j)
+	{
+		node->content = malloc((j + 1) * sizeof(char));
+		if (!node->content)
+			return ;
+		ft_strlcpy(node->content, content + i + 1, j);
+	}
 }
 
 int	ft_find_equal(char *str)

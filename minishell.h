@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:40:11 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:55:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,8 +241,8 @@ int					check_only_operator(t_token **tokens);
 void				ft_clean_operator(t_token **tokens);
 void				update_token_link(t_token *curr);
 int					handle_fd(t_token *curr, t_token **tokens);
-void	ft_front(t_token **command);
-void	ft_back(t_token **command);
+void				ft_front(t_token **command);
+void				ft_back(t_token **command);
 
 /******************************************************************************/
 /*                                                                            */
@@ -375,7 +375,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*                             		AST        								  */
+/*                                 AST                                        */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/

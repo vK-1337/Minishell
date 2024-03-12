@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 13:27:42 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 13:43:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,37 +38,42 @@ void	ft_reunite_redirection(t_token **tokens)
 	(*tokens)->prev = NULL;
 }
 
-void handle_token_addition(t_token **command, t_token **curr)
+void	handle_token_addition(t_token **command, t_token **curr)
 {
-    t_token *temp;
+	t_token	*temp;
 
-    if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
-    {
-        temp = (*curr)->next;
-        ft_tokenlstadd_back(&(*command)->file_redir_in, *curr);
-        *curr = temp;
-    }
-    else
-    {
-        temp = (*curr)->next;
-        ft_tokenlstadd_back(&(*command)->file_redir_out, *curr);
-        *curr = temp;
-    }
+	if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
+	{
+		temp = (*curr)->next;
+		ft_tokenlstadd_back(&(*command)->file_redir_in, *curr);
+		*curr = temp;
+	}
+	else
+	{
+		temp = (*curr)->next;
+		ft_tokenlstadd_back(&(*command)->file_redir_out, *curr);
+		*curr = temp;
+	}
 }
 
-void ft_front(t_token **command)
+void	ft_front(t_token **command)
 {
-    t_token *curr = (*command)->next;
-    t_token *temp2 = curr ? curr->prev : NULL;
+	t_token	*curr;
+	t_token	*temp2;
 
-    while (curr && curr->type == OPERATOR && 
-           (is(curr->token, "<") || is(curr->token, ">") ||
-            is(curr->token, "<<") || is(curr->token, ">>")))
-    {
-        handle_token_addition(command, &curr);
-        if (temp2)
-            temp2->next = curr;
-    }
+	curr = (*command)->next;
+	if (curr)
+		temp2 = curr->prev;
+	else
+		temp2 = NULL;
+	while (curr && curr->type == OPERATOR && (is(curr->token, "<")
+			|| is(curr->token, ">") || is(curr->token, "<<") || is(curr->token,
+				">>")))
+	{
+		handle_token_addition(command, &curr);
+		if (temp2)
+			temp2->next = curr;
+	}
 }
 
 void	ft_back(t_token **command)

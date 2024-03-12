@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:27:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:45:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*ft_reunite_tokens(t_token **tokens)
 				"export", 6) == 0)
 		{
 			if (ft_join_export(tokens, curr->next, curr->next->next) == NULL)
-                return (NULL);
+				return (NULL);
 			curr = *tokens;
 		}
 		else if (next && curr->type == OPTION && next->type == OPTION)

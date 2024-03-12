@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:41:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:44:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ int	do_redirections(t_ast *command)
 		{
 			fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 			if (ft_strncmp(travel->token, "<<", 2) == 0)
-				fd_in = launch_here_doc(travel->file_redir, (int[2]) {0, 1});
+				fd_in = launch_here_doc(travel->file_redir, (int [2]){0, 1});
 			if (fd_in == -1)
 				return (-1917);
 			travel = travel->next;

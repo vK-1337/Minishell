@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:52:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:52:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,9 @@ t_list	**ft_sort_nodes(t_list **env_list)
 	t_list	*curr;
 	t_list	*tmp;
 	t_list	*last_node;
-	int		i;
 
 	curr = *env_list;
 	curr = curr->next;
-	i = 0;
 	while (curr)
 	{
 		tmp = curr->next;

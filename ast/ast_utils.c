@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:47:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:59:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,11 @@ void	free_token(t_token *token)
 		token = next;
 	}
 	return ;
+}
+
+int	is(char *token, char *comp)
+{
+	if (ft_strcmp(token, comp) == 0)
+		return (1);
+	return (0);
 }

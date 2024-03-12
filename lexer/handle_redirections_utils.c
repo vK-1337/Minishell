@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:39:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 13:45:26 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,30 @@ t_token	*ft_clean_tokens(t_token **tokens)
 	return (curr);
 }
 
-int handle_fd(t_token *curr, t_token **tokens)
+int	handle_fd(t_token *curr, t_token **tokens)
 {
-    int fd = file_redir(curr);
-    t_token *tmp = curr->next;
+	int		fd;
+	t_token	*tmp;
 
-    if (fd == -1)
-    {
-        tmp->prev = ft_clean_tokens(tokens);
-        tmp->prev->next = tmp;
-        return -1;
-    }
-    else if (fd == -1917)
-        return -1917;
-    return 0;
+	fd = file_redir(curr);
+	tmp = curr->next;
+	if (fd == -1)
+	{
+		tmp->prev = ft_clean_tokens(tokens);
+		tmp->prev->next = tmp;
+		return (-1);
+	}
+	else if (fd == -1917)
+		return (-1917);
+	return (0);
 }
 
-void update_token_link(t_token *curr)
+void	update_token_link(t_token *curr)
 {
-    if (curr->next)
-        curr->next->prev = curr->prev;
-    if (curr->prev)
-        curr->prev->next = curr->next;
+	if (curr->next)
+		curr->next->prev = curr->prev;
+	if (curr->prev)
+		curr->prev->next = curr->next;
 }
 
 int	check_only_operator(t_token **tokens)
@@ -77,7 +79,6 @@ void	ft_clean_operator(t_token **tokens)
 	{
 		curr = (*tokens)->next;
 		ft_tokenlstdelone(tokens);
-		;
 		*tokens = curr;
 	}
 	while (curr->next != NULL)

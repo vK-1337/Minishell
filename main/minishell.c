@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:48:15 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:50:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
 		if (check_syntax(input) == 0)
 			continue ;
-		input = ft_expand(input, &env_list);
 		ft_change_signals();
 		launch_ast(input, env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->xit_status == -1917

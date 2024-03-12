@@ -14,7 +14,10 @@ SRCS =			cd/cd.c \
 				env/export_utils.c \
 				env/export_utils_two.c \
 				env/unset.c \
-				exec_command.c \
+				exec_command/exec_command.c \
+				exec_command/exec_redirections.c \
+				exec_command/exec_redirections2.c \
+				exec_command/exec_utils.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \

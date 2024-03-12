@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 13:43:09 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:23:24 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,31 @@ void	ft_front(t_token **command)
 	}
 }
 
+void	ft_token_addition(t_token **command, t_token **curr)
+{
+	t_token	*temp;
+
+	if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
+	{
+		if ((*curr)->prev)
+		{
+			temp = (*curr)->prev;
+			ft_tokenlstadd_front(&(*command)->file_redir_in, *curr);
+			*curr = temp;
+		}
+		else
+		{
+			ft_tokenlstadd_front(&(*command)->file_redir_in, *curr);
+			*curr = NULL;
+		}
+	}
+	else
+		ft_add_front (curr, command);
+}
+
 void	ft_back(t_token **command)
 {
 	t_token	*curr;
-	t_token	*temp;
 	t_token	*temp2;
 
 	curr = (*command)->prev;
@@ -90,34 +111,7 @@ void	ft_back(t_token **command)
 	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
-		if (is(curr->token, "<") == 1 || is(curr->token, "<<") == 1)
-		{
-			if (curr->prev)
-			{
-				temp = curr->prev;
-				ft_tokenlstadd_front(&(*command)->file_redir_in, curr);
-				curr = temp;
-			}
-			else
-			{
-				ft_tokenlstadd_front(&(*command)->file_redir_in, curr);
-				curr = NULL;
-			}
-		}
-		else
-		{
-			if (curr->prev)
-			{
-				temp = curr->prev;
-				ft_tokenlstadd_front(&(*command)->file_redir_out, curr);
-				curr = temp;
-			}
-			else
-			{
-				ft_tokenlstadd_front(&(*command)->file_redir_out, curr);
-				curr = NULL;
-			}
-		}
+		ft_token_addition(command, &curr);
 		(*command)->prev = curr;
 		if (curr == NULL)
 			break ;

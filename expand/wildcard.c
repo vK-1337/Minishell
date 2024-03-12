@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:09 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:15:27 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	de = readdir(dr);
 	while (de != NULL)
 	{
-		if (ft_match(token, de->d_name))
+		if (ft_match(*token, de->d_name))
 		{
 			*token = ft_join_match_helper(*token, de->d_name, count);
 			if (token == NULL)
@@ -61,7 +61,7 @@ int	ft_replace_wildcards(char *token)
 {
 	int	contain_wc;
 
-	contain_wc = ft_contain_wildcards(token);
+	contain_wc = ft_contain_wildcards(*token);
 	if (contain_wc == 1)
 		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)

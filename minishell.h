@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 17:02:44 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:27:44 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,9 @@ int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
 void				here_doc(char *limiter, int fd[2]);
+char				*check_valid_command(char **cmd_split, char *path);
+char				*take_path(char **env);
+void				ft_add_front(t_token **command, t_token **curr);
 
 /******************************************************************************/
 /*                                                                            */
@@ -397,6 +400,7 @@ size_t				ft_strlen(const char *str);
 int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
+int					ft_replace_wildcards(char **token);
 char				*ft_join_match_helper(char *token, char *de_name,
 						int count);
 

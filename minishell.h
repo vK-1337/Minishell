@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 20:54:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 08:37:12 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,12 @@ void				*ft_join_export(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
+int					ft_redirections(t_token **listed_tokens);
+int					ft_open_solo_fd(t_token **tokens);
+t_token				*ft_clean_tokens(t_token **tokens);
+int					file_redir(t_token *token);
+int					ft_open_fd(t_token **tokens);
+int					check_only_operator(t_token **tokens);
 
 /******************************************************************************/
 /*                                                                            */
@@ -309,10 +315,10 @@ void				wait_p_handler(int signum);
 /*                                                                            */
 /******************************************************************************/
 
-void				ft_tokenlstclear(t_token **lst, void (*del)(void *));
+void				ft_tokenlstclear(t_token **lst);
 void				ft_tokenlstadd_back(t_token **lst, t_token *new);
 void				ft_tokenlstadd_front(t_token **lst, t_token *new);
-void				ft_tokenlstdelone(t_token *lst);
+void				ft_tokenlstdelone(t_token **lst);
 void				ft_tokenlstiter(t_token *lst, void (*f)(void *));
 t_token				*ft_tokenlstlast(t_token *lst);
 t_token				*ft_tokenlstmap(t_token *lst, void *(*f)(void *),
@@ -350,13 +356,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 
-/******************************************************************************/
-/*                                                                            */
-/*                                                                            */
-/*                             		AST											*/
-/*                                                                            */
-/*                                                                            */
-/******************************************************************************/
+/*******************************************************************************/
+/*                                                                             */
+/*                                                                             */
+/*                             		AST																			  */
+/*                                                                             */
+/*                                                                             */
+/*******************************************************************************/
 
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);

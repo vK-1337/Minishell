@@ -6,17 +6,17 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 23:46:41 by vk                #+#    #+#             */
-/*   Updated: 2024/03/11 16:55:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:02:04 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_tokenlstdelone(t_token *lst)
+void	ft_tokenlstdelone(t_token **lst)
 {
 	if (!lst)
 		return ;
-	free(lst->token);
-	free(lst->file_redir);
-	free(lst);
+	free((*lst)->token);
+	free((*lst)->file_redir);
+	free((*lst));
 }

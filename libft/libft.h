@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 15:26:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:50:57 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef enum e_ttype
 	CMD_ARG,
 	OPERATOR,
 	PATH_FILE,
-	PARENTHESIS
+	PARENTHESIS,
+	ERROR
 }					t_ttype;
 
 typedef struct s_list

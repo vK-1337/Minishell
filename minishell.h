@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 16:56:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:48:54 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
-int				do_redirections(t_ast *command);
+int					do_redirections(t_ast *command);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
@@ -225,6 +225,12 @@ void				*ft_join_export(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
+int					ft_redirections(t_token **listed_tokens);
+int					ft_open_solo_fd(t_token **tokens);
+t_token				*ft_clean_tokens(t_token **tokens);
+int					file_redir(t_token *token);
+int					ft_open_fd(t_token **tokens);
+int					check_only_operator(t_token **tokens);
 
 /*******************************************************************************/
 /*                                                                             */
@@ -300,10 +306,10 @@ void				wait_p_handler(int signum);
 /*                                                                             */
 /*******************************************************************************/
 
-void				ft_tokenlstclear(t_token **lst, void (*del)(void *));
+void				ft_tokenlstclear(t_token **lst);
 void				ft_tokenlstadd_back(t_token **lst, t_token *new);
 void				ft_tokenlstadd_front(t_token **lst, t_token *new);
-void				ft_tokenlstdelone(t_token *lst);
+void				ft_tokenlstdelone(t_token **lst);
 void				ft_tokenlstiter(t_token *lst, void (*f)(void *));
 t_token				*ft_tokenlstlast(t_token *lst);
 t_token				*ft_tokenlstmap(t_token *lst, void *(*f)(void *),
@@ -344,7 +350,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /*******************************************************************************/
 /*                                                                             */
 /*                                                                             */
-/*                             		AST																			  */
+/*                             		AST																				*/
 /*                                                                             */
 /*                                                                             */
 /*******************************************************************************/

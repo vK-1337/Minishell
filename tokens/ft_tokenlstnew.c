@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/03/09 15:21:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 19:47:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,5 @@ t_token	*ft_tokenlstnew(void *content, t_ttype type)
     new_node->file_redir = NULL;
 	new_node->file_redir_in = NULL;
 	new_node->file_redir_out = NULL;
-	new_node->fd[0] = 0;
-	new_node->fd[1] = 1;
 	return (new_node);
 }

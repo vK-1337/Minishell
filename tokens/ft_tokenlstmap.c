@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenlstmap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:16:07 by vk                #+#    #+#             */
-/*   Updated: 2024/02/12 19:59:33 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:34:05 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*ft_tokenlstmap(t_token *lst, void *(*f)(void *), void (*del)(void *))
 		new = ft_tokenlstnew(f(lst->token), 0);
 		if (!new)
 		{
-			ft_tokenlstclear(&new, del);
+			ft_tokenlstclear(&new);
 			return (NULL);
 		}
 		ft_tokenlstadd_back(&new_head, new);

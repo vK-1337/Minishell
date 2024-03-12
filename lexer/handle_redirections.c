@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 23:18:21 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 08:47:24 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,10 @@ int ft_open_fd(t_token **tokens)
 
 void	ft_front(t_token **command)
 {
-	t_token *curr;
-	t_token *temp;
-	t_token *temp2;
-	
+	t_token	*curr;
+	t_token	*temp;
+	t_token	*temp2;
+
 	curr = (*command)->next;
 	while (curr && (curr->type == COMMAND || curr->type == OPTION))
 		curr = curr->next;
@@ -190,7 +190,7 @@ void	ft_front(t_token **command)
 		return ;
 	temp2 = curr->prev;
 	while (curr && curr->type == OPERATOR && (is_fd_in(curr->token) == 1
-				|| is_fd_out(curr->token) == 1 || is_here_doc(curr->token) == 1
+			|| is_fd_out(curr->token) == 1 || is_here_doc(curr->token) == 1
 			|| is_append(curr->token) == 1))
 	{
 		if (is_fd_in(curr->token) == 1 || is_here_doc(curr->token) == 1)
@@ -229,18 +229,20 @@ void	ft_front(t_token **command)
 
 void	ft_back(t_token **command)
 {
-	t_token *curr;
-	t_token *temp;
-	t_token *temp2;
+	t_token	*curr;
+	t_token	*temp;
+	t_token	*temp2;
+
 	curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is_fd_in(temp2->token) == 1
-			|| is_fd_out(temp2->token) == 1 || is_here_doc(temp2->token) == 1
-		|| is_append(temp2->token) == 1)))
+				|| is_fd_out(temp2->token) == 1
+				|| is_here_doc(temp2->token) == 1
+				|| is_append(temp2->token) == 1)))
 		temp2 = temp2->prev;
 	while (curr->type == 3 && (is_fd_in(curr->token) == 1
 			|| is_fd_out(curr->token) == 1 || is_here_doc(curr->token) == 1
-		|| is_append(curr->token) == 1))
+			|| is_append(curr->token) == 1))
 	{
 		if (is_fd_in(curr->token) == 1 || is_here_doc(curr->token) == 1)
 		{
@@ -279,8 +281,8 @@ void	ft_back(t_token **command)
 }
 void	ft_reunite_redirection(t_token **tokens)
 {
-	t_token *curr;
-	
+	t_token	*curr;
+
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND && (*tokens)->type != PARENTHESIS)
 	{
@@ -303,16 +305,17 @@ void	ft_reunite_redirection(t_token **tokens)
 	(*tokens)->prev = NULL;
 }
 
-int       ft_open_solo_fd(t_token **tokens)
+int	ft_open_solo_fd(t_token **tokens)
 {
 	t_token	*curr;
-	t_token *tmp;
-	int	fd;
-	
+	t_token	*tmp;
+	int		fd;
+
 	curr = *tokens;
 	while (curr != NULL)
 	{
-		if ((curr->type != OPERATOR) ||(curr->type == OPERATOR && curr->file_redir == NULL))
+		if ((curr->type != OPERATOR) || (curr->type == OPERATOR
+				&& curr->file_redir == NULL))
 			return (1);
 		curr = curr->next;
 	}
@@ -351,11 +354,11 @@ t_token*	ft_clean_tokens(t_token **tokens)
 	return (curr);
 }
 
-int file_redir(t_token *token)
+int	file_redir(t_token *token)
 {
 	char *file;
-	int	fd;
-	
+	int fd = 0;
+
 	file = token->file_redir;
 	fd = 0;
 	if (is_fd_out(token->token) == 1)
@@ -371,5 +374,4 @@ int file_redir(t_token *token)
 			return (-1917);
 	}
 	return (fd);
-	
 }

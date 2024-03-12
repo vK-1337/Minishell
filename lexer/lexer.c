@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 22:59:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 08:47:49 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*ft_reunite_tokens(t_token **tokens)
 	while (curr)
 	{
 		next = curr->next;
-	    if (next && curr->type == OPTION && next->type == OPTION)
+		if (next && curr->type == OPTION && next->type == OPTION)
 		{
 			if (ft_join_options(tokens, curr, next) == NULL)
 				return (NULL);

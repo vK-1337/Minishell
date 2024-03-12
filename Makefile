@@ -10,6 +10,7 @@ SRCS =			cd/cd.c \
 				exec_command.c \
 				expand/expand.c \
 				expand/expand_utils.c \
+				expand/expand_utils_two.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				get_next_line/get_next_line.c \
@@ -18,6 +19,7 @@ SRCS =			cd/cd.c \
 				lexer/lexer_utils.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
+				lexer/syntax_utils.c \
 				lexer/handle_redirections.c \
 				lst_utils.c \
 				main/minishell.c \
@@ -35,6 +37,7 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
 				tokens/token_utils.c \
+
 
 CFLAGS = -Wall -Werror -Wextra -g3
 

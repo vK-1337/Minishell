@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/09 13:12:17 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:31:40 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_var_exists(t_list **env_list, char *var)
 	i = 0;
 	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_' || var[i + 1] == '?')
 		i++;
-	if (var[0] == '$')
+	if (var[0] == '$' || var[0] == '{')
 		var++;
 	else
 		i++;

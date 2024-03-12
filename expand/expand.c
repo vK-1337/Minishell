@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 14:51:47 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/11 20:22:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_contain_variables(char *input)
 {
 	int	i;
-	int	variable_count;
 	int	j;
+	int	variable_count;
 
 	i = 0;
 	variable_count = 0;
@@ -41,43 +41,25 @@ int	ft_contain_variables(char *input)
 
 int	*ft_is_expandable(char *input, int variable_count)
 {
-	int	i;
-	int	j;
-	int	index;
-	int	single_quotes;
-	int	double_quotes;
-	int	*expand_infos;
-
-	i = 0;
-	index = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	expand_infos = malloc((variable_count) * sizeof(int));
-	while (input[i])
+	t_norme(vars) = {0};
+	vars.tab = malloc((variable_count) * sizeof(int));
+	while (input[vars.i])
 	{
-		if (input[i] == 39 && double_quotes == 0)
-			single_quotes += ft_decr_incr(single_quotes);
-		else if (input[i] == 34 && single_quotes == 0)
-			double_quotes += ft_decr_incr(double_quotes);
-		else if (input[i] == 36 && (ft_isalpha(input[i + 1]) || input[i
-				+ 1] == '?'))
+		if (input[vars.i] == 39 && vars.l == 0)
+			vars.k += ft_decr_incr(vars.k);
+		else if (input[vars.i] == 34 && vars.k == 0)
+			vars.l += ft_decr_incr(vars.l);
+		else if (input[vars.i] == 36 && (ft_isalpha(input[vars.i + 1])
+				|| input[vars.i + 1] == '?'))
 		{
-			expand_infos[index] = ft_should_expand(single_quotes,
-					double_quotes);
-			index++;
+			vars.tab[vars.index] = ft_should_expand(vars.k, vars.l);
+			vars.index++;
 		}
-		else if (input[i] == 36 && input[i + 1] == '{')
-		{
-			j = i + 2;
-			while ((ft_isalnum(input[j]) || input[j] == '_'))
-				j++;
-			if (input[j] == '}')
-				expand_infos[index] = ft_should_expand(single_quotes,
-						double_quotes);
-		}
-		i++;
+		else if (input[vars.i] == 36 && input[vars.i + 1] == '{')
+			is_expandable_helper(&vars, input);
+		vars.i++;
 	}
-	return (expand_infos);
+	return (vars.tab);
 }
 
 int	ft_decr_incr(int condition)
@@ -102,58 +84,27 @@ int	ft_should_expand(int single_quotes, int double_quotes)
 
 char	*ft_expand(char *input, t_list **env)
 {
-	int		i;
-	int		j;
-	int		*vars;
-	int		vars_number;
-	char	*final_input;
-	int		var_idx;
+	t_norme	vars;
 
-	i = 0;
-	var_idx = 0;
-	vars_number = ft_contain_variables(input);
-	if (!vars_number)
+	vars.i = 0;
+	vars.j = 0;
+	vars.k = ft_contain_variables(input);
+	if (!vars.k)
 		return (input);
-	vars = ft_is_expandable(input, vars_number);
-	final_input = NULL;
-	while (input[i])
+	vars.tab = ft_is_expandable(input, vars.k);
+	vars.str = NULL;
+	while (input[vars.i])
 	{
-		if (input[i] != 36)
-			final_input = ft_char_join(final_input, input[i]);
-		else if (input[i] == 36 && (ft_isalpha(input[i + 1]) || input[i + 1] == '?'))
-		{
-			if (var_idx < vars_number && vars[var_idx] == 1)
-			{
-				if (ft_var_exists(env, &input[i]))
-					final_input = ft_join_var(env, final_input, &input[i]);
-				while (input[i + 1] && (ft_isalnum(input[i + 1]) || input[i + 1] == '?'))
-					i++;
-			}
-			else
-				final_input = ft_char_join(final_input, input[i]);
-			var_idx++;
-		}
-		else if (input[i] == 36 && input[i + 1] == '{')
-		{
-			if (var_idx < vars_number && vars[var_idx] == 1)
-			{
-				j = i + 2;
-				while ((ft_isalnum(input[j]) || input[j] == '_'))
-					j++;
-				if (input[j] == '}' && ft_var_exists(env, &input[i + 1]))
-				{
-					final_input = ft_join_var(env, final_input, &input[i + 1]);
-					while (input[i + 1] && input[i] != '}')
-						i++;
-				}
-			}
-			else
-				final_input = ft_char_join(final_input, input[i]);
-			var_idx++;
-		}
-		i++;
+		if (input[vars.i] != 36)
+			vars.str = ft_char_join(vars.str, input[vars.i]);
+		else if (input[vars.i] == 36 && (ft_isalpha(input[vars.i + 1])
+				|| input[vars.i + 1] == '?'))
+			ft_expand_helper1(&vars, input, env);
+		else if (input[vars.i] == 36 && input[vars.i + 1] == '{')
+			ft_expand_helper2(&vars, input, env);
+		vars.i++;
 	}
 	free(input);
-	free(vars);
-	return (final_input);
+	free(vars.tab);
+	return (vars.str);
 }

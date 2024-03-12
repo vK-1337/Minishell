@@ -9,6 +9,8 @@ SRCS =			cd/cd.c \
 				cd/cd_utils.c \
 				env/env.c \
 				env/export.c \
+				env/export_utils.c \
+				env/export_utils_two.c \
 				env/unset.c \
 				exec_command.c \
 				expand/expand.c \

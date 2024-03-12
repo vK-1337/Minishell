@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:55:06 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:02:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,5 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 int					ft_after_equal(char *str);
 int					ft_find_equal(char *str);
 void				ft_env_node(t_list *node, void *content);
-
 
 #endif

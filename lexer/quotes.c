@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 18:56:22 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:48:45 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	ft_not_single_quoted(char *input, int char_index)
 
 int	ft_not_double_quoted(char *input, int char_index)
 {
-	int i;
-	int double_quotes;
+	int	i;
+	int	double_quotes;
 
 	i = 0;
 	double_quotes = 0;

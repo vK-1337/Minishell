@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/06 16:46:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:14:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ char	*ft_build_prompt(t_list **env)
 	t_list	*pwd;
 	char	*final_prompt;
 
-	hostname = ft_extract_hostname(getenv("SESSION_MANAGER"));
+	hostname = ft_extract_hostname(ft_find_var(env,
+				"$SESSION_MANAGER")->content);
 	if (!hostname)
 		return (NULL);
-	username = getenv("USER"); // TODO Change to get the USER VAR.
+	username = ft_find_var(env, "$USER")->content;
 	pwd = ft_find_var(env, "$PWD");
 	final_prompt = ft_strjoin(username, "@", 0);
 	final_prompt = ft_strjoin(final_prompt, hostname, 1);

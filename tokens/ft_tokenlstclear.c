@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenlstclear.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 23:52:20 by vk                #+#    #+#             */
-/*   Updated: 2024/03/12 08:48:11 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 12:11:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_tokenlstclear(t_token **lst)
 	while (current != NULL)
 	{
 		next = current->next;
-		ft_tokenlstdelone(current, del);
+		ft_tokenlstdelone(current);
 		current = next;
 	}
 	(*lst) = NULL;

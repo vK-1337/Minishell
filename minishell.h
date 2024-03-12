@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 08:37:12 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 12:06:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,5 @@ int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 						int save_std[2]);
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
-void				ft_clean_tokens(t_token *tokens);
 int					file_redir(t_token *token);
 #endif

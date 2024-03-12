@@ -5,10 +5,14 @@ SRCS =			cd/cd.c \
 				ast/launch_ast.c \
 				ast/ast_utils.c \
 				ast/ast_utils2.c \
+				ast/ast_utils3.c \
 				ast/parenthesis.c \
 				cd/cd_utils.c \
+				echo/echo.c \
 				env/env.c \
 				env/export.c \
+				env/export_utils.c \
+				env/export_utils_two.c \
 				env/unset.c \
 				exec_command/exec_command.c \
 				exec_command/exec_redirections.c \
@@ -17,12 +21,15 @@ SRCS =			cd/cd.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \
+				expand/expand_utils_three.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				get_next_line/get_next_line.c \
 				get_next_line/get_next_line_utils.c \
 				lexer/lexer.c \
 				lexer/lexer_utils.c \
+				lexer/lexer_utils_two.c \
+				lexer/lexer_utils_three.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
 				lexer/syntax_utils.c \
@@ -44,6 +51,7 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
 				tokens/helpers.c \
+				tokens/lst_utils.c \
 				tokens/token_utils.c \
 
 

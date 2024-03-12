@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 17:11:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:23:43 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,17 @@ int					ft_is_file(char *token);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
+/*                                 ECHO                                       */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
+
+int					ft_echo(char **command);
+int					ft_is_n_option(char *str);
+
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
 /*                                  ENV                                       */
 /*                                                                            */
 /*                                                                            */
@@ -198,6 +209,7 @@ void				is_expandable_helper(t_norme *vars, char *input);
 /******************************************************************************/
 
 int					ft_unclosed_input(char *input);
+void				ft_unclosed_input_helper(t_norme *vars);
 int					ft_not_quoted(char *input, int char_index);
 int					ft_not_single_quoted(char *input, int char_index);
 int					ft_not_double_quoted(char *input, int char_index);
@@ -243,8 +255,20 @@ int					check_only_operator(t_token **tokens);
 void				ft_clean_operator(t_token **tokens);
 void				update_token_link(t_token *curr);
 int					handle_fd(t_token *curr, t_token **tokens);
-void				ft_front(t_token **command);
-void				ft_back(t_token **command);
+void							ft_front(t_token **command);
+void							ft_back(t_token **command);
+t_token				*ft_handle_operator_path_file(t_token **tokens,
+						t_token *curr, t_token *next);
+t_token				*ft_handle_option(t_token **tokens, t_token *curr,
+						t_token *next);
+t_token				*ft_handle_command_export(t_token **tokens, t_token *curr);
+t_token				*ft_handle_next_token(t_token **tokens, t_token *curr,
+						t_token *next);
+int					ft_check_first_redir(char **tokens, t_ttype *type);
+t_ttype				ft_define_first_token_type(char **tokens,
+						int first_type_redir, t_ttype type);
+t_ttype				ft_define_subsequent_token_type(char **tokens, int i,
+						int first_type_redir, t_ttype previous_type);
 
 /******************************************************************************/
 /*                                                                            */
@@ -339,6 +363,8 @@ int					handle_non_space_delimiter(const char *str, int index,
 						int delimiter);
 int					handle_space_delimiter(const char *str, int index,
 						int delimiter);
+void				ft_handle_brackets(int *i, char *input, t_list **env,
+						char **final_input);
 int					determine_return_value(int delimiter, int i);
 void				ft_helper1(int *i, int *count, char const *s);
 void				ft_helper2(int *i, int *count, char const *s);
@@ -377,7 +403,7 @@ int					ft_match_single_wc(char *pattern, char *name);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*                             		AST        									                */
+/*                                 AST                                        */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
@@ -408,5 +434,7 @@ int					do_pipe_redirections(t_ast *command, int fd[2],
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
 int					last_pipe(char **env, t_ast *command, t_list *env_list,
 						int saved_std[2]);
+void				export_and_wc_helper(t_token *travel, t_list *env_list);
+void				export_and_wc_helper2(t_token *travel, t_list *env_list);
 
 #endif

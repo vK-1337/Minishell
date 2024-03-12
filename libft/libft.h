@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:55:04 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 15:21:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:27:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_after_equal(char *str);
 int					ft_find_equal(char *str);
+void				ft_env_node(t_list *node, void *content);
 
 #endif

@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ast_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 21:07:25 by vk                #+#    #+#             */
-/*   Updated: 2024/03/12 16:22:01 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/03/12 14:12:14 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/03/12 14:13:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	export_and_wc_helper(t_token *travel, t_list *env_list)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
+	while (travel)
 	{
-		ft_putchar_fd(s[i], fd);
-		i++;
+		travel->file_redir = ft_expand(travel->file_redir, &env_list);
+		travel = travel->next;
 	}
-	return ;
+}
+
+void	export_and_wc_helper2(t_token *travel, t_list *env_list)
+{
+	while (travel)
+	{
+		travel->file_redir = ft_expand(travel->file_redir, &env_list);
+		travel = travel->next;
+	}
 }

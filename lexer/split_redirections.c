@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 14:38:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:27:12 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ void	ft_reunite_redirection(t_token **tokens)
 	(*tokens)->prev = NULL;
 }
 
-void handle_token_addition(t_token **command, t_token **curr)
+void	handle_token_addition(t_token **command, t_token **curr)
 {
-    t_token *temp;
+	t_token	*temp;
 
-    if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
-    {
-        temp = (*curr)->next;
-        ft_tokenlstadd_back(&(*command)->file_redir_in, *curr);
-        *curr = temp;
-    }
-    else
-    {
-        temp = (*curr)->next;
-        ft_tokenlstadd_back(&(*command)->file_redir_out, *curr);
-        *curr = temp;
-    }
+	if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
+	{
+		temp = (*curr)->next;
+		ft_tokenlstadd_back(&(*command)->file_redir_in, *curr);
+		*curr = temp;
+	}
+	else
+	{
+		temp = (*curr)->next;
+		ft_tokenlstadd_back(&(*command)->file_redir_out, *curr);
+		*curr = temp;
+	}
 }
 
-void ft_front(t_token **command)
+void	ft_front(t_token **command)
 {
     t_token *curr = (*command)->next;
     t_token *temp2 = curr ? curr->prev : NULL;
@@ -70,6 +70,7 @@ void ft_front(t_token **command)
             temp2->next = curr;
     }
 }
+
 void ft_token_addition(t_token **command, t_token **curr)
 {
 	t_token	*temp;
@@ -124,3 +125,4 @@ void	ft_back(t_token **command)
 	if (temp2 && temp2 != (*command))
 		temp2->next = (*command);
 }
+

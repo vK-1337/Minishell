@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 17:19:50 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:24:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 void	free_token(t_token *token);
 void	free_ast_right(t_ast *ast);
 
-int is(char *token, char *comp)
-{
-	if (ft_strcmp(token, comp) == 0)
-		return (1);
-	return (0);
-
-}
 void	ft_free_ast(t_ast *ast)
 {
 	if (ast == NULL)
@@ -62,4 +55,11 @@ void	free_token(t_token *token)
 		token = next;
 	}
 	return ;
+}
+
+int	is(char *token, char *comp)
+{
+	if (ft_strcmp(token, comp) == 0)
+		return (1);
+	return (0);
 }

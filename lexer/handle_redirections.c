@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:39:27 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 13:44:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,26 @@ int	ft_no_command(t_token *token)
 	return (1);
 }
 
-int ft_open_fd(t_token **tokens)
+int	ft_open_fd(t_token **tokens)
 {
-    t_token *curr = *tokens;
-    int status;
+	t_token	*curr;
+	int		status;
 
-    while (curr)
-    {
-        if (curr->type == OPERATOR && !curr->file_redir && ft_no_command(curr))
-        {
-            update_token_link(curr);
-            status = handle_fd(curr, tokens);
-            if (status != 0)
-                return status;
-            curr = curr->next->prev; // Move back to the previous token after deletion
-        }
+	curr = *tokens;
+	while (curr)
+	{
+		if (curr->type == OPERATOR && !curr->file_redir && ft_no_command(curr))
+		{
+			update_token_link(curr);
+			status = handle_fd(curr, tokens);
+			if (status != 0)
+				return (status);
+			curr = curr->next->prev;
+		}
 		else
-        	curr = curr->next;
-    }
-    return 0;
+			curr = curr->next;
+	}
+	return (0);
 }
 
 int	ft_open_solo_fd(t_token **tokens)
@@ -122,7 +123,7 @@ int	file_redir(t_token *token)
 		fd = open(file, O_RDWR, 0777);
 	else if (is(token->token, "<<") == 1)
 	{
-		fd = launch_here_doc(token->file_redir, (int[2]){0, 1});
+		fd = launch_here_doc(token->file_redir, (int [2]){0, 1});
 		if (fd == -1)
 			return (-1917);
 	}

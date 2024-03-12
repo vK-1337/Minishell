@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:43:33 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:02:32 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:10:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,16 @@ int	determine_return_value(int delimiter, int i)
 		return (i + 2);
 	else
 		return (i);
+}
+
+void	ft_print_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		printf("Token numero |%d| => |%s|\n", i + 1, tokens[i]);
+		i++;
+	}
 }

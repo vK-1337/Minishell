@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:14:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:06:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ char	*ft_extract_hostname(char *session_manager)
 	session_manager++;
 	end_of_hostname = session_manager;
 	i = 0;
-	while (i < 12)
-	{
-		i++;
+	while (i++ < 12)
 		end_of_hostname++;
-	}
 	hostname = malloc((i + 1) * sizeof(char));
 	if (!hostname)
 		return (NULL);

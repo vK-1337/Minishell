@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:50:55 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:56:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
 void				here_doc(char *limiter, int fd[2]);
+char				*check_valid_command(char **cmd_split, char *path);
+char				*take_path(char **env);
 
 /******************************************************************************/
 /*                                                                            */
@@ -241,8 +243,8 @@ int					check_only_operator(t_token **tokens);
 void				ft_clean_operator(t_token **tokens);
 void				update_token_link(t_token *curr);
 int					handle_fd(t_token *curr, t_token **tokens);
-void	ft_front(t_token **command);
-void	ft_back(t_token **command);
+void				ft_front(t_token **command);
+void				ft_back(t_token **command);
 
 /******************************************************************************/
 /*                                                                            */
@@ -395,4 +397,5 @@ int					do_pipe_redirections(t_ast *command, int fd[2],
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
 int					last_pipe(char **env, t_ast *command, t_list *env_list,
 						int saved_std[2]);
+
 #endif

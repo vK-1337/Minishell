@@ -36,7 +36,9 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstnew.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
+				tokens/helpers.c \
 				tokens/token_utils.c \
+				tokens/token_utils_two.c \
 
 
 CFLAGS = -Wall -Werror -Wextra -g3

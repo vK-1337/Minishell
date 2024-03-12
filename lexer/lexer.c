@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:14:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:12:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ void	*ft_reunite_tokens(t_token **tokens)
 	while (curr)
 	{
 		next = curr->next;
-		if (next && curr->type == OPTION && next->type == OPTION)
+		if (next && next->next && curr->type == COMMAND && strncmp(curr->token,
+				"export", 6) == 0)
+		{
+			ft_join_export(tokens, curr->next, curr->next->next);
+			curr = *tokens;
+		}
+		else if (next && curr->type == OPTION && next->type == OPTION)
 		{
 			if (ft_join_options(tokens, curr, next) == NULL)
 				return (NULL);
@@ -63,6 +69,30 @@ void	*ft_reunite_tokens(t_token **tokens)
 		else
 			curr = curr->next;
 	}
+	return ((void *)1);
+}
+
+void	*ft_join_export(t_token **tokens, t_token *curr, t_token *next)
+{
+	char	*new_token;
+	t_token	*new_node;
+
+	new_token = ft_strjoin(curr->token, next->token, 1);
+	if (!new_token)
+		return (NULL);
+	new_node = ft_tokenlstnew(new_token, COMMAND);
+	if (!new_node)
+		return (NULL);
+	new_node->next = next->next;
+	if (curr->prev)
+	{
+		curr->prev->next = new_node;
+		new_node->prev = curr->prev;
+	}
+	else
+		*tokens = new_node;
+	free(curr);
+	free(next);
 	return ((void *)1);
 }
 
@@ -167,36 +197,4 @@ t_ttype	ft_define_ttype(char *token, char *previous_token)
 			return (COMMAND);
 	}
 	return (COMMAND);
-}
-
-int	ft_is_file(char *token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i])
-	{
-		if (token[i] == '.')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_is_option(char *token)
-{
-	int	i;
-
-	i = 0;
-	if (token[0] != '-')
-		return (0);
-	else
-		i++;
-	while (token[i])
-	{
-		if (!ft_isalnum(token[i]))
-			return (0);
-		i++;
-	}
-	return (1);
 }

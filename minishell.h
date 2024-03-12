@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:50:55 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 13:05:10 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,17 @@ t_token				*ft_tokenlstmap(t_token *lst, void *(*f)(void *),
 t_token				*ft_tokenlstnew(void *content, t_ttype type);
 int					ft_tokenlstsize(t_list *lst);
 void				ft_print_token_list(t_token **tokens);
+int					handle_quotes(const char *str, int index, int delimiter);
+int					handle_parentheses(const char *str, int index);
+int					handle_non_space_delimiter(const char *str, int index,
+						int delimiter);
+int					handle_space_delimiter(const char *str, int index,
+						int delimiter);
+int					determine_return_value(int delimiter, int i);
+void				ft_helper1(int *i, int *count, char const *s);
+void				ft_helper2(int *i, int *count, char const *s);
+void				ft_helper3(int *i, int *count, char const *s);
+void				ft_helper4(int *i, int *count);
 
 /******************************************************************************/
 /*                                                                            */
@@ -361,13 +372,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 
-/*******************************************************************************/
-/*                                                                             */
-/*                                                                             */
-/*                             		AST																				*/
-/*                                                                             */
-/*                                                                             */
-/*******************************************************************************/
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                             		AST        									                */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
 
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);

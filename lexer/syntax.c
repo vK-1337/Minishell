@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/11 20:44:24 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:47:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	ft_syntax_redir(char *input)
 int	ft_rredir_synt_err(char *input, int index, char redir_char)
 {
 	if (!input[index + 1] || (input[index + 1] == redir_char && !input[index
-			+ 2]))
+				+ 2]))
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (1);
 	}
 	if (!input[index + 1] || (input[index + 1] == redir_char && input[index
-			+ 2] == redir_char))
+				+ 2] == redir_char))
 	{
 		if (input[index + 3] && input[index + 3] == redir_char)
 		{
@@ -96,7 +96,7 @@ int	ft_pipes_synt_error(char *input, int index)
 		return (printf("minishell: syntax error near unexpected token `|'\n"),
 			0);
 	else if (input[index] == '|' && input[index + 1] == '|' && !input[index
-		+ 2])
+			+ 2])
 		return (printf("minishell: syntax error near unexpected token `||'\n"),
 			0);
 	else if (input[index] == '|')
@@ -120,8 +120,8 @@ int	ft_pipes_synt_error(char *input, int index)
 
 int	ft_syntax_parenthesis(char *input)
 {
-	int i;
-	int parenthesis;
+	int	i;
+	int	parenthesis;
 
 	parenthesis = 0;
 	i = 0;

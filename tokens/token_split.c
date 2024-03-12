@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/08 20:37:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:06:54 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,51 +74,28 @@ int	ft_tokenlen(const char *str, int index)
 	i = 0;
 	delimiter = ft_define_delimiter(str[index]);
 	if (delimiter == 34 || delimiter == 39)
-	{
-		index++;
-		while (str[index] != delimiter)
-		{
-			index++;
-			i++;
-		}
-	}
+		i = handle_quotes(str, index, delimiter);
 	else if (delimiter == 40)
+		i = handle_parentheses(str, index);
+	else if (delimiter != 32)
+		i = handle_non_space_delimiter(str, index, delimiter);
+	else
+		i = handle_space_delimiter(str, index, delimiter);
+	return (determine_return_value(delimiter, i));
+}
+
+int	handle_quotes(const char *str, int index, int delimiter)
+{
+	int	i;
+
+	i = 0;
+	index++;
+	while (str[index] != delimiter)
 	{
 		index++;
-		while (str[index] != 41)
-		{
-			if (str[index] == 40)
-				i++;
-			index++;
-			i++;
-		}
+		i++;
 	}
-	else if (delimiter != 32)
-	{
-		if (str[index + 1] && str[index + 1] == delimiter)
-			i = 2;
-		else
-			i = 1;
-	}
-	else
-	{
-		while (str[index] && str[index] != delimiter)
-		{
-			if (str[index + 1] == 34 || str[index + 1] == 39
-				|| ft_is_operator(str[index + 1]))
-			{
-				i++;
-				index++;
-				break ;
-			}
-			i++;
-			index++;
-		}
-	}
-	if (delimiter == 34 || delimiter == 39 || delimiter == 40)
-		return (i + 2);
-	else
-		return (i);
+	return (i);
 }
 
 void	ft_print_tokens(char **tokens)

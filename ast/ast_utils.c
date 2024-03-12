@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:52:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:47:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_ast_right(t_ast *ast)
 
 void	free_token(t_token *token)
 {
-	t_token *next;
+	t_token	*next;
 
 	if (token == NULL)
 		return ;

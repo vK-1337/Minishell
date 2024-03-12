@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:48:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:41:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	}
 	return (ft_free_char_tab(cmd_split), exit_status);
 }
+
 void	handle_error(int err, char *msg)
 {
 	if (err == -1)
@@ -200,6 +201,7 @@ void	here_doc(char *limiter, int fd[2])
 		free(line);
 	}
 }
+
 int	launch_here_doc(char *limiter, int saved_std[2])
 {
 	int	fd[2];
@@ -232,6 +234,7 @@ int	configure_fd_in(int fd_in, char *token, char *file)
 	handle_error(fd_in, file);
 	return (fd_in);
 }
+
 int	configure_fd_out(int fd_out, char *token, char *file)
 {
 	if (fd_out != 0)
@@ -259,7 +262,7 @@ int	do_redirections(t_ast *command)
 		{
 			fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 			if (ft_strncmp(travel->token, "<<", 2) == 0)
-				fd_in = launch_here_doc(travel->file_redir, (int[2]){0, 1});
+				fd_in = launch_here_doc(travel->file_redir, (int[2]) {0, 1});
 			if (fd_in == -1)
 				return (-1917);
 			travel = travel->next;

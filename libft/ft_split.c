@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:36:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/06 17:34:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:45:16 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,29 @@ void	ft_fill_element(char *element, const char *src, size_t index,
 
 char	**ft_split(char *s, char c)
 {
-	size_t	i;
-	size_t	j;
-	size_t	words_nbr;
-	size_t	word_len;
+	t_norme	vars;
 	char	**words;
 
-	words_nbr = ft_count_words(s, c);
-	words = malloc((words_nbr + 1) * sizeof(char *));
+	vars.k = ft_count_words(s, c);
+	words = malloc((vars.k + 1) * sizeof(char *));
 	if (!words)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i] != '\0')
+	vars.i = 0;
+	vars.j = 0;
+	while (s[vars.i] != '\0')
 	{
-		if (s[i] != c && s[i] != '\0')
+		if (s[vars.i] != c && s[vars.i] != '\0')
 		{
-			word_len = ft_wordlen(s, c, i);
-			words[j] = malloc((word_len + 1) * sizeof(char));
-            if (!words[j])
-                return (free(words), NULL);
-			ft_fill_element(words[j], s, i, word_len);
-			i += (word_len - 1);
-			j++;
+			vars.l = ft_wordlen(s, c, vars.i);
+			words[vars.j] = malloc((vars.l + 1) * sizeof(char));
+			if (!words[vars.j])
+				return (free(words), NULL);
+			ft_fill_element(words[vars.j], s, vars.i, vars.l);
+			vars.i += (vars.l - 1);
+			vars.j++;
 		}
-		i++;
+		vars.i++;
 	}
-	words[words_nbr] = NULL;
+	words[vars.k] = NULL;
 	return (words);
 }

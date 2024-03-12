@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:43:24 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:51:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 08:59:01 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*remove_parenthesis(t_token **token)
 	i = 1;
 	j = 0;
 	new_token = malloc(sizeof(char) * ft_strlen((*token)->token) - 1);
-	printf("token: %s\n", (*token)->token);
 	while ((*token)->token[i + 1] != '\0')
 		new_token[j++] = (*token)->token[i++];
 	new_token[j] = '\0';

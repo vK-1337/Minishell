@@ -238,6 +238,11 @@ t_token				*ft_clean_tokens(t_token **tokens);
 int					file_redir(t_token *token);
 int					ft_open_fd(t_token **tokens);
 int					check_only_operator(t_token **tokens);
+void				ft_clean_operator(t_token **tokens);
+void				update_token_link(t_token *curr);
+int					handle_fd(t_token *curr, t_token **tokens);
+void	ft_front(t_token **command);
+void	ft_back(t_token **command);
 
 /******************************************************************************/
 /*                                                                            */
@@ -370,20 +375,14 @@ int					ft_match_single_wc(char *pattern, char *name);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*                             		AST        									*/
+/*                             		AST        									                */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
-int					is_or(char *token);
-int					is_and(char *token);
-int					is_pipe(char *token);
-int					is_fd_in(char *token);
-int					is_fd_out(char *token);
-int					is_here_doc(char *token);
-int					is_append(char *token);
+int					is(char *token, char *comp);
 void				ft_free_ast(t_ast *ast);
 int					launch_ast(char *input, t_list *env_list, int *exit_status);
 int					launch_ast_recursive(t_ast *ast, t_list *env_list,
@@ -397,4 +396,14 @@ int					pipe_chain(char **env, t_ast *command, t_list *env_list,
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
 int					file_redir(t_token *token);
+t_token				*get_last_strongest_operator(t_token *token_list);
+void				send_to_build(t_ast **node, int direction);
+t_token				*get_first_strongest_operator(t_token *token_list);
+t_ast				*build_tree(t_ast **node, t_token *strongest);
+t_ast				*init_branch(t_ast *parent, t_token *token, int is_left);
+int					do_pipe_redirections(t_ast *command, int fd[2],
+						int saved_std[2]);
+void				export_and_wildcard(t_ast *ast, t_list *env_list);
+int					last_pipe(char **env, t_ast *command, t_list *env_list,
+						int saved_std[2]);
 #endif

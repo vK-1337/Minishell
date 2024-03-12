@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:27 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 19:51:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	struct dirent	*de;
 	DIR				*dr;
 	int				count;
+    char *new_token;
 
 	count = 0;
 	dr = opendir(".");
@@ -27,37 +28,41 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	{
 		if (ft_match(*token, de->d_name))
 		{
-			*token = ft_join_match_helper(*token, de->d_name, count);
-			if (token == NULL)
+			new_token = ft_join_match_helper(new_token, de->d_name, count);
+			if (new_token == NULL)
 				return (0);
 			count++;
 		}
 		de = readdir(dr);
 	}
+    *token = new_token;
 	if (!count)
 		return (closedir(dr), 1);
 	return (closedir(dr), 0);
 }
 
-char	*ft_join_match_helper(char *token, char *de_name, int count)
+char	*ft_join_match_helper(char *prev_new_token, char *de_name, int count)
 {
+    char *new_token;
+
+    new_token = NULL;
 	if (count == 0)
 	{
-		token = ft_strjoin(de_name, " ", 0);
-		if (token == NULL)
+		new_token = ft_strjoin(de_name, " ", 0);
+		if (new_token == NULL)
 			return (NULL);
 	}
 	else
 	{
-		token = ft_strjoin(token, de_name, 1);
-		token = ft_strjoin(token, " ", 1);
-		if (token == NULL)
+		new_token = ft_strjoin(prev_new_token, de_name, 1);
+		new_token = ft_strjoin(new_token, " ", 1);
+		if (new_token == NULL)
 			return (NULL);
 	}
-	return (token);
+	return (new_token);
 }
 
-int	ft_replace_wildcards(char *token)
+int	ft_replace_wildcards(char **token)
 {
 	int	contain_wc;
 

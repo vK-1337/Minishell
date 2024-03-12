@@ -6,19 +6,11 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 17:25:55 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:19:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	handle_error(int err, char *msg)
-{
-	if (err == -1)
-	{
-		perror(msg);
-	}
-}
 
 int	check_command(char **command, t_list *env_list)
 {

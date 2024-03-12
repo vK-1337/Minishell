@@ -53,6 +53,7 @@ SRCS =			cd/cd.c \
 				tokens/helpers.c \
 				tokens/lst_utils.c \
 				tokens/token_utils.c \
+				tokens/token_utils_two.c \
 
 
 CFLAGS = -Wall -Werror -Wextra -g3

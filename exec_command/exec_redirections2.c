@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 17:10:21 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 17:35:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,12 @@ int	do_redirections(t_ast *command)
 	}
 	do_redirection2(command, &fd_in, &fd_out);
 	return (0);
+}
+
+void	handle_error(int err, char *msg)
+{
+	if (err == -1)
+	{
+		perror(msg);
+	}
 }

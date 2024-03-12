@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 17:27:12 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 18:23:24 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,28 @@ void	handle_token_addition(t_token **command, t_token **curr)
 
 void	ft_front(t_token **command)
 {
-    t_token *curr = (*command)->next;
-    t_token *temp2 = curr ? curr->prev : NULL;
+	t_token	*curr;
+	t_token	*temp2;
 
-    while (curr && curr->type == OPERATOR && 
-           (is(curr->token, "<") || is(curr->token, ">") ||
-            is(curr->token, "<<") || is(curr->token, ">>")))
-    {
-        handle_token_addition(command, &curr);
-        if (temp2)
-            temp2->next = curr;
-    }
+	curr = (*command)->next;
+	if (curr)
+		temp2 = curr->prev;
+	else
+		temp2 = NULL;
+	while (curr && curr->type == OPERATOR && (is(curr->token, "<")
+			|| is(curr->token, ">") || is(curr->token, "<<") || is(curr->token,
+				">>")))
+	{
+		handle_token_addition(command, &curr);
+		if (temp2)
+			temp2->next = curr;
+	}
 }
 
-void ft_token_addition(t_token **command, t_token **curr)
+void	ft_token_addition(t_token **command, t_token **curr)
 {
 	t_token	*temp;
+
 	if (is((*curr)->token, "<") == 1 || is((*curr)->token, "<<") == 1)
 	{
 		if ((*curr)->prev)
@@ -88,20 +94,8 @@ void ft_token_addition(t_token **command, t_token **curr)
 			*curr = NULL;
 		}
 	}
-		else
-		{
-			if ((*curr)->prev)
-			{
-				temp = (*curr)->prev;
-				ft_tokenlstadd_front(&(*command)->file_redir_out, *curr);
-				*curr = temp;
-			}
-			else
-			{
-				ft_tokenlstadd_front(&(*command)->file_redir_out, *curr);
-				*curr = NULL;
-			}
-		}
+	else
+		ft_add_front (curr, command);
 }
 
 void	ft_back(t_token **command)
@@ -117,7 +111,7 @@ void	ft_back(t_token **command)
 	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
-		ft_token_addition (command, &curr);
+		ft_token_addition(command, &curr);
 		(*command)->prev = curr;
 		if (curr == NULL)
 			break ;
@@ -125,4 +119,3 @@ void	ft_back(t_token **command)
 	if (temp2 && temp2 != (*command))
 		temp2->next = (*command);
 }
-

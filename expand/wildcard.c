@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 16:52:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:15:27 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_join_matching_dir(char *token, int (*ft_match)(char *, char *))
+int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 {
 	struct dirent	*de;
 	DIR				*dr;
@@ -25,14 +25,14 @@ int	ft_join_matching_dir(char *token, int (*ft_match)(char *, char *))
 	de = readdir(dr);
 	while (de != NULL)
 	{
-		if (ft_match(token, de->d_name))
+		if (ft_match(*token, de->d_name))
 		{
 			if (count == 0)
-				token = ft_strjoin(de->d_name, " ", 1);
+				*token = ft_strjoin(de->d_name, " ", 0);
 			else
 			{
-				token = ft_strjoin(token, de->d_name, 1);
-				token = ft_strjoin(token, " ", 1);
+				*token = ft_strjoin(*token, de->d_name, 1);
+				*token = ft_strjoin(*token, " ", 1);
 			}
 			count++;
 		}
@@ -43,11 +43,11 @@ int	ft_join_matching_dir(char *token, int (*ft_match)(char *, char *))
 	return (closedir(dr), 0);
 }
 
-int	ft_replace_wildcards(char *token)
+int	ft_replace_wildcards(char **token)
 {
 	int	contain_wc;
 
-	contain_wc = ft_contain_wildcards(token);
+	contain_wc = ft_contain_wildcards(*token);
 	if (contain_wc == 1)
 		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)

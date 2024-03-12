@@ -401,6 +401,8 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
+char				*ft_join_match_helper(char *token, char *de_name,
+						int count);
 
 /******************************************************************************/
 /*                                                                            */

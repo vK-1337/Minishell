@@ -24,6 +24,7 @@ SRCS =			cd/cd.c \
 				expand/expand_utils_three.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
+				expand/wildcard_utils_two.c \
 				get_next_line/get_next_line.c \
 				get_next_line/get_next_line_utils.c \
 				lexer/lexer.c \

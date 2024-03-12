@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 14:15:47 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:25:27 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void				is_expandable_helper(t_norme *vars, char *input);
 /******************************************************************************/
 
 int					ft_unclosed_input(char *input);
+void				ft_unclosed_input_helper(t_norme *vars);
 int					ft_not_quoted(char *input, int char_index);
 int					ft_not_single_quoted(char *input, int char_index);
 int					ft_not_double_quoted(char *input, int char_index);

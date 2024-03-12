@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:53:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:08:38 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	ft_cd(char *path, t_list **env)
 {
 	int	status;
 
-	// if (path == NULL)
-	//     go_home(env);
 	if (ft_set_pwd(env) == 0)
 		return (0);
 	status = old_pwd_use(path, env);
@@ -99,10 +97,10 @@ int	back_home(char *path, t_list **env)
 
 int	cdpath_find(char *path, t_list **env)
 {
-	t_list *cdpath;
-	char **cdpath_split;
-	char *temp;
-	int i;
+	t_list	*cdpath;
+	char	**cdpath_split;
+	char	*temp;
+	int		i;
 
 	cdpath = ft_find_var(env, "$CDPATH");
 	if (cdpath == NULL || cdpath->content == NULL)

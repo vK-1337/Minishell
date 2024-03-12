@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:50:55 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:11:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	ft_set_pwd(t_list **env)
 
 int	ft_replace_pwd(t_list **env)
 {
-	t_list *pwd;
-	t_list *old_pwd;
-	char *current_directory;
+	t_list	*pwd;
+	t_list	*old_pwd;
+	char	*current_directory;
 
 	current_directory = NULL;
 	current_directory = ft_get_current_directory(current_directory);

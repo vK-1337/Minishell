@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/11 20:48:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 10:43:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ int	configure_fd_in(int fd_in, char *token, char *file)
 {
 	if (fd_in != 0)
 		close(fd_in);
-	if (is_fd_in(token) == 1)
+	if (is(token, "<") == 1)
 		fd_in = open(file, O_RDWR, 0777);
 	handle_error(fd_in, file);
 	return (fd_in);
@@ -236,9 +236,9 @@ int	configure_fd_out(int fd_out, char *token, char *file)
 {
 	if (fd_out != 0)
 		close(fd_out);
-	if (is_fd_out(token) == 1)
+	if (is(token, ">") == 1)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (is_append(token) == 1)
+	else if (is(token, ">>") == 1)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	handle_error(fd_out, file);
 	return (fd_out);

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 08:47:49 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 08:59:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	if (status == -1)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
 	if (status == -1917)
-		return (printf("test"), ft_tokenlstnew(NULL, ERROR));
+		return (ft_tokenlstnew(NULL, ERROR));
 	return (listed_tokens);
 }
 

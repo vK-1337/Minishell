@@ -1,7 +1,10 @@
 SRCS =			cd/cd.c \
-        		ast/create_ast_list.c \
+        		ast/create_tree.c \
+				ast/build_tree.c \
+				ast/ast.c \
 				ast/launch_ast.c \
 				ast/ast_utils.c \
+				ast/ast_utils2.c \
 				ast/parenthesis.c \
 				cd/cd_utils.c \
 				env/env.c \
@@ -21,6 +24,8 @@ SRCS =			cd/cd.c \
 				lexer/syntax.c \
 				lexer/syntax_utils.c \
 				lexer/handle_redirections.c \
+				lexer/handle_redirections_utils.c \
+				lexer/split_redirections.c \
 				lst_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \

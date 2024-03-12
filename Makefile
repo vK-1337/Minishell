@@ -24,6 +24,8 @@ SRCS =			cd/cd.c \
 				get_next_line/get_next_line_utils.c \
 				lexer/lexer.c \
 				lexer/lexer_utils.c \
+				lexer/lexer_utils_two.c \
+				lexer/lexer_utils_three.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
 				lexer/syntax_utils.c \

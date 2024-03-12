@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 14:25:27 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:56:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,18 @@ void				update_token_link(t_token *curr);
 int					handle_fd(t_token *curr, t_token **tokens);
 void				ft_front(t_token **command);
 void				ft_back(t_token **command);
+t_token				*ft_handle_operator_path_file(t_token **tokens,
+						t_token *curr, t_token *next);
+t_token				*ft_handle_option(t_token **tokens, t_token *curr,
+						t_token *next);
+t_token				*ft_handle_command_export(t_token **tokens, t_token *curr);
+t_token				*ft_handle_next_token(t_token **tokens, t_token *curr,
+						t_token *next);
+int					ft_check_first_redir(char **tokens, t_ttype *type);
+t_ttype				ft_define_first_token_type(char **tokens,
+						int first_type_redir, t_ttype type);
+t_ttype				ft_define_subsequent_token_type(char **tokens, int i,
+						int first_type_redir, t_ttype previous_type);
 
 /******************************************************************************/
 /*                                                                            */

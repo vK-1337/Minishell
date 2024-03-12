@@ -5,6 +5,7 @@ SRCS =			cd/cd.c \
 				ast/launch_ast.c \
 				ast/ast_utils.c \
 				ast/ast_utils2.c \
+				ast/ast_utils3.c \
 				ast/parenthesis.c \
 				cd/cd_utils.c \
 				env/env.c \
@@ -16,6 +17,7 @@ SRCS =			cd/cd.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \
+				expand/expand_utils_three.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				get_next_line/get_next_line.c \

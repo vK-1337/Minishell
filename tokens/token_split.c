@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:06:54 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:09:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,30 @@
 
 char	**ft_token_split(char const *s)
 {
-	size_t	i;
-	size_t	j;
-	size_t	words_nbr;
-	size_t	word_len;
+	t_norme	vars;
 	char	**words;
 
-	words_nbr = ft_count_tokens(s);
-	words = malloc((words_nbr + 1) * sizeof(char *));
+	vars.k = ft_count_tokens(s);
+	words = malloc((vars.k + 1) * sizeof(char *));
 	if (!words)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i])
+	vars.i = 0;
+	vars.j = 0;
+	while (s[vars.i])
 	{
-		if (s[i] != ' ' && s[i])
+		if (s[vars.i] != ' ' && s[vars.i])
 		{
-			word_len = ft_tokenlen(s, i);
-			words[j] = malloc((word_len + 1) * sizeof(char));
-			if (!words[j])
+			vars.l = ft_tokenlen(s, vars.i);
+			words[vars.j] = malloc((vars.l + 1) * sizeof(char));
+			if (!words[vars.j])
 				return (free(words), NULL);
-			ft_add_token(words[j], s, i, word_len);
-			i += (word_len - 1);
-			j++;
+			ft_add_token(words[vars.j], s, vars.i, vars.l);
+			vars.i += (vars.l - 1);
+			vars.j++;
 		}
-		i++;
+		vars.i++;
 	}
-	words[words_nbr] = NULL;
+	words[vars.k] = NULL;
 	return (words);
 }
 
@@ -96,16 +93,4 @@ int	handle_quotes(const char *str, int index, int delimiter)
 		i++;
 	}
 	return (i);
-}
-
-void	ft_print_tokens(char **tokens)
-{
-	int	i;
-
-	i = 0;
-	while (tokens[i])
-	{
-		printf("Token numero |%d| => |%s|\n", i + 1, tokens[i]);
-		i++;
-	}
 }

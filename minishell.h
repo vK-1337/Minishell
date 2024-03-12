@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:55:01 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:15:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,6 +337,8 @@ int					handle_non_space_delimiter(const char *str, int index,
 						int delimiter);
 int					handle_space_delimiter(const char *str, int index,
 						int delimiter);
+void				ft_handle_brackets(int *i, char *input, t_list **env,
+						char **final_input);
 int					determine_return_value(int delimiter, int i);
 void				ft_helper1(int *i, int *count, char const *s);
 void				ft_helper2(int *i, int *count, char const *s);
@@ -406,4 +408,7 @@ int					do_pipe_redirections(t_ast *command, int fd[2],
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
 int					last_pipe(char **env, t_ast *command, t_list *env_list,
 						int saved_std[2]);
+void				export_and_wc_helper(t_token *travel, t_list *env_list);
+void				export_and_wc_helper2(t_token *travel, t_list *env_list);
+
 #endif

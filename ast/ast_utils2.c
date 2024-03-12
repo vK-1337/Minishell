@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:06:09 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 14:13:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,11 @@ void	export_and_wildcard(t_ast *ast, t_list *env_list)
 	if (ast == NULL)
 		return ;
 	travel = ast->token;
-	while (travel)
-	{
-		travel->token = ft_expand(travel->token, &env_list);
-		travel = travel->next;
-	}
+	export_and_wc_helper(travel, env_list);
 	if (ast->token->file_redir_in)
 	{
 		travel = ast->token->file_redir_in;
-		while (travel)
-		{
-			travel->file_redir = ft_expand(travel->file_redir, &env_list);
-			travel = travel->next;
-		}
+		export_and_wc_helper2(travel, env_list);
 	}
 	if (ast->token->file_redir_out)
 	{

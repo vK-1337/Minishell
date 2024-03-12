@@ -8,6 +8,7 @@ SRCS =			cd/cd.c \
 				ast/ast_utils3.c \
 				ast/parenthesis.c \
 				cd/cd_utils.c \
+				echo/echo.c \
 				env/env.c \
 				env/export.c \
 				env/export_utils.c \
@@ -32,7 +33,6 @@ SRCS =			cd/cd.c \
 				lexer/handle_redirections.c \
 				lexer/handle_redirections_utils.c \
 				lexer/split_redirections.c \
-				lst_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \
 				pwd/pwd.c \
@@ -48,6 +48,7 @@ SRCS =			cd/cd.c \
 				tokens/ft_tokenlstsize.c \
 				tokens/ft_tokenlstadd_back.c \
 				tokens/helpers.c \
+				tokens/lst_utils.c \
 				tokens/token_utils.c \
 				tokens/token_utils_two.c \
 

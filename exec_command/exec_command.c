@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 18:19:09 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 20:26:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	exec_command(char *command, char **env, t_list *env_list)
 		printf("execve error\n");
 		exit_status = -1917;
 	}
+    free(instruct);
 	return (ft_free_char_tab(cmd_split), exit_status);
 }
 
@@ -85,7 +86,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 		path = ft_strjoin(temp, cmd_split[0], 0);
 		if (!path)
 			return (ft_free_char_tab(path_split), NULL);
-		free(temp);
+        free(temp);
 		if (access(path, F_OK | X_OK) == 0)
 			return (ft_free_char_tab(path_split), path);
 		free(path);

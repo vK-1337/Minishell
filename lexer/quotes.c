@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 14:24:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:54:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,25 @@ int	ft_not_double_quoted(char *input, int char_index)
 	if (double_quotes % 2 == 0)
 		return (1);
 	return (0);
+}
+
+void ft_trim_quotes(char** input)
+{
+    int i;
+
+    i = 0;
+    if (!input)
+        return ;
+    if (*input[0] == 34 || *input[0] == 39)
+    {
+        while ((*input)[i])
+        {
+            (*input)[i] = (*input)[i + 1];
+            i++;
+        }
+        i = 0;
+        while ((*input)[i])
+            i++;
+        (*input)[i - 1] = '\0';
+    }
 }

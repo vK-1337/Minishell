@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 19:51:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:47:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	ft_replace_wildcards(char **token)
 	int	contain_wc;
 
 	contain_wc = ft_contain_wildcards(*token);
+    ft_trim_quotes(token);
 	if (contain_wc == 1)
 		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)

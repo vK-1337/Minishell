@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 10:47:24 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:02:38 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	ft_contain_wildcards(char *input)
 	single_quotes = 0;
 	double_quotes = 0;
 	counter = 0;
+	if (!input)
+		return (0);
 	while (input[i])
 	{
 		if (input[i] == 34)

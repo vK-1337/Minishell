@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 18:01:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 10:48:31 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	*build_command(t_ast *node)
 	while (travel != NULL)
 	{
 		command = ft_strjoin(command, " ", 1);
+		if (!travel->token)
+			return (command);
 		command = ft_strjoin(command, travel->token, 1);
 		if (!command)
 			return (NULL);

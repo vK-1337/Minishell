@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 11:02:03 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 20:22:29 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,25 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 int	create_redirection(t_ast *node, t_list *env_list)
 {
 	int	exit_status;
-	int	saved_std[2];
+	t_exec	*exec;
 
-	saved_std[0] = dup(0);
-	saved_std[1] = dup(1);
+	exec = malloc(sizeof(t_exec));
+	exec->saved_fd[0] = dup(0);
+	exec->saved_fd[1] = dup(1);
 	if (is(node->left->token->token, "|") == 1)
-		exit_status = left_pipe(node, env_list, saved_std);
+		exit_status = left_pipe(node, env_list, &exec);
 	else if (is(node->right->token->token, "|") == 1)
-		exit_status = right_pipe(node, env_list, saved_std);
+		exit_status = right_pipe(node, env_list, &exec);
 	else
 	{
-		pipe_chain(redo_env(env_list), node->left, env_list, saved_std);
+		pipe_chain(redo_env(env_list), node->left, env_list, &exec);
 		exit_status = last_pipe(redo_env(env_list), node->right, env_list,
-				saved_std);
+				&exec);
 	}
-	dup2(saved_std[0], 0);
-	close(saved_std[0]);
-	close(saved_std[1]);
+	dup2(exec->saved_fd[0], 0);
+	dup2(exec->saved_fd[1], 1);
+	close(exec->saved_fd[0]);
+	close(exec->saved_fd[1]);
+	free(exec);
 	return (exit_status);
 }

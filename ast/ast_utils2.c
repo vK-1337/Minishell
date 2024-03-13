@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 10:48:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 20:07:37 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,41 @@ char	*build_command(t_ast *node)
 	return (command);
 }
 
-int	do_pipe_redirections(t_ast *command, int fd[2], int saved_std[2])
+int	do_pipe_redirections(t_ast *command, t_exec **exec)
 {
 	t_token	*travel;
-
+	
 	travel = command->token->file_redir_in;
 	while (travel)
 	{
-		fd[0] = configure_fd_in(fd[0], travel->token, travel->file_redir);
+		(*exec)->fd[0] = configure_fd_in((*exec)->fd[0], travel->token,
+				travel->file_redir);
 		if (ft_strncmp(travel->token, "<<", 2) == 0)
-			fd[0] = launch_here_doc(travel->file_redir, saved_std);
-		if (fd[0] == -1)
+			(*exec)->fd[0] = launch_here_doc(travel->file_redir,
+					(*exec)->saved_fd);
+		if ((*exec)->fd[0] == -1)
 			return (-1917);
 		travel = travel->next;
 	}
 	travel = command->token->file_redir_out;
 	while (travel)
 	{
-		fd[1] = configure_fd_out(fd[1], travel->token, travel->file_redir);
+		(*exec)->fd[1] = configure_fd_out((*exec)->fd[1], travel->token,
+				travel->file_redir);
 		travel = travel->next;
 	}
-	dup2(fd[0], 0);
-	dup2(fd[1], 1);
+	if ((*exec)->fd[0] != -1000)
+	{
+		dup2((*exec)->fd[0], 0);
+		close((*exec)->fd[0]);
+	}
+	if ((*exec)->last == 1 && (*exec)->fd[1] == -1000)
+		dup2((*exec)->saved_fd[1], 1);
+	else
+	{	
+		dup2((*exec)->fd[1], 1);
+		close((*exec)->fd[1]);
+	}
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 10:30:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:21:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_token	*ft_convert_tokens(char **tokens)
 		previous_type = type;
 		vars.i++;
 	}
-    ft_print_token_list(&tokens_list);
 	return (tokens_list);
 }
 

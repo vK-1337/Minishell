@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 11:02:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 17:50:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	struct dirent	*de;
 	DIR				*dr;
 	int				count;
-    char *new_token;
+	char			*new_token;
 
 	count = 0;
 	dr = opendir(".");
@@ -35,7 +35,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 		}
 		de = readdir(dr);
 	}
-    *token = new_token;
+	*token = new_token;
 	if (!count)
 		return (closedir(dr), 1);
 	return (closedir(dr), 0);
@@ -43,9 +43,9 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 
 char	*ft_join_match_helper(char *prev_new_token, char *de_name, int count)
 {
-    char *new_token;
+	char	*new_token;
 
-    new_token = NULL;
+	new_token = NULL;
 	if (count == 0)
 	{
 		new_token = ft_strjoin(de_name, " ", 0);
@@ -67,7 +67,9 @@ int	ft_replace_wildcards(char **token)
 	int	contain_wc;
 
 	contain_wc = ft_contain_wildcards(*token);
-    ft_trim_quotes(token);
+	if (ft_contain_quotes(*token))
+		ft_trim_quotes(token);
+    // printf("token: %s\n", *token);
 	if (contain_wc == 1)
 		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)

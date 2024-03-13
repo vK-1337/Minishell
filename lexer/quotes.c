@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 10:54:13 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:48:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ int	ft_not_single_quoted(char *input, int char_index)
 
 	i = 0;
 	single_quotes = 0;
-	while (i < char_index)
+	while (i <= char_index)
 	{
 		if (input[i] == 39 && ft_not_double_quoted(input, i))
 			single_quotes++;
 		i++;
 	}
-	if (single_quotes % 2 == 0)
+	if (single_quotes % 2 == 0 || (single_quotes % 2 != 0
+			&& input[char_index] == 39))
 		return (1);
 	return (0);
 }
@@ -79,34 +80,79 @@ int	ft_not_double_quoted(char *input, int char_index)
 
 	i = 0;
 	double_quotes = 0;
-	while (i < char_index)
+	while (i <= char_index)
 	{
 		if (input[i] == 34 && ft_not_single_quoted(input, i))
 			double_quotes++;
 		i++;
 	}
-	if (double_quotes % 2 == 0)
+	if (double_quotes % 2 == 0 || (double_quotes % 2 != 0
+			&& input[char_index] == 34))
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 
-void ft_trim_quotes(char** input)
+void	ft_trim_quotes(char **input)
 {
-    int i;
+	int		i;
+	int		j;
+	int		quotes_number;
+	char	*trimed_token;
 
-    i = 0;
-    if (!input)
-        return ;
-    if (*input[0] == 34 || *input[0] == 39)
-    {
-        while ((*input)[i])
-        {
-            (*input)[i] = (*input)[i + 1];
-            i++;
-        }
-        i = 0;
-        while ((*input)[i])
-            i++;
-        (*input)[i - 1] = '\0';
-    }
+	i = 0;
+	j = 0;
+	if (!input)
+		return ;
+	quotes_number = ft_count_quotes(*input);
+	trimed_token = malloc(ft_strlen(*input) - quotes_number + 1);
+	if (!trimed_token)
+		return ;
+	while (i < (int)ft_strlen(*input))
+	{
+		if (((*input)[i] != 34 && (*input)[i] != 39))
+		{
+			trimed_token[j] = (*input)[i];
+			j++;
+		}
+		else if (((*input)[i] == 34 || (*input)[i] == 39)
+			&& !ft_not_quoted(*input, i))
+		{
+			trimed_token[j] = (*input)[i];
+			j++;
+		}
+		i++;
+	}
+    trimed_token[j] = '\0';
+	free(*input);
+	*input = trimed_token;
+}
+int	ft_count_quotes(char *input)
+{
+	int	i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (input[i])
+	{
+		if ((input[i] == 34 || input[i] == 39) && ft_not_quoted(input, i))
+			counter++;
+		i++;
+	}
+	return (counter);
+}
+
+int	ft_contain_quotes(char *token)
+{
+	int i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == 34 || token[i] == 39)
+			return (1);
+		i++;
+	}
+	return (0);
 }

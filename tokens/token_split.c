@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 14:09:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:22:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,17 @@ int	handle_quotes(const char *str, int index, int delimiter)
 {
 	int	i;
 
+	(void)delimiter;
 	i = 0;
 	index++;
-	while (str[index] != delimiter)
+	while (str[index])
 	{
+		if (!str[index + 1] || (ft_not_quoted((char *)str, index + 1)
+				&& str[index + 1] == 32) || (ft_is_operator(str[index + 1]
+					&& ft_not_quoted((char *)str, index + 1))))
+		{
+			break ;
+		}
 		index++;
 		i++;
 	}

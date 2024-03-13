@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 11:28:20 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:49:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_token	*ft_convert_tokens(char **tokens)
 	{
 		if (ft_token_empty(tokens[vars.i]))
 		{
-			printf("empty token\n");
 			tokens++;
 			continue ;
 		}
@@ -41,7 +40,7 @@ t_token	*ft_convert_tokens(char **tokens)
 		previous_type = type;
 		vars.i++;
 	}
-	ft_print_token_list(&tokens_list);
+	// ft_print_token_list(&tokens_list);
 	return (tokens_list);
 }
 

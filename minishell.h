@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 11:01:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 13:58:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int					ft_is_file(char *token);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_echo(char **command);
+int					ft_echo(char **str, char *brut_input);
 int					ft_is_n_option(char *str);
 
 /******************************************************************************/
@@ -272,6 +272,8 @@ t_ttype				ft_define_subsequent_token_type(char **tokens, int i,
 						int first_type_redir, t_ttype previous_type);
 int					ft_only_spaces_between(char *token);
 int					ft_token_empty(char *token);
+int					ft_contain_quotes(char *token);
+int					ft_count_quotes(char *input);
 
 /******************************************************************************/
 /*                                                                            */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 15:13:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 09:28:47 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	free(tokens);
 	if (!listed_tokens)
 		return (NULL);
+	ft_print_token_list(&listed_tokens);
 	ft_reunite_tokens(&listed_tokens);
 	status = ft_redirections(&listed_tokens);
 	if (status == -1)

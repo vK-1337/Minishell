@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:36:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 12:45:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:40:20 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	**ft_split(char *s, char c)
 	t_norme	vars;
 	char	**words;
 
+	if (!s)
+		return (NULL);
 	vars.k = ft_count_words(s, c);
 	words = malloc((vars.k + 1) * sizeof(char *));
 	if (!words)

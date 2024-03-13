@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:27 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 10:19:15 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_contain_wildcards(char *input)
 	single_quotes = 0;
 	double_quotes = 0;
 	counter = 0;
+	if (!input)
+		return (0);
 	while (input[i])
 	{
 		if (input[i] == 34)

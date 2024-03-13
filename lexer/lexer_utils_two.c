@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 10:30:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:28:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ t_token	*ft_convert_tokens(char **tokens)
 	vars.i = 0;
 	while (tokens[vars.i])
 	{
-        if (ft_token_empty(tokens[vars.i]))
-        {
-            tokens++;
-            continue ;
-        }
+		if (ft_token_empty(tokens[vars.i]))
+		{
+			printf("empty token\n");
+			tokens++;
+			continue ;
+		}
 		if (vars.i == 0)
 			type = ft_define_first_token_type(tokens, vars.j, type);
 		else
@@ -40,36 +41,37 @@ t_token	*ft_convert_tokens(char **tokens)
 		previous_type = type;
 		vars.i++;
 	}
-    ft_print_token_list(&tokens_list);
+	ft_print_token_list(&tokens_list);
 	return (tokens_list);
 }
 
 int	ft_token_empty(char *token)
 {
-    if (token[0] == 0)
-        return (1);
-    else if (token[0] == 39 && token[1] == 39)
-        return (1);
-    else if (token[0] == 34 && token[1] == 34)
-        return (1);
-    else if (ft_only_spaces_between(token) == 1)
-        return (1);
-    return (0);
+	if (token[0] == 0)
+		return (1);
+	else if (token[0] == 39 && token[1] == 39)
+		return (1);
+	else if (token[0] == 34 && token[1] == 34)
+		return (1);
+	else if (ft_only_spaces_between(token) == 1 && (token[0] == 34
+			|| token[0] == 39))
+		return (1);
+	return (0);
 }
 
-int ft_only_spaces_between(char *token)
+int	ft_only_spaces_between(char *token)
 {
-    int i;
-    int delimiter;
+	int	i;
+	int	delimiter;
 
-    i = 0;
-    delimiter = token[0];
-    while (token[++i] != delimiter)
-    {
-        if (token[i] != ' ')
-            return (0);
-    }
-    return (1);
+	i = 0;
+	delimiter = token[0];
+	while (token[++i] != delimiter)
+	{
+		if (token[i] != ' ')
+			return (0);
+	}
+	return (1);
 }
 
 int	ft_check_first_redir(char **tokens, t_ttype *type)

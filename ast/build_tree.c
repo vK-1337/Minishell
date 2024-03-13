@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:29:04 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 16:31:49 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 11:04:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	send_to_build(t_ast **node, int direction)
 	}
 	else if (direction == 2)
 	{
-		ft_print_token_list(&(*node)->token);
+		// ft_print_token_list(&(*node)->token);
 		strongest = get_last_strongest_operator((*node)->token);
 		if (strongest == NULL)
 			return ;

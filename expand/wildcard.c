@@ -27,13 +27,9 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	{
 		if (ft_match(*token, de->d_name))
 		{
-			if (count == 0)
-				*token = ft_strjoin(de->d_name, " ", 0);
-			else
-			{
-				*token = ft_strjoin(*token, de->d_name, 1);
-				*token = ft_strjoin(*token, " ", 1);
-			}
+			*token = ft_join_match_helper(*token, de->d_name, count);
+			if (token == NULL)
+				return (0);
 			count++;
 		}
 		de = readdir(dr);
@@ -43,7 +39,25 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	return (closedir(dr), 0);
 }
 
-int	ft_replace_wildcards(char **token)
+char	*ft_join_match_helper(char *token, char *de_name, int count)
+{
+	if (count == 0)
+	{
+		token = ft_strjoin(de_name, " ", 0);
+		if (token == NULL)
+			return (NULL);
+	}
+	else
+	{
+		token = ft_strjoin(token, de_name, 1);
+		token = ft_strjoin(token, " ", 1);
+		if (token == NULL)
+			return (NULL);
+	}
+	return (token);
+}
+
+int	ft_replace_wildcards(char *token)
 {
 	int	contain_wc;
 
@@ -108,23 +122,4 @@ int	ft_match_multiple_wc(char *pattern, char *name)
 			return (1);
 	}
 	return (1);
-}
-
-int	ft_match_single_wc(char *pattern, char *name)
-{
-	int	wildcard_index;
-	int	patt_len;
-	int	after_wild;
-
-	patt_len = ft_strlen(pattern);
-	wildcard_index = 0;
-	while (pattern[wildcard_index] != 42)
-		wildcard_index++;
-	after_wild = patt_len - wildcard_index;
-	if ((unsigned long)wildcard_index == (ft_strlen(pattern) - 1))
-		return (ft_starting_match(pattern, name));
-	else if (wildcard_index == 0)
-		return (ft_ending_match(pattern, name));
-	else
-		return (ft_both_match(pattern, name));
 }

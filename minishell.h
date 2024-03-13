@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 09:55:42 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/13 11:01:29 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,8 @@ t_ttype				ft_define_first_token_type(char **tokens,
 						int first_type_redir, t_ttype type);
 t_ttype				ft_define_subsequent_token_type(char **tokens, int i,
 						int first_type_redir, t_ttype previous_type);
+int					ft_only_spaces_between(char *token);
+int					ft_token_empty(char *token);
 
 /******************************************************************************/
 /*                                                                            */
@@ -401,8 +403,9 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
-char				*ft_join_match_helper(char *token, char *de_name,
+char				*ft_join_match_helper(char *prev_new_token, char *de_name,
 						int count);
+void				ft_trim_quotes(char **input);
 
 /******************************************************************************/
 /*                                                                            */

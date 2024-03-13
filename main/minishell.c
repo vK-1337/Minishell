@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 17:50:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:11:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int ac, char **av, char **env)
 			|| ft_find_var(&env_list, "$?")->xit_status == 127)
 			break ;
 		free(prompt);
+        free(input);
 		prompt = ft_build_prompt(&env_list);
 		if (!prompt)
 			return (printf("Error: malloc failed\n"), ft_free_list(&env_list),

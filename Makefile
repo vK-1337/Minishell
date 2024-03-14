@@ -18,6 +18,7 @@ SRCS =			cd/cd.c \
 				exec_command/exec_redirections.c \
 				exec_command/exec_redirections2.c \
 				exec_command/exec_utils.c \
+				exit/exit.c \
 				expand/expand.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \

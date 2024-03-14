@@ -6,21 +6,11 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 12:50:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:01:44 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int ft_tablen(char **tab)
-{
-    int i;
-
-    i = 0;
-    while (tab[i])
-        i++;
-    return (i);
-}
 
 int	check_command(char **command, t_list *env_list, char *brut_input)
 {
@@ -36,7 +26,7 @@ int	check_command(char **command, t_list *env_list, char *brut_input)
 	else if (ft_strcmp("export", command[0]) == 0)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strcmp("exit", command[0]) == 0)
-		exit_status = -1917;
+		exit_status = ft_exit(command, &env_list);
     else if (ft_strcmp("echo", command[0]) == 0)
         exit_status = ft_echo(command, brut_input);
 	else if (ft_strcmp("cd", command[0]) == 0)
@@ -123,7 +113,6 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 		return (ft_free_char_tab(env), 0);
 
 	command_str = build_command(command);
-	//printf("command_str: %s\n", command_str);
 	exit_status = 1871;
 	exit_status = check_command(ft_split(command_str, ' '), env_list, command_str);
 	if (exit_status != 1871)

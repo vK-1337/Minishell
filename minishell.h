@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 12:18:09 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:02:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 void				ft_print_list(t_list **env_list);
+int					ft_tablen(char **tab);
 
 /******************************************************************************/
 /*                                                                            */
@@ -149,6 +150,17 @@ void				here_doc(char *limiter, int fd[2]);
 char				*check_valid_command(char **cmd_split, char *path);
 char				*take_path(char **env);
 void				ft_add_front(t_token **command, t_token **curr);
+
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   EXIT                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
+
+int					ft_exit(char **command, t_list **env_list);
+int					ft_isnumber(char *str);
 
 /******************************************************************************/
 /*                                                                            */

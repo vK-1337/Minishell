@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 12:48:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:12:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,5 @@ int	ft_replace_pwd(t_list **env)
 	old_pwd->content = ft_strdup(pwd->content);
 	free(pwd->content);
 	pwd->content = ft_strdup(current_directory);
-	printf("%s\n", current_directory);
 	return (free(current_directory), 1);
 }

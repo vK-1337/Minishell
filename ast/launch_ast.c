@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 20:22:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 12:51:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 
 int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 {
-	char	**env;
-
-	env = NULL;
 	export_and_wildcard(ast, env_list);
 	if (ast == NULL)
 		return (0);
@@ -57,10 +54,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 	else if (ast->token->type == 3 && is(ast->token->token, "|") == 1)
 		*exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-	{
-		env = redo_env(env_list);
-		*exit_status = exec_shell_command(ast, env_list, env);
-	}
+		*exit_status = exec_shell_command(ast, env_list, redo_env(env_list));
 	return (*exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 19:54:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 13:37:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 	}
 }
 
-int	do_redirections(t_ast *command)
+int	do_redirections(t_ast *command, int saved_fd[2])
 {
 	t_token	*travel;
 	int		fd_out;
@@ -52,7 +52,7 @@ int	do_redirections(t_ast *command)
 		{
 			fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 			if (ft_strncmp(travel->token, "<<", 2) == 0)
-				fd_in = launch_here_doc(travel->file_redir, (int [2]){0, 1});
+				fd_in = launch_here_doc(travel->file_redir, saved_fd);
 			if (fd_in == -1)
 				return (-1917);
 			travel = travel->next;

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 18:23:24 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:32:33 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ void	ft_front(t_token **command)
 {
 	t_token	*curr;
 	t_token	*temp2;
-
+	
 	curr = (*command)->next;
+	while (curr && (curr->type == OPTION || curr->type == COMMAND))
+		curr = curr->next;
 	if (curr)
 		temp2 = curr->prev;
 	else
 		temp2 = NULL;
+	
 	while (curr && curr->type == OPERATOR && (is(curr->token, "<")
 			|| is(curr->token, ">") || is(curr->token, "<<") || is(curr->token,
 				">>")))

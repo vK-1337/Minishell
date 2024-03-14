@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 17:48:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:13:42 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_trim_quotes(char **input)
 		}
 		i++;
 	}
-    trimed_token[j] = '\0';
+	trimed_token[j] = '\0';
 	free(*input);
 	*input = trimed_token;
 }
@@ -148,6 +148,8 @@ int	ft_contain_quotes(char *token)
 	int i;
 
 	i = 0;
+	if (!token)
+		return (0);
 	while (token[i])
 	{
 		if (token[i] == 34 || token[i] == 39)

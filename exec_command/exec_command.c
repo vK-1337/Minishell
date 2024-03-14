@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 20:47:43 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 10:51:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 
 	if (command->token->token == NULL)
 		return (ft_free_char_tab(env), 0);
-	
+
 	command_str = build_command(command);
 	//printf("command_str: %s\n", command_str);
 	exit_status = 1871;

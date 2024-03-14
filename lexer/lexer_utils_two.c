@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 20:48:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:29:42 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ t_token	*ft_convert_tokens(char **tokens)
 	vars.i = 0;
 	while (tokens[vars.i])
 	{
-		if (ft_token_empty(tokens[vars.i]))
-		{
-			tokens++;
-			continue ;
-		}
 		if (vars.i == 0)
 			type = ft_define_first_token_type(tokens, vars.j, type);
 		else

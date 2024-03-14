@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:56:12 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:16:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,4 @@ t_list	*ft_convert_env(char **env)
 	return (env_list);
 }
 
-t_list	*ft_exit_variable(void)
-{
-	t_list	*exit_variable;
 
-	exit_variable = malloc(sizeof(t_list));
-	if (!exit_variable)
-		return (NULL);
-	exit_variable->var_name = ft_strdup("?");
-	exit_variable->content = ft_strdup("0");
-	exit_variable->env_print = 0;
-	exit_variable->next = NULL;
-	exit_variable->prev = NULL;
-	exit_variable->xit_status = 0;
-	return (exit_variable);
-}

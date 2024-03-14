@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 14:02:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:12:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void				ft_add_front(t_token **command, t_token **curr);
 
 int					ft_exit(char **command, t_list **env_list);
 int					ft_isnumber(char *str);
+void				ft_end_minishell(t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */

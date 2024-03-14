@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:45:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/02/28 17:41:50 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 12:25:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_unset(t_list **env_list, char *var_to_del)
 	t_list	*curr;
 
 	curr = *env_list;
+	if (!var_to_del)
+		return (0);
 	while (curr)
 	{
 		if (strncmp(curr->var_name, var_to_del, ft_strlen(var_to_del)) == 0)
@@ -33,5 +35,5 @@ int	ft_unset(t_list **env_list, char *var_to_del)
 		}
 		curr = curr->next;
 	}
-	return (1);
+	return (0);
 }

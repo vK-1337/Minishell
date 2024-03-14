@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:47:50 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:18:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ int					ft_contain_equal(char *new_var);
 void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
 void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
 void				is_expandable_helper(t_norme *vars, char *input);
+int					ft_before_equal(char *new_var, int i);
 
 /******************************************************************************/
 /*                                                                            */

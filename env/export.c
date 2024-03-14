@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:18:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:17:16 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,30 @@ int	ft_correct_format(char *new_var)
 		return (0);
 	if (!(ft_isalpha(new_var[i])) && new_var[i] != '_')
 	{
-		printf("`%s': not a valid identifier\n", new_var);
+		ft_putstr_fd(" not a valid identifier\n", 2);
 		return (0);
 	}
 	while (new_var[i])
 	{
-		if (ft_forbidden_char(new_var[i]))
+		if (ft_forbidden_char(new_var[i]) && ft_before_equal(new_var, i))
 		{
-			printf("`%s': not a valid identifier\n", new_var);
+			ft_putstr_fd(" not a valid identifier\n", 2);
 			return (0);
 		}
 		i++;
 	}
 	return (1);
+}
+
+int ft_before_equal(char *new_var, int i)
+{
+    while (i)
+    {
+        if (new_var[i] == '=')
+            return (0);
+        i--;
+    }
+    return (1);
 }
 
 int	ft_forbidden_char(char c)
@@ -76,7 +87,7 @@ int	ft_forbidden_char(char c)
 	char	*charset;
 
 	i = 0;
-	charset = "!@#$%^&*(){}[]|;:<>,?/";
+	charset = "!@#$%^&*(){}[]|;:<>,?/-";
 	while (charset[i])
 	{
 		if (c == charset[i])

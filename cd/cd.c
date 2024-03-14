@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 11:11:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 12:59:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_cd(char *path, t_list **env)
 	{
 		if (cdpath_find(path, env) == 0)
 			return (0);
-		printf("cd: %s: No such file or directory\n", path);
-		return (-1);
+		ft_putstr_fd(" No such file or directory", 2);
+		return (1);
 	}
 	else
 	{

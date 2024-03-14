@@ -6,11 +6,21 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 10:51:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:50:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int ft_tablen(char **tab)
+{
+    int i;
+
+    i = 0;
+    while (tab[i])
+        i++;
+    return (i);
+}
 
 int	check_command(char **command, t_list *env_list, char *brut_input)
 {
@@ -32,8 +42,13 @@ int	check_command(char **command, t_list *env_list, char *brut_input)
 	else if (ft_strcmp("cd", command[0]) == 0)
 	{
 		if (command[1] == NULL)
-			exit_status = ft_cd(NULL, &env_list);
-		else
+			exit_status = ft_cd(ft_find_var(&env_list, "$HOME")->content, &env_list);
+		else if (ft_tablen(command) > 2)
+        {
+            ft_putstr_fd("cd: too many arguments\n", 2);
+            exit_status = 1;
+        }
+        else
 			exit_status = ft_cd(command[1], &env_list);
 	}
 	else if (ft_strcmp("pwd", command[0]) == 0)

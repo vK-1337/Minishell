@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:13:42 by vk                #+#    #+#             */
-/*   Updated: 2024/03/12 13:52:33 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:00:58 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	ft_env_node(t_list *node, void *content)
 			return ;
 		ft_strlcpy(node->content, content + i + 1, j);
 	}
+    else
+        node->content = NULL;
 }
 
 int	ft_find_equal(char *str)

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 12:48:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:38:28 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_cd(char *path, t_list **env)
 	{
 		if (cdpath_find(path, env) == 0)
 			return (0);
-		printf("cd: %s: No such file or directory\n", path);
-		return (-1);
+		ft_putstr_fd(" No such file or directory", 2);
+		return (1);
 	}
 	else
 	{

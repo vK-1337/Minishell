@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 15:34:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:40:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	saved_std[1] = dup(1);
 	if (command->token->token == NULL)
 		return (ft_free_char_tab(env), 0);
-	command_str = build_command(command);;
+
+	command_str = build_command(command);
 	exit_status = 1871;
 	exit_status = manage_built_in(ft_split(command_str, ' '), env_list, command_str, command);
 	if (exit_status != 1871)

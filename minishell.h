@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:37:25 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:38:16 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 void				ft_print_list(t_list **env_list);
+int					ft_tablen(char **tab);
 
 /******************************************************************************/
 /*                                                                            */
@@ -157,6 +158,18 @@ int					exec_built_in(char **command, t_list *env_list,
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
+/*                                   EXIT                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
+
+int					ft_exit(char **command, t_list **env_list);
+int					ft_isnumber(char *str);
+
+
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
 /*                                 EXPAND                                     */
 /*                                                                            */
 /*                                                                            */
@@ -203,6 +216,7 @@ int					ft_contain_equal(char *new_var);
 void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
 void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
 void				is_expandable_helper(t_norme *vars, char *input);
+int					ft_before_equal(char *new_var, int i);
 
 /******************************************************************************/
 /*                                                                            */

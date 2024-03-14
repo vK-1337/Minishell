@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 16:16:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:42:15 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,3 @@ t_list	*ft_convert_env(char **env)
 	ft_lstadd_back(&env_list, ft_exit_variable());
 	return (env_list);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 20:07:37 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:51:44 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*build_command(t_ast *node)
 int	do_pipe_redirections(t_ast *command, t_exec **exec)
 {
 	t_token	*travel;
-	
+
 	travel = command->token->file_redir_in;
 	while (travel)
 	{
@@ -111,7 +111,7 @@ int	do_pipe_redirections(t_ast *command, t_exec **exec)
 	if ((*exec)->last == 1 && (*exec)->fd[1] == -1000)
 		dup2((*exec)->saved_fd[1], 1);
 	else
-	{	
+	{
 		dup2((*exec)->fd[1], 1);
 		close((*exec)->fd[1]);
 	}

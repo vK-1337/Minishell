@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 08:48:18 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 14:07:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:31:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*ft_find_var(t_list **env, char *input)
 			break ;
 		i++;
 	}
-	if (input[0] == '?' && !input[1])
+	if (input[0] == '?')
 		i = 1;
 	curr = *env;
 	while (curr)

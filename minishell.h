@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 20:47:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:47:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
+void				ft_print_list(t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */
@@ -166,7 +167,8 @@ char				*ft_char_join(char *base_str, char to_join);
 t_list				*ft_find_var(t_list **env, char *input);
 char				*ft_join_var(t_list **env, char *final_input, char *input);
 char				*ft_expand(char *input, t_list **env);
-char				*ft_join_xstatus(char *final_input, t_list *x_var);
+char				*ft_join_xstatus(char *final_input, t_list *x_var,
+						char *input);
 char				*ft_join_other_var(char *final_input, t_list *env_var);
 void				ft_join_helper(int *j, char *new_str, char *final_input);
 void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);

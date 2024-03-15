@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 16:12:24 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:04:38 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char *command, char **env, t_list *env_list);
-int					do_redirections(t_ast *command);
+int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2]);
@@ -150,6 +150,10 @@ void				here_doc(char *limiter, int fd[2]);
 char				*check_valid_command(char **cmd_split, char *path);
 char				*take_path(char **env);
 void				ft_add_front(t_token **command, t_token **curr);
+int					manage_built_in(char **command, t_list *env_list,
+						char *brut_input, t_ast *ast);
+int					exec_built_in(char **command, t_list *env_list,
+						char *brut_input);
 
 /******************************************************************************/
 /*                                                                            */

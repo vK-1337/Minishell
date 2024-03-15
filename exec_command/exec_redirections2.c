@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 17:44:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:05:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
+int	configure_fd_out2(int fd_out, char *token, char *file)
+{
+	if (fd_out != 0)
+		close(fd_out);
+	if (is(token, ">") == 1)
+	{
+		fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	}
+	else if (is(token, ">>") == 1)
+		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	handle_error(fd_out, file);
+	if (fd_out == -1)
+		return (-1);
+	close(fd_out);
+	return (fd_out);
+}
+
+int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 {
 	t_token	*travel;
 
@@ -21,9 +38,11 @@ void	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		travel = command->token->file_redir_out;
 		while (travel)
 		{
-			configure_fd_out(*fd_out, travel->token, travel->file_redir);
+			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) == -1)
+				return (-1);
 			travel = travel->next;
 		}
+		*fd_out = configure_fd_out(*fd_out, travel->token, travel->file_redir);
 	}
 	if (*fd_out != 1)
 	{
@@ -35,9 +54,22 @@ void	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		dup2(*fd_in, 0);
 		close(*fd_in);
 	}
+	return (0);
+}
+int	configure_fd_in2(int fd_in, char *token, char *file)
+{
+	if (fd_in != 0)
+		close(fd_in);
+	else if (is(token, "<") == 1)
+		fd_in = open(file, O_RDWR, 0777);
+	handle_error(fd_in, file);
+	if (fd_in == -1)
+		return (-1);
+	close(fd_in);
+	return (fd_in);
 }
 
-int	do_redirections(t_ast *command)
+int	do_redirections(t_ast *command, int saved_fd[2])
 {
 	t_token	*travel;
 	int		fd_out;
@@ -48,17 +80,27 @@ int	do_redirections(t_ast *command)
 	if (command->token->file_redir_in != NULL)
 	{
 		travel = command->token->file_redir_in;
-		while (travel)
+		while (travel->next)
 		{
-			fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
-			if (ft_strncmp(travel->token, "<<", 2) == 0)
-				fd_in = launch_here_doc(travel->file_redir, (int [2]){0, 1});
-			if (fd_in == -1)
+			if (configure_fd_in2(fd_in, travel->token, travel->file_redir) == -1)
 				return (-1917);
+			if (ft_strncmp(travel->token, "<<", 2) == 0)
+			{
+				if (launch_here_doc(travel->file_redir, saved_fd) == -1)
+					return (-1917);
+			}
 			travel = travel->next;
 		}
+		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
+		if (ft_strncmp(travel->token, "<<", 2) == 0)
+		{
+			fd_in = launch_here_doc(travel->file_redir, saved_fd);
+		}
+		if (fd_in == -1)
+				return (-1917);
 	}
-	do_redirection2(command, &fd_in, &fd_out);
+	if (do_redirection2(command, &fd_in, &fd_out) == -1)
+		return (-1917);
 	return (0);
 }
 

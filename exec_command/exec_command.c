@@ -3,49 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 17:42:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:05:33 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	check_command(char **command, t_list *env_list, char *brut_input)
-{
-	int	exit_status;
-
-	exit_status = 1871;
-	if (!command)
-		return (-1917);
-	if (ft_strcmp("env", command[0]) == 0)
-		exit_status = ft_print_env(env_list);
-	else if (ft_strcmp("unset", command[0]) == 0)
-		exit_status = ft_unset(&env_list, command[1]);
-	else if (ft_strcmp("export", command[0]) == 0)
-		exit_status = ft_export(&env_list, command[1]);
-	else if (ft_strcmp("exit", command[0]) == 0)
-		exit_status = ft_exit(command, &env_list);
-	else if (ft_strcmp("echo", command[0]) == 0)
-		exit_status = ft_echo(command, brut_input);
-	else if (ft_strcmp("cd", command[0]) == 0)
-	{
-		if (command[1] == NULL)
-			exit_status = ft_cd(ft_find_var(&env_list, "$HOME")->content,
-					&env_list);
-		else if (ft_tablen(command) > 2)
-		{
-			ft_putstr_fd("cd: too many arguments\n", 2);
-			exit_status = 1;
-		}
-		else
-			exit_status = ft_cd(command[1], &env_list);
-	}
-	else if (ft_strcmp("pwd", command[0]) == 0)
-		exit_status = ft_pwd();
-	return (ft_free_char_tab(command), exit_status);
-}
 
 int	exec_command(char *command, char **env, t_list *env_list)
 {
@@ -53,7 +18,7 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	char	**cmd_split;
 	int		exit_status;
 
-	exit_status = check_command(ft_split(command, ' '), env_list, command);
+	exit_status = exec_built_in(ft_split(command, ' '), env_list, command);
 	if (exit_status != 1871)
 		exit(exit_status);
 	cmd_split = ft_split(command, ' ');
@@ -109,20 +74,22 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	int		id;
 	int		exit_status;
 	char	*command_str;
+	int     saved_std[2];
 
+	saved_std[0] = dup(0);
+	saved_std[1] = dup(1);
 	if (command->token->token == NULL)
 		return (ft_free_char_tab(env), 0);
 	command_str = build_command(command);
 	exit_status = 1871;
-	exit_status = check_command(ft_split(command_str, ' '), env_list,
-			command_str);
+	exit_status = manage_built_in(ft_split(command_str, ' '), env_list, command_str, command);
 	if (exit_status != 1871)
 		return (ft_free_char_tab(env), free(command_str), exit_status);
 	id = fork();
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		if (do_redirections(command) == -1917)
+		if (do_redirections(command, saved_std) == -1917)
 			return (ft_free_char_tab(env), free(command_str), -1917);
 		exit_status = exec_command(command_str, env, env_list);
 	}

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/15 15:52:04 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:04:58 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 
 int	create_redirection(t_ast *node, t_list *env_list)
 {
-	int	exit_status;
+	int		exit_status;
 	t_exec	*exec;
 
 	exec = malloc(sizeof(t_exec));

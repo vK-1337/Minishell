@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:03:42 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:51:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:41:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_list	**ft_copy_env_list(t_list **env_list)
 	t_list	*node_copy;
 
 	curr = *env_list;
-    copy = malloc(sizeof(t_list *));
-    if (!copy)
-        return (NULL);
-    *copy = NULL;
+	copy = malloc(sizeof(t_list *));
+	if (!copy)
+		return (NULL);
+	*copy = NULL;
 	while (curr)
 	{
 		node_copy = ft_copy_env_node(curr);

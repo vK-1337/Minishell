@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:53:14 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:37:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:43:41 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*ft_join_other_var(char *final_input, t_list *env_var)
 {
 	char	*new_str;
 
-	int(i) = 0;
-	int(j) = 0;
+	int (i) = 0;
+	int (j) = 0;
 	new_str = malloc((ft_strlen(final_input) + ft_strlen(env_var->content) + 1)
 			* sizeof(char));
 	if (!new_str)
@@ -87,18 +87,18 @@ char	*ft_join_other_var(char *final_input, t_list *env_var)
 	return (new_str);
 }
 
-int ft_get_join_len(char *input)
+int	ft_get_join_len(char *input)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (input[i])
-    {
-        if (input[i] == ' ')
-            break;
-        i++;
-    }
-    return (i);
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == ' ')
+			break ;
+		i++;
+	}
+	return (i);
 }
 
 char	*ft_join_xstatus(char *final_input, t_list *x_var, char *input)

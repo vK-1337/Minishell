@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/15 15:58:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:05:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,13 @@ void	handle_error(int err, char *msg)
 		perror(msg);
 	}
 }
-int ft_tablen(char **tab)
-{
-    int i;
 
-    i = 0;
-    while (tab[i])
-        i++;
-    return (i);
+int	ft_tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

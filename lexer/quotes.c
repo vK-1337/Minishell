@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:47:08 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:13:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:50:58 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	ft_trim_quotes(char **input)
 	free(*input);
 	*input = trimed_token;
 }
+
 int	ft_count_quotes(char *input)
 {
 	int	i;
@@ -145,7 +146,7 @@ int	ft_count_quotes(char *input)
 
 int	ft_contain_quotes(char *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!token)

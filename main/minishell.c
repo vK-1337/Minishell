@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 12:21:35 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:06:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	*prompt;
 	t_list	*env_list;
+	int		last_exit_status;
 
 	(void)ac;
 	(void)av;
@@ -51,18 +52,18 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		ft_change_signals();
 		launch_ast(input, env_list, &ft_find_var(&env_list, "$?")->xit_status);
-		if (ft_find_var(&env_list, "$?")->xit_status == -1917
-			|| ft_find_var(&env_list, "$?")->xit_status == 127)
+		if (ft_find_var(&env_list, "$?")->should_end == 1)
 			break ;
 		free(prompt);
-        free(input);
+		free(input);
 		prompt = ft_build_prompt(&env_list);
 		if (!prompt)
 			return (printf("Error: malloc failed\n"), ft_free_list(&env_list),
 				1);
 	}
+	free(prompt);
+	last_exit_status = ft_find_var(&env_list, "$?")->xit_status;
 	ft_free_list(&env_list);
 	rl_clear_history();
-	free(prompt);
-	return (0);
+	exit(last_exit_status);
 }

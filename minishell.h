@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 15:38:16 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:04:38 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int					exec_built_in(char **command, t_list *env_list,
 
 int					ft_exit(char **command, t_list **env_list);
 int					ft_isnumber(char *str);
-
+void				ft_end_minishell(t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:04:26 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 11:47:17 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:41:55 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	ft_display_export(t_list **env_list)
 	t_list	**sorted_list;
 
 	list_copy = ft_copy_env_list(env_list);
-    if (!list_copy)
-        return ;
-    ft_print_list(list_copy);
+	if (!list_copy)
+		return ;
+	ft_print_list(list_copy);
 	sorted_list = ft_sort_nodes(list_copy);
 	curr = *sorted_list;
 	while (curr)
@@ -63,15 +63,16 @@ void	ft_display_export(t_list **env_list)
 		curr = curr->next;
 	}
 }
-void ft_print_list(t_list **env_list)
-{
-    t_list *curr;
 
-    curr = *env_list;
-    while (curr)
-    {
-        printf("var_name: %s\n", curr->var_name);
-        printf("content: %s\n", curr->content);
-        curr = curr->next;
-    }
+void	ft_print_list(t_list **env_list)
+{
+	t_list	*curr;
+
+	curr = *env_list;
+	while (curr)
+	{
+		printf("var_name: %s\n", curr->var_name);
+		printf("content: %s\n", curr->content);
+		curr = curr->next;
+	}
 }

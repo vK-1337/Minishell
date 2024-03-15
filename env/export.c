@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 12:17:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:45:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ int	ft_correct_format(char *new_var)
 	return (1);
 }
 
-int ft_before_equal(char *new_var, int i)
+int	ft_before_equal(char *new_var, int i)
 {
-    while (i)
-    {
-        if (new_var[i] == '=')
-            return (0);
-        i--;
-    }
-    return (1);
+	while (i)
+	{
+		if (new_var[i] == '=')
+			return (0);
+		i--;
+	}
+	return (1);
 }
 
 int	ft_forbidden_char(char c)
@@ -93,31 +93,6 @@ int	ft_forbidden_char(char c)
 		if (c == charset[i])
 			return (1);
 		i++;
-	}
-	return (0);
-}
-
-int	ft_var_exists(t_list **env_list, char *var)
-{
-	t_list	*curr;
-	int		i;
-
-	curr = *env_list;
-	i = 0;
-	while (ft_isalnum(var[i + 1]) || var[i + 1] == '_' || var[i + 1] == '?')
-		i++;
-	if (var[0] == '$' || var[0] == '{')
-		var++;
-	else
-		i++;
-	if (var[0] == '?')
-		return (1);
-	while (curr)
-	{
-		if (ft_strncmp(curr->var_name, var, i) == 0
-			&& curr->var_name[i] == '\0')
-			return (1);
-		curr = curr->next;
 	}
 	return (0);
 }

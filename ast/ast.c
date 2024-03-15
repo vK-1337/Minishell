@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 20:34:52 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:50:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int	last_pipe(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	{
 		waitpid(id, &exit_status, 0);
 		while (wait(NULL) > 0)
-			continue;
+			continue ;
 		exit_status = exit_status >> 8;
-		
 	}
 	return (free(command_str), exit_status);
 }
@@ -55,8 +54,7 @@ int	right_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 		travel = travel->left;
 	}
 	pipe_chain(redo_env(env_list), node->left, env_list, exec);
-	exit_status = last_pipe(redo_env(env_list), node->right, env_list,
-			exec);
+	exit_status = last_pipe(redo_env(env_list), node->right, env_list, exec);
 	return (exit_status);
 }
 
@@ -76,8 +74,7 @@ int	left_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 		pipe_chain(redo_env(env_list), travel->right, env_list, exec);
 		travel = travel->daddy;
 	}
-	exit_status = last_pipe(redo_env(env_list), node->right, env_list,
-			exec);
+	exit_status = last_pipe(redo_env(env_list), node->right, env_list, exec);
 	return (exit_status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 02:36:32 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 09:33:42 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:46:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ int	check_syntax(char *input)
 		return (0);
 	if (!ft_syntax_redir(input))
 		return (0);
-	
 	return (1);
 }

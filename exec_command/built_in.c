@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/16 16:00:20 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:05:55 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	manage_built_in(char **command, t_list *env_list, char *brut_input, t_ast *a
 	    dup2(saved_fd[1], 1);
         return (ft_exit(command, &env_list));
 	}
-	exit_status = exec_built_in(command, env_list, brut_input);
+	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
 	dup2(saved_fd[1], 1);
 	return (exit_status);
@@ -69,7 +69,7 @@ int	check_command(char *command)
 	return (0);
 }
 
-int	exec_built_in(char **command, t_list *env_list, char *brut_input)
+int	exec_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast)
 {
 	int exit_status;
 
@@ -83,7 +83,7 @@ int	exec_built_in(char **command, t_list *env_list, char *brut_input)
 	else if (ft_strcmp("export", command[0]) == 0)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strcmp("echo", command[0]) == 0)
-		exit_status = ft_echo(command, brut_input);
+		exit_status = ft_echo(command, brut_input, ast);
 	else if (ft_strcmp("cd", command[0]) == 0)
 	{
 		if (tablen(command) > 2)

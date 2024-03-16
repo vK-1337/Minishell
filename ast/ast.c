@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/16 17:18:44 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 17:54:37 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	last_pipe(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	{
 		close((*exec)->fd[0]);
 		char *command2 = build_command(command);
-		if (check_command(command2) == 1)
+		if (check_command(command2) == 0)
 		{
 			if (do_pipe_redirections(command, exec) == -1917)
 			{
@@ -56,15 +56,17 @@ int	right_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 {
 	t_ast	*travel;
 	int		exit_status;
+	char	**env;
 
+	env = redo_env(env_list);
 	travel = node;
 	while (is(travel->right->token->token, "|") == 1)
 	{
-		pipe_chain(redo_env(env_list), node->left, env_list, exec);
+		pipe_chain(env, node->left, env_list, exec);
 		travel = travel->left;
 	}
-	pipe_chain(redo_env(env_list), node->left, env_list, exec);
-	exit_status = last_pipe(redo_env(env_list), node->right, env_list, exec);
+	pipe_chain(env, node->left, env_list, exec);
+	exit_status = last_pipe(env, node->right, env_list, exec);
 	return (exit_status);
 }
 
@@ -72,19 +74,21 @@ int	left_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 {
 	t_ast	*travel;
 	int		exit_status;
+	char	**env;
 
+	env = redo_env(env_list);
 	travel = node;
 	while (is(travel->left->token->token, "|") == 1)
 	{
 		travel = travel->left;
 	}
-	pipe_chain(redo_env(env_list), travel->left, env_list, exec);
+	pipe_chain(env, travel->left, env_list, exec);
 	while (travel != node)
 	{
-		pipe_chain(redo_env(env_list), travel->right, env_list, exec);
+		pipe_chain(env, travel->right, env_list, exec);
 		travel = travel->daddy;
 	}
-	exit_status = last_pipe(redo_env(env_list), node->right, env_list, exec);
+	exit_status = last_pipe(env, node->right, env_list, exec);
 	return (exit_status);
 }
 
@@ -100,7 +104,7 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	{
 		close((*exec)->fd[0]);
 		char *command2 = build_command(command);
-		if (check_command(command2) == 1)
+		if (check_command(command2) == 0)
 		{
 			if (do_pipe_redirections(command, exec) == -1917)
 			{

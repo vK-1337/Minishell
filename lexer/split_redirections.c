@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 15:32:33 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 19:22:17 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,16 @@ void	ft_back(t_token **command)
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")
 				|| is(temp2->token, "<<") || is(temp2->token, ">>"))))
 		temp2 = temp2->prev;
+	if (curr == NULL)
+			return ;
 	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
+		printf("curr->token: %s\n", curr->token);
 		ft_token_addition(command, &curr);
 		(*command)->prev = curr;
-		if (curr == NULL)
-			break ;
+		curr = curr->prev;
+		
 	}
 	if (temp2 && temp2 != (*command))
 		temp2->next = (*command);

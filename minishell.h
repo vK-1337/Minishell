@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/16 17:19:25 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:10:01 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int					ft_tablen(char **tab);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_echo(char **str, char *brut_input);
+int					ft_echo(char **str, char *brut_input, t_ast *ast);
 int					ft_is_n_option(char *str);
 
 /******************************************************************************/
@@ -154,7 +154,7 @@ void				ft_add_front(t_token **command, t_token **curr);
 int					manage_built_in(char **command, t_list *env_list,
 						char *brut_input, t_ast *ast);
 int					exec_built_in(char **command, t_list *env_list,
-						char *brut_input);
+						char *brut_input, t_ast *ast);
 
 /******************************************************************************/
 /*                                                                            */

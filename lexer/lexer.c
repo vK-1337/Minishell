@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
 /*   Updated: 2024/03/14 16:59:27 by udumas           ###   ########.fr       */
@@ -28,6 +28,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	if (!listed_tokens)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
+	// ft_print_token_list(&listed_tokens);
 	status = ft_redirections(&listed_tokens);
 	if (status == -1)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
@@ -51,13 +52,14 @@ void	*ft_reunite_tokens(t_token **tokens)
 			curr = ft_handle_next_token(tokens, curr, next);
 		else
 			curr = curr->next;
+        // ft_print_token_list(tokens);
 	}
 	return ((void *)1);
 }
 
 t_token	*ft_handle_next_token(t_token **tokens, t_token *curr, t_token *next)
 {
-	if (next->next && curr->type == COMMAND && strncmp(curr->token, "export",
+	if (next->next && next->next->type == COMMAND && curr->type == COMMAND && strncmp(curr->token, "export",
 			6) == 0)
 		return (ft_handle_command_export(tokens, curr));
 	else if (curr->type == OPTION && next->type == OPTION)

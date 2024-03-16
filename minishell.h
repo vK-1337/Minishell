@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/15 16:04:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 17:19:25 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,12 @@ void				ft_update_xstatus(t_list **env, int x_status);
 /******************************************************************************/
 
 int					exec_shell_command(t_ast *command, t_list *env_list,
-						char **env);
+						char **env, t_ast *ast);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char *command, char **env, t_list *env_list);
+int					exec_command(char *command, char **env, t_list *env_list,
+						t_ast *ast);
 int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 17:50:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:18:44 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+int	check_command(char *command);
 
 int	last_pipe(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 {
@@ -27,14 +28,23 @@ int	last_pipe(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	if (id == 0)
 	{
 		close((*exec)->fd[0]);
-		if (do_pipe_redirections(command, exec) == -1917)
-			return (free(command_str), -1917);
-		exec_command(command_str, env, env_list);
-		exit(EXIT_FAILURE);
+		char *command2 = build_command(command);
+		if (check_command(command2) == 1)
+		{
+			if (do_pipe_redirections(command, exec) == -1917)
+			{
+				ft_end_minishell(&env_list);
+				return (-1917);
+			}
+		}
+		exit_status = exec_command(command_str, env, env_list, command);
+		ft_putnbr_fd(exit_status, 2);
+		return (exit_status);
 	}
 	else
 	{
 		waitpid(id, &exit_status, 0);
+		close(0);
 		while (wait(NULL) > 0)
 			continue ;
 		exit_status = exit_status >> 8;
@@ -89,9 +99,16 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	if (id == 0)
 	{
 		close((*exec)->fd[0]);
-		if (do_pipe_redirections(command, exec) == -1917)
-			return (-1917);
-		exec_command(build_command(command), env, env_list);
+		char *command2 = build_command(command);
+		if (check_command(command2) == 1)
+		{
+			if (do_pipe_redirections(command, exec) == -1917)
+			{
+				ft_end_minishell(&env_list);
+				return (-1917);
+			}
+		}
+		exec_command(build_command(command), env, env_list, command);
 		return (-1917);
 	}
 	else

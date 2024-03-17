@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/16 18:10:01 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/17 12:58:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 void				ft_print_list(t_list **env_list);
 int					ft_tablen(char **tab);
+void				ft_print_tab(char **tokens);
 
 /******************************************************************************/
 /*                                                                            */

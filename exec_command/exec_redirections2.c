@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/15 16:05:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:47:11 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 	if (command->token->file_redir_out != NULL)
 	{
 		travel = command->token->file_redir_out;
-		while (travel)
+		while (travel->next)
 		{
 			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) == -1)
 				return (-1);

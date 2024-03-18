@@ -6,21 +6,24 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/15 16:05:33 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:17:14 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	exec_command(char *command, char **env, t_list *env_list)
+int	exec_command(char *command, char **env, t_list *env_list, t_ast *ast)
 {
 	char	*instruct;
 	char	**cmd_split;
 	int		exit_status;
 
-	exit_status = exec_built_in(ft_split(command, ' '), env_list, command);
+	exit_status = manage_built_in(ft_split(command, ' '), env_list, command, ast);
 	if (exit_status != 1871)
-		exit(exit_status);
+	{
+		ft_end_minishell(&env_list);
+		return (ft_free_char_tab(env), exit_status);
+	}
 	cmd_split = ft_split(command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
 	if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
@@ -29,13 +32,15 @@ int	exec_command(char *command, char **env, t_list *env_list)
 	{
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit_status = -1917;
+		exit_status = 1;
+		ft_end_minishell(&env_list);
 	}
 	else
 	{
 		execve(instruct, cmd_split, env);
 		printf("execve error\n");
-		exit_status = -1917;
+		exit_status = 1;
+		ft_end_minishell(&env_list);
 	}
 	free(instruct);
 	return (ft_free_char_tab(cmd_split), exit_status);
@@ -69,7 +74,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 	return (ft_free_char_tab(path_split), path);
 }
 
-int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
+int	exec_shell_command(t_ast *command, t_list *env_list, char **env, t_ast *ast)
 {
 	int		id;
 	int		exit_status;
@@ -90,10 +95,14 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env)
 	if (id == 0)
 	{
 		if (do_redirections(command, saved_std) == -1917)
-			return (ft_free_char_tab(env), free(command_str), -1917);
-		exit_status = exec_command(command_str, env, env_list);
+		{
+			ft_end_minishell(&env_list);
+			return (ft_free_char_tab(env), free(command_str), 1);
+		}
+		exit_status = exec_command(command_str, env, env_list, ast);
 	}
 	else
 		waitpid(id, &exit_status, 0);
+	exit_status = exit_status >> 8;
 	return (ft_free_char_tab(env), free(command_str), exit_status);
 }

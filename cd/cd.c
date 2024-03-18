@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 15:38:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/17 12:00:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_cd(char *path, t_list **env)
 	{
 		ft_replace_pwd(env);
 		if (ft_find_var(env, "$PWD") == NULL)
-			return (perror("PWD not created: error"), -1);
+			return (perror("PWD not created: error"), 1);
 	}
 	return (0);
 }

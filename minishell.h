@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/15 16:04:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/17 12:58:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 void				ft_print_list(t_list **env_list);
 int					ft_tablen(char **tab);
+void				ft_print_tab(char **tokens);
 
 /******************************************************************************/
 /*                                                                            */
@@ -112,7 +113,7 @@ int					ft_tablen(char **tab);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_echo(char **str, char *brut_input);
+int					ft_echo(char **str, char *brut_input, t_ast *ast);
 int					ft_is_n_option(char *str);
 
 /******************************************************************************/
@@ -137,11 +138,12 @@ void				ft_update_xstatus(t_list **env, int x_status);
 /******************************************************************************/
 
 int					exec_shell_command(t_ast *command, t_list *env_list,
-						char **env);
+						char **env, t_ast *ast);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char *command, char **env, t_list *env_list);
+int					exec_command(char *command, char **env, t_list *env_list,
+						t_ast *ast);
 int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
@@ -153,7 +155,7 @@ void				ft_add_front(t_token **command, t_token **curr);
 int					manage_built_in(char **command, t_list *env_list,
 						char *brut_input, t_ast *ast);
 int					exec_built_in(char **command, t_list *env_list,
-						char *brut_input);
+						char *brut_input, t_ast *ast);
 
 /******************************************************************************/
 /*                                                                            */

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/15 16:04:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 19:12:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 	else if (ast->token->type == 3 && is(ast->token->token, "|") == 1)
 		*exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-		*exit_status = exec_shell_command(ast, env_list, redo_env(env_list));
+		*exit_status = exec_shell_command(ast, env_list, redo_env(env_list), ast);
 	return (*exit_status);
 }
 
@@ -73,6 +73,12 @@ int	create_redirection(t_ast *node, t_list *env_list)
 	else
 	{
 		pipe_chain(redo_env(env_list), node->left, env_list, &exec);
+		if (ft_find_var(&env_list, "$?")->should_end == 1)
+		{
+			close(exec->fd[0]);
+			close(exec->fd[1]);
+			return (1);
+		}
 		exit_status = last_pipe(redo_env(env_list), node->right, env_list,
 				&exec);
 	}

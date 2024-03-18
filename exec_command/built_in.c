@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 15:52:05 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:05:55 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ int	manage_built_in(char **command, t_list *env_list, char *brut_input, t_ast *a
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
 		return (ft_free_char_tab(command), 1871);
-    do_redirections(ast, saved_fd);
+	
+    if (do_redirections(ast, saved_fd) == -1917)
+		return (1);
 	if (exit_status == 2)
 	{
         dup2(saved_fd[0], 0);
 	    dup2(saved_fd[1], 1);
         return (ft_exit(command, &env_list));
-		
 	}
-	exit_status = exec_built_in(command, env_list, brut_input);
+	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
 	dup2(saved_fd[1], 1);
 	return (exit_status);
@@ -68,7 +69,7 @@ int	check_command(char *command)
 	return (0);
 }
 
-int	exec_built_in(char **command, t_list *env_list, char *brut_input)
+int	exec_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast)
 {
 	int exit_status;
 
@@ -82,12 +83,11 @@ int	exec_built_in(char **command, t_list *env_list, char *brut_input)
 	else if (ft_strcmp("export", command[0]) == 0)
 		exit_status = ft_export(&env_list, command[1]);
 	else if (ft_strcmp("echo", command[0]) == 0)
-		exit_status = ft_echo(command, brut_input);
+		exit_status = ft_echo(command, brut_input, ast);
 	else if (ft_strcmp("cd", command[0]) == 0)
 	{
 		if (tablen(command) > 2)
 		{
-			printf("command[2] = %s\n", command[2]);
 			ft_putstr_fd("cd: too many arguments\n", 2);
 			exit_status = -1;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/18 17:52:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 18:29:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	create_redirection(t_ast *node, t_list *env_list)
 			free(exec);
 			return (exit_status);
 		}
-		
+
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);

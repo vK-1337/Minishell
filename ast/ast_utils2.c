@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/16 14:22:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/17 12:25:05 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	export_and_wildcard(t_ast *ast, t_list *env_list)
 		while (travel)
 		{
 			travel->file_redir = ft_expand(travel->file_redir, &env_list);
+            ft_replace_wildcards(&travel->file_redir);
 			travel = travel->next;
 		}
 	}

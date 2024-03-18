@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/18 11:22:17 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:00:31 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ t_token	*ft_lexer(char *input, t_list **env)
 	tokens = ft_token_split(input);
 	if (!tokens)
 		return (NULL);
+    // ft_print_tab(tokens);
 	listed_tokens = ft_convert_tokens(tokens);
+	// ft_print_token_list(&listed_tokens);
 	free(tokens);
 	if (!listed_tokens)
 		return (NULL);
@@ -34,7 +36,18 @@ t_token	*ft_lexer(char *input, t_list **env)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
 	if (status == -1917)
 		return (ft_tokenlstnew(NULL, ERROR));
+	// ft_print_token_list(&listed_tokens);
 	return (listed_tokens);
+}
+
+void ft_print_tab(char **tokens)
+{
+    int i = 0;
+    while (tokens[i])
+    {
+        printf("tokens[%d] = %s\n", i, tokens[i]);
+        i++;
+    }
 }
 
 void	*ft_reunite_tokens(t_token **tokens)

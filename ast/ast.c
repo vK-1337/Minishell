@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/18 16:51:26 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:51:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ int	right_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 	travel = node;
 	while (is(travel->right->token->token, "|") == 1)
 	{
-		pipe_chain(env, node->left, env_list, exec);
+		exit_status = pipe_chain(env, node->left, env_list, exec);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)
-			return (1);
+			return (exit_status);
 		travel = travel->left;
 	}
-	pipe_chain(env, node->left, env_list, exec);
+	exit_status = pipe_chain(env, node->left, env_list, exec);
 	if (ft_find_var(&env_list, "$?")->should_end == 1)
-			return (1);
+			return (exit_status);
 	exit_status = last_pipe(env, node->right, env_list, exec);
 	if (ft_find_var(&env_list, "$?")->should_end == 1)
-			return (1);
+			return (exit_status);
 	return (exit_status);
 }
 
@@ -88,19 +88,19 @@ int	left_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 	{
 		travel = travel->left;
 	}
-	pipe_chain(env, travel->left, env_list, exec);
+	exit_status = pipe_chain(env, travel->left, env_list, exec);
 	if (ft_find_var(&env_list, "$?")->should_end == 1)
-		return (1);
+		return (exit_status);
 	while (travel != node)
 	{
-		pipe_chain(env, travel->right, env_list, exec);
+		exit_status = pipe_chain(env, travel->right, env_list, exec);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)
-			return (1);
+			return (exit_status);
 		travel = travel->daddy;
 	}
 	exit_status = last_pipe(env, node->right, env_list, exec);
 	if (ft_find_var(&env_list, "$?")->should_end == 1)
-			return (1);
+			return (exit_status);
 	return (exit_status);
 }
 
@@ -108,7 +108,7 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 {
 	int	id;
 	char *command2;
-
+	
 	command2 = build_command(command);
 	if (pipe((*exec)->fd) == -1)
 		handle_error(-1, "pipe");

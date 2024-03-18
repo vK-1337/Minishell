@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/16 18:05:55 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 16:37:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ int	tablen(char **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+int manage_built_in2(char *brut_input, t_list *env_list, t_ast *ast)
+{
+	char	**command;
+	int		exit_status;
+
+	command = ft_split(brut_input, ' ');
+	exit_status = check_command(command[0]);
+	if (exit_status == 2)
+		return (ft_free_char_tab(command), ft_exit(command, &env_list));
+	exit_status = exec_built_in(command, env_list, brut_input, ast);
+	ft_end_minishell(&env_list);
+	return (exit_status);
 }
 
 int	manage_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast)
@@ -89,7 +102,7 @@ int	exec_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast
 		if (tablen(command) > 2)
 		{
 			ft_putstr_fd("cd: too many arguments\n", 2);
-			exit_status = -1;
+			exit_status = 1;
 		}
 		else if (command[1] == NULL)
 			exit_status = ft_cd(ft_find_var(&env_list, "$HOME")->content,

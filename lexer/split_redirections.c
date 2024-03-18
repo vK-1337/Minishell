@@ -6,11 +6,26 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/16 19:22:17 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 15:15:58 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+
+void ft_print_reverse(t_token *tokens)
+{
+	t_token	*curr;
+
+	curr = tokens;
+	while (curr->next)
+		curr = curr->next;
+	while (curr)
+	{
+		printf("token = %s\n", curr->token);
+		curr = curr->prev;
+	}
+}
 
 void	ft_reunite_redirection(t_token **tokens)
 {
@@ -76,6 +91,7 @@ void	ft_front(t_token **command)
 		handle_token_addition(command, &curr);
 		if (temp2)
 			temp2->next = curr;
+		
 	}
 }
 
@@ -106,22 +122,25 @@ void	ft_back(t_token **command)
 	t_token	*curr;
 	t_token	*temp2;
 
-	curr = (*command)->prev;
+	if ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION)
+		curr = (*command);
+	else
+		curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")
 				|| is(temp2->token, "<<") || is(temp2->token, ">>"))))
 		temp2 = temp2->prev;
-	if (curr == NULL)
-			return ;
 	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
-		printf("curr->token: %s\n", curr->token);
 		ft_token_addition(command, &curr);
-		(*command)->prev = curr;
 		curr = curr->prev;
-		
 	}
+	while ((*command)->type != COMMAND)
+		(*command) = (*command)->next;
 	if (temp2 && temp2 != (*command))
+	{
 		temp2->next = (*command);
+		(*command)->prev = temp2;
+	}
 }

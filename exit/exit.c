@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/15 16:30:17 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/18 16:13:04 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_exit(char **command, t_list **env_list)
 				exit_status = (256 + exit_status) % 256;
 		}
 	}
+	printf("exit\n");
 	return (ft_end_minishell(env_list), exit_status);
 }
 

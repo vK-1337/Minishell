@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 17:51:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:41:33 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	read_ast(t_ast *node, int depth)
 		printf("    ");
 		printf("file_redir_in%d: %s\n", i, temp->token);
 		printf("file_redir : %s\n", temp->file_redir);
+		printf("nbr : %d\n", temp->order);
 		temp = temp->next;
 		i++;
 	}
@@ -110,6 +111,7 @@ void	read_ast(t_ast *node, int depth)
 		printf("    ");
 		printf("file_redir_out%d: %s\n", i, temp->token);
 		printf("file_redir : %s\n", temp->file_redir);
+		printf("nbr : %d\n", temp->order);
 		temp = temp->next;
 		i++;
 	}

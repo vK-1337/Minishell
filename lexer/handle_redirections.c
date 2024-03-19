@@ -3,15 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 13:44:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:40:10 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	ft_putnbr_redir(t_token **tokens)
+{
+	t_token	*curr;
+	int		i;
+
+	curr = *tokens;
+	while (curr)
+	{
+		curr->order = 0;
+		curr = curr->next;
+	}
+	i = 1;
+	curr = *tokens;
+	while (curr)
+	{
+		if (curr->type == OPERATOR && curr->file_redir != NULL)
+		{
+			curr->order = i;
+			i++;
+		}
+		if (curr->type == OPERATOR && curr->file_redir == NULL)
+			curr->order = 1;
+		curr = curr->next;
+	}
+}
 int	ft_redirections(t_token **listed_tokens)
 {
 	int	status;
@@ -25,6 +50,7 @@ int	ft_redirections(t_token **listed_tokens)
 	if (check_only_operator(listed_tokens) == 1)
 		return (ft_tokenlstclear(listed_tokens), -1);
 	ft_clean_operator(listed_tokens);
+	ft_putnbr_redir(listed_tokens);
 	ft_reunite_redirection(listed_tokens);
 	return (0);
 }

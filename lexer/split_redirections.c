@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/18 15:15:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:03:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void ft_print_reverse(t_token *tokens)
 		curr = curr->prev;
 	}
 }
-
 void	ft_reunite_redirection(t_token **tokens)
 {
 	t_token	*curr;
@@ -114,7 +113,7 @@ void	ft_token_addition(t_token **command, t_token **curr)
 		}
 	}
 	else
-		ft_add_front (curr, command);
+		ft_add_front (command, curr);
 }
 
 void	ft_back(t_token **command)
@@ -130,7 +129,7 @@ void	ft_back(t_token **command)
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")
 				|| is(temp2->token, "<<") || is(temp2->token, ">>"))))
 		temp2 = temp2->prev;
-	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
+	while (curr && curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
 		ft_token_addition(command, &curr);

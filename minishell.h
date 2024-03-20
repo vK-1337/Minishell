@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/19 17:05:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 10:55:58 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_token
 	struct s_token	*prev;
 	struct s_token	*file_redir_in;
 	struct s_token	*file_redir_out;
-	int			    order; 
+	int				order;
 }					t_token;
 
 typedef struct s_ast
@@ -97,7 +97,6 @@ void				ft_print_tokens(char **tokens);
 int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
-t_token				*ft_convert_tokens(char **tokens);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
@@ -254,7 +253,8 @@ int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
 int					ft_go_next_parenthesis(const char *str, int index);
-t_token				*ft_convert_tokens(char **tokens);
+t_token				*ft_convert_tokens(char **tokens, t_list **env);
+int					ft_empty_expand(char *token, t_list **env);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);

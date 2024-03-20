@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/20 16:17:03 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:26:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,17 @@ void	ft_front(t_token **command)
 				">>")))
 	{
 		handle_token_addition(command, &curr);
-		if (temp2)
+		if (curr && curr->type == COMMAND && curr->next)
+		{
 			temp2->next = curr;
+			curr->prev = temp2;
+			temp2 = curr;
+			curr = curr->next;
+		}
+		else if (temp2)
+		{
+			temp2->next = curr;
+		}
 		
 	}
 }

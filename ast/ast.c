@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/19 15:12:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:31:29 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	left_pipe(t_ast *node, t_list *env_list, t_exec **exec)
 
 	env = redo_env(env_list);
 	travel = node;
-	while (is(travel->left->token->token, "|") == 1)
+	while (travel->token->type == OPERATOR && is(travel->left->token->token, "|") == 1)
 	{
 		travel = travel->left;
 	}

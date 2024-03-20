@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/19 18:54:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:18:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	configure_fd_out2(int fd_out, char *token, char *file)
 	else if (is(token, ">>") == 1)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	handle_error(fd_out, file);
+
 	if (fd_out == -1)
 		return (-1);
 	close(fd_out);
@@ -39,7 +40,7 @@ int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		while (travel->next)
 		{
 			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) == -1)
-				break ;
+				return (-1) ;
 			travel = travel->next;
 		}
 		*fd_out = configure_fd_out(*fd_out, travel->token, travel->file_redir);

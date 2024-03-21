@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:07:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:14:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_print_token_list(t_token **tokens)
 		printf("Type => |%s|\n", ft_print_type(curr->type));
 		if (curr->file_redir)
 			printf("File redir => |%s|\n", curr->file_redir);
+		if (curr->file_redir_in)
+			printf("File redir out => |%s|\n", curr->file_redir_out->token);
 		curr = curr->next;
 	}
 }

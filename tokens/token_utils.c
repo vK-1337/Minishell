@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:54:23 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/17 13:31:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:54:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_go_next(const char *str, int index)
 
 int	ft_is_separator(char c)
 {
-	if (c == 34 || c == 39 || c == 60 || c == 62 || c == 124 || c == '\0'
+	if ( c == 60 || c == 62 || c == 124 || c == '\0'
 		|| c == ' ')
 		return (1);
 	return (0);

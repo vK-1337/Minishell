@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:43:33 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/13 12:10:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:48:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,10 @@ int	handle_space_delimiter(const char *str, int index, int delimiter)
 	int	i;
 
 	i = 0;
-	while (str[index] && str[index] != delimiter)
+	while (str[index])
 	{
-		if (ft_is_operator(str[index + 1]))
-		{
-			i++;
-			index++;
-			break ;
-		}
+		if (str[index] == delimiter && ft_not_quoted((char *)str, index))
+            break;
 		i++;
 		index++;
 	}

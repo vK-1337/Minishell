@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 15:13:08 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:32:45 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	int				total_matches;
 
 	count = 0;
+    new_token = NULL;
 	total_matches = ft_count_matches(token, ft_match);
 	if (total_matches == 0)
-		return (0);
+		return (1);
 	dr = opendir(".");
 	if (dr == NULL)
-		return (0);
+		return (1);
 	de = readdir(dr);
 	while (de != NULL)
 	{
@@ -40,6 +41,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 		}
 		de = readdir(dr);
 	}
+    free(*token);
 	*token = new_token;
 	if (!count)
 		return (closedir(dr), 1);

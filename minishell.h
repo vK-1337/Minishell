@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 16:05:30 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:35:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -426,8 +426,9 @@ int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
 char				*ft_join_match_helper(char *prev_new_token, char *de_name,
-						int count);
+						int count, int total_count);
 void				ft_trim_quotes(char **input);
+int	ft_count_matches(char **token, int (*ft_match)(char *, char *));
 
 /******************************************************************************/
 /*                                                                            */

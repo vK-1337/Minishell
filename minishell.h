@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/20 10:55:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:02:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,7 +440,7 @@ void				ft_trim_quotes(char **input);
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
 int					is(char *token, char *comp);
-void				ft_free_ast(t_ast *ast);
+void				ft_free_ast(t_ast **ast);
 int					launch_ast(char *input, t_list *env_list, int *exit_status);
 int					launch_ast_recursive(t_ast *ast, t_list *env_list,
 						int *exit_status);

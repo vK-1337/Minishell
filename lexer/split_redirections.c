@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/20 17:26:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 10:51:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,22 @@ void	ft_reunite_redirection(t_token **tokens)
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND && (*tokens)->type != PARENTHESIS)
 	{
-		while ((*tokens)->next && ((*tokens)->type != COMMAND))
+		while ((*tokens)->next && (((*tokens)->type != COMMAND) && (*tokens)->type != PARENTHESIS))
 			(*tokens) = (*tokens)->next;
 	}
 	while (curr)
 	{
-		if (curr->type == COMMAND)
+		if (curr->type == COMMAND || curr->type == PARENTHESIS)
 		{
 			if (curr->next != NULL)
 				ft_front(&curr);
 			if (curr->prev != NULL)
 				ft_back(&curr);
-			if (curr->next != NULL)
+			if (curr && curr->next != NULL)
 				curr->next->prev = curr;
 		}
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 	(*tokens)->prev = NULL;
 }
@@ -76,7 +77,7 @@ void	ft_front(t_token **command)
 	t_token	*temp2;
 	
 	curr = (*command)->next;
-	while (curr && (curr->type == OPTION || curr->type == COMMAND))
+	while (curr && (curr->type == OPTION || curr->type == COMMAND || curr->type == PARENTHESIS))
 		curr = curr->next;
 	if (curr)
 		temp2 = curr->prev;
@@ -88,7 +89,7 @@ void	ft_front(t_token **command)
 				">>")))
 	{
 		handle_token_addition(command, &curr);
-		if (curr && curr->type == COMMAND && curr->next)
+		if (curr && (curr->type == COMMAND || curr->type == PARENTHESIS) && curr->next)
 		{
 			temp2->next = curr;
 			curr->prev = temp2;
@@ -130,7 +131,7 @@ void	ft_back(t_token **command)
 	t_token	*curr;
 	t_token	*temp2;
 
-	if ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION)
+	if ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION ||  (*command)->prev->type == PARENTHESIS)
 		curr = (*command);
 	else
 		curr = (*command)->prev;
@@ -144,9 +145,9 @@ void	ft_back(t_token **command)
 		ft_token_addition(command, &curr);
 		curr = curr->prev;
 	}
-	while ((*command)->type != COMMAND)
+	while ((*command) && ((*command)->type != COMMAND || (*command)->type != PARENTHESIS))
 		(*command) = (*command)->next;
-	if (temp2 && temp2 != (*command))
+	if (temp2 && (*command)  && temp2 != (*command))
 	{
 		temp2->next = (*command);
 		(*command)->prev = temp2;

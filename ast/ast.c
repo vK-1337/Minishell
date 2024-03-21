@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/20 18:31:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:50:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ int	last_pipe(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 	if (id == 0)
 	{
 		close((*exec)->fd[0]);
-		char *command2 = build_command(command);
-		if (check_command(command2) == 0)
+		if (check_command(command_str) == 0)
 		{
 			if (do_pipe_redirections(command, exec) == -1917)
 			{
 				ft_end_minishell(&env_list);
-				return (1);
+				return (free(command_str), 1);
 			}
-			return(exec_command(command_str, env, env_list, command));
+			return(exec_command(&command_str, env, env_list, command));
 		}
 		return (manage_built_in2(command_str, env_list, command));
 	}
@@ -124,10 +123,10 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 		}
 		if (check_command(command2) == 0)
 		{
-			exec_command(command2, env, env_list, command);
+			exec_command(&command2, env, env_list, command);
 			return (1);
 		}
-		return (manage_built_in2(command2, env_list, command));
+		return (manage_built_in2(build_command(command), env_list, command));
 	}
 	else
 	{
@@ -135,5 +134,5 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 		dup2((*exec)->fd[0], 0);
 		close((*exec)->fd[0]);
 	}
-	return (-1);
+	return (free(command2), -1);
 }

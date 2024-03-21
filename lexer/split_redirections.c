@@ -6,12 +6,26 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 15:32:33 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:02:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
+void ft_print_reverse(t_token *tokens)
+{
+	t_token	*curr;
+
+	curr = tokens;
+	while (curr->next)
+		curr = curr->next;
+	while (curr)
+	{
+		printf("token = %s\n", curr->token);
+		curr = curr->prev;
+	}
+}
 void	ft_reunite_redirection(t_token **tokens)
 {
 	t_token	*curr;
@@ -19,21 +33,22 @@ void	ft_reunite_redirection(t_token **tokens)
 	curr = *tokens;
 	if ((*tokens)->type != COMMAND && (*tokens)->type != PARENTHESIS)
 	{
-		while ((*tokens)->next && ((*tokens)->type != COMMAND))
+		while ((*tokens)->next && (((*tokens)->type != COMMAND) && (*tokens)->type != PARENTHESIS))
 			(*tokens) = (*tokens)->next;
 	}
 	while (curr)
 	{
-		if (curr->type == COMMAND)
+		if (curr->type == COMMAND || curr->type == PARENTHESIS)
 		{
 			if (curr->next != NULL)
 				ft_front(&curr);
 			if (curr->prev != NULL)
 				ft_back(&curr);
-			if (curr->next != NULL)
+			if (curr && curr->next != NULL)
 				curr->next->prev = curr;
 		}
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 	(*tokens)->prev = NULL;
 }
@@ -62,20 +77,29 @@ void	ft_front(t_token **command)
 	t_token	*temp2;
 	
 	curr = (*command)->next;
-	while (curr && (curr->type == OPTION || curr->type == COMMAND))
+	while (curr && (curr->type == OPTION || curr->type == COMMAND || curr->type == PARENTHESIS))
 		curr = curr->next;
 	if (curr)
 		temp2 = curr->prev;
 	else
 		temp2 = NULL;
-	
 	while (curr && curr->type == OPERATOR && (is(curr->token, "<")
 			|| is(curr->token, ">") || is(curr->token, "<<") || is(curr->token,
 				">>")))
 	{
 		handle_token_addition(command, &curr);
-		if (temp2)
+		if (curr && (curr->type == COMMAND || curr->type == PARENTHESIS) && curr->next)
+		{
 			temp2->next = curr;
+			curr->prev = temp2;
+			temp2 = curr;
+			curr = curr->next;
+		}
+		else if (temp2)
+		{
+			temp2->next = curr;
+		}
+		
 	}
 }
 
@@ -98,7 +122,7 @@ void	ft_token_addition(t_token **command, t_token **curr)
 		}
 	}
 	else
-		ft_add_front (curr, command);
+		ft_add_front (command, curr);
 }
 
 void	ft_back(t_token **command)
@@ -106,19 +130,25 @@ void	ft_back(t_token **command)
 	t_token	*curr;
 	t_token	*temp2;
 
-	curr = (*command)->prev;
+	if ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION ||  (*command)->prev->type == PARENTHESIS)
+		curr = (*command);
+	else
+		curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")
 				|| is(temp2->token, "<<") || is(temp2->token, ">>"))))
 		temp2 = temp2->prev;
-	while (curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
+	while (curr && curr->type == 3 && (is(curr->token, "<") || is(curr->token, ">")
 			|| is(curr->token, "<<") || is(curr->token, ">>")))
 	{
 		ft_token_addition(command, &curr);
-		(*command)->prev = curr;
-		if (curr == NULL)
-			break ;
+		curr = curr->prev;
 	}
-	if (temp2 && temp2 != (*command))
+	while ((*command) && ((*command)->type != COMMAND && (*command)->type != PARENTHESIS))
+		(*command) = (*command)->next;
+	if (temp2 && (*command)  && temp2 != (*command))
+	{
 		temp2->next = (*command);
+		(*command)->prev = temp2;
+	}
 }

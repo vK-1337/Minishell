@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/13 20:23:35 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:15:01 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int	launch_here_doc(char *limiter, int saved_std[2])
 
 int	configure_fd_in(int fd_in, char *token, char *file)
 {
-	if (fd_in != 0)
-		close(fd_in);
-	else if (is(token, "<") == 1)
+	if (is(token, "<") == 1)
 		fd_in = open(file, O_RDWR, 0777);
 	handle_error(fd_in, file);
 	return (fd_in);
@@ -67,7 +65,7 @@ int	configure_fd_in(int fd_in, char *token, char *file)
 
 int	configure_fd_out(int fd_out, char *token, char *file)
 {
-	if (fd_out != 0)
+	if (fd_out != 0 && fd_out != -1000)
 		close(fd_out);
 	if (is(token, ">") == 1)
 	{

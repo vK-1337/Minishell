@@ -3,57 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 17:51:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:43:26 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_token(t_token *token);
-void	free_ast_right(t_ast *ast);
+void	free_token(t_token **token);
+void	free_ast_right(t_ast **ast);
 
-void	ft_free_ast(t_ast *ast)
+void	ft_free_ast(t_ast **ast)
 {
 	if (ast == NULL)
 		return ;
 	free_ast_right(ast);
 }
 
-void	free_ast_right(t_ast *ast)
+void	free_ast_right(t_ast **ast)
 {
 	t_ast	*right;
 	t_ast	*left;
 
-	while (ast != NULL)
+	while ((*ast) != NULL)
 	{
-		right = ast->right;
-		left = ast->left;
+		right = (*ast)->right;
+		left = (*ast)->left;
 		if (right != NULL)
-			free_ast_right(right);
+			free_ast_right(&right);
 		if (left != NULL)
-			free_ast_right(left);
-		free_token(ast->token);
-		free(ast);
-		ast = NULL;
+			free_ast_right(&left);
+		free_token(&(*ast)->token);
+		free((*ast));
+		(*ast) = NULL;
 	}
 }
 
-void	free_token(t_token *token)
+void	free_file_redir(t_token *file_redir)
 {
 	t_token	*next;
 
-	if (token == NULL)
+	if (file_redir == NULL)
 		return ;
-	while (token != NULL)
+	while (file_redir != NULL)
 	{
-		next = token->next;
-		free(token->token);
-		free(token);
-		token = next;
+		next = file_redir->next;
+		free(file_redir->token);
+		free(file_redir->file_redir);
+		free(file_redir);
+		file_redir = next;
 	}
+}
+
+void	free_token(t_token **token)
+{
+	t_token	*next;
+
+	if ((*token) == NULL)
+		return ;
+	while ((*token) != NULL)
+	{
+		next = (*token)->next;
+		free((*token)->token);
+		if ((*token)->file_redir != NULL)
+			free(file_redir);
+		free_file_redir((*token)->file_redir_in);
+		free_file_redir((*token)->file_redir_out);
+		free((*token));
+		(*token) = next;
+	}
+	(*token) = NULL;
 	return ;
 }
 

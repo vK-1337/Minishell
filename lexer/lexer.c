@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 16:59:27 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:05:01 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,30 @@ t_token	*ft_lexer(char *input, t_list **env)
 	tokens = ft_token_split(input);
 	if (!tokens)
 		return (NULL);
-	listed_tokens = ft_convert_tokens(tokens);
+    // ft_print_tab(tokens);
+	listed_tokens = ft_convert_tokens(tokens, env);
+	// ft_print_token_list(&listed_tokens);
 	free(tokens);
 	if (!listed_tokens)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
-	// ft_print_token_list(&listed_tokens);
-	status = ft_redirections(&listed_tokens);
+	status = ft_redirections(&listed_tokens, *env);
 	if (status == -1)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
 	if (status == -1917)
 		return (ft_tokenlstnew(NULL, ERROR));
+	// ft_print_token_list(&listed_tokens);
 	return (listed_tokens);
+}
+
+void ft_print_tab(char **tokens)
+{
+    int i = 0;
+    while (tokens[i])
+    {
+        printf("tokens[%d] = %s\n", i, tokens[i]);
+        i++;
+    }
 }
 
 void	*ft_reunite_tokens(t_token **tokens)
@@ -52,7 +64,6 @@ void	*ft_reunite_tokens(t_token **tokens)
 			curr = ft_handle_next_token(tokens, curr, next);
 		else
 			curr = curr->next;
-        // ft_print_token_list(tokens);
 	}
 	return ((void *)1);
 }

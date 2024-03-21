@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 17:47:29 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:35:28 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	DIR				*dr;
 	int				count;
 	char			*new_token;
+	int				total_matches;
 
 	count = 0;
+	total_matches = ft_count_matches(token, ft_match);
+	if (total_matches == 0)
+		return (0);
 	dr = opendir(".");
 	if (dr == NULL)
 		return (0);
@@ -28,7 +32,8 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	{
 		if (ft_match(*token, de->d_name))
 		{
-			new_token = ft_join_match_helper(new_token, de->d_name, count);
+			new_token = ft_join_match_helper(new_token, de->d_name, count,
+					total_matches);
 			if (new_token == NULL)
 				return (0);
 			count++;
@@ -41,21 +46,47 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	return (closedir(dr), 0);
 }
 
-char	*ft_join_match_helper(char *prev_new_token, char *de_name, int count)
+int	ft_count_matches(char **token, int (*ft_match)(char *, char *))
+{
+	int				count;
+	struct dirent	*de;
+	DIR				*dr;
+
+	count = 0;
+	dr = opendir(".");
+	if (dr == NULL)
+		return (0);
+	de = readdir(dr);
+	while (de != NULL)
+	{
+		if (ft_match(*token, de->d_name))
+			count++;
+		de = readdir(dr);
+	}
+	closedir(dr);
+	return (count);
+}
+
+char	*ft_join_match_helper(char *prev_new_token, char *de_name, int count,
+		int total_count)
 {
 	char	*new_token;
 
 	new_token = NULL;
 	if (count == 0)
 	{
-		new_token = ft_strjoin(de_name, " ", 0);
+		if (total_count == 1)
+			new_token = ft_strjoin(de_name, "", 0);
+		else
+			new_token = ft_strjoin(de_name, " ", 0);
 		if (new_token == NULL)
 			return (NULL);
 	}
 	else
 	{
 		new_token = ft_strjoin(prev_new_token, de_name, 1);
-		new_token = ft_strjoin(new_token, " ", 1);
+		if (count != total_count - 1)
+			new_token = ft_strjoin(new_token, " ", 1);
 		if (new_token == NULL)
 			return (NULL);
 	}

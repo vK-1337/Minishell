@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/15 16:04:38 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:35:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_token
 	struct s_token	*prev;
 	struct s_token	*file_redir_in;
 	struct s_token	*file_redir_out;
+	int				order;
 }					t_token;
 
 typedef struct s_ast
@@ -96,13 +97,13 @@ void				ft_print_tokens(char **tokens);
 int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
-t_token				*ft_convert_tokens(char **tokens);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
 int					ft_is_file(char *token);
 void				ft_print_list(t_list **env_list);
 int					ft_tablen(char **tab);
+void				ft_print_tab(char **tokens);
 
 /******************************************************************************/
 /*                                                                            */
@@ -112,7 +113,7 @@ int					ft_tablen(char **tab);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_echo(char **str, char *brut_input);
+int					ft_echo(char **str, char *brut_input, t_ast *ast);
 int					ft_is_n_option(char *str);
 
 /******************************************************************************/
@@ -137,11 +138,12 @@ void				ft_update_xstatus(t_list **env, int x_status);
 /******************************************************************************/
 
 int					exec_shell_command(t_ast *command, t_list *env_list,
-						char **env);
+						char **env, t_ast *ast);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char *command, char **env, t_list *env_list);
+int					exec_command(char **command, char **env, t_list *env_list,
+						t_ast *ast);
 int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
@@ -153,7 +155,7 @@ void				ft_add_front(t_token **command, t_token **curr);
 int					manage_built_in(char **command, t_list *env_list,
 						char *brut_input, t_ast *ast);
 int					exec_built_in(char **command, t_list *env_list,
-						char *brut_input);
+						char *brut_input, t_ast *ast);
 
 /******************************************************************************/
 /*                                                                            */
@@ -251,7 +253,8 @@ int					ft_is_separator(char c);
 int					ft_is_operator(char c);
 int					ft_go_next(const char *str, int index);
 int					ft_go_next_parenthesis(const char *str, int index);
-t_token				*ft_convert_tokens(char **tokens);
+t_token				*ft_convert_tokens(char **tokens, t_list **env);
+int					ft_empty_expand(char *token, t_list **env);
 t_ttype				ft_define_ttype(char *token, char *previous_token);
 char				*ft_print_type(t_ttype type);
 int					ft_is_option(char *token);
@@ -264,8 +267,8 @@ void				*ft_join_export(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
-int					ft_redirections(t_token **listed_tokens);
-int					ft_open_solo_fd(t_token **tokens);
+int					ft_redirections(t_token **listed_tokens, t_list *env);
+int					ft_open_solo_fd(t_token **tokens, t_list *env);
 t_token				*ft_clean_tokens(t_token **tokens);
 int					file_redir(t_token *token);
 int					ft_open_fd(t_token **tokens);
@@ -423,8 +426,9 @@ int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
 char				*ft_join_match_helper(char *prev_new_token, char *de_name,
-						int count);
+						int count, int total_count);
 void				ft_trim_quotes(char **input);
+int	ft_count_matches(char **token, int (*ft_match)(char *, char *));
 
 /******************************************************************************/
 /*                                                                            */
@@ -437,7 +441,7 @@ void				ft_trim_quotes(char **input);
 void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
 int					is(char *token, char *comp);
-void				ft_free_ast(t_ast *ast);
+void				ft_free_ast(t_ast **ast);
 int					launch_ast(char *input, t_list *env_list, int *exit_status);
 int					launch_ast_recursive(t_ast *ast, t_list *env_list,
 						int *exit_status);

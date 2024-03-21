@@ -3,20 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/12 13:44:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:29:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_redirections(t_token **listed_tokens)
+void	ft_putnbr_redir(t_token **tokens)
+{
+	t_token	*curr;
+	int		i;
+
+	curr = *tokens;
+	while (curr)
+	{
+		curr->order = 0;
+		curr = curr->next;
+	}
+	i = 1;
+	curr = *tokens;
+	while (curr)
+	{
+		if (curr->type == OPERATOR && curr->file_redir != NULL)
+		{
+			curr->order = i;
+			i++;
+		}
+		if (curr->type == OPERATOR && curr->file_redir == NULL)
+			curr->order = 1;
+		curr = curr->next;
+	}
+}
+int	ft_redirections(t_token **listed_tokens, t_list *env)
 {
 	int	status;
 
-	status = ft_open_solo_fd(listed_tokens);
+	status = ft_open_solo_fd(listed_tokens, env);
 	if (status == -1 || status == -1917)
 		return (status);
 	status = ft_open_fd(listed_tokens);
@@ -25,6 +50,7 @@ int	ft_redirections(t_token **listed_tokens)
 	if (check_only_operator(listed_tokens) == 1)
 		return (ft_tokenlstclear(listed_tokens), -1);
 	ft_clean_operator(listed_tokens);
+	ft_putnbr_redir(listed_tokens);
 	ft_reunite_redirection(listed_tokens);
 	return (0);
 }
@@ -77,8 +103,22 @@ int	ft_open_fd(t_token **tokens)
 	}
 	return (0);
 }
+int	export_and_wildcard2(t_token *token, t_list *env_list)
+{
+	char *tmp;
 
-int	ft_open_solo_fd(t_token **tokens)
+	tmp = ft_strdup(token->file_redir);
+	token->file_redir = ft_expand(token->file_redir, &env_list);
+	ft_replace_wildcards(&token->file_redir);
+	if (!token->file_redir)
+	{
+		ft_putstr_fd(tmp, 2);
+		ft_putstr_fd(" :no such file or directory\n", 2);
+		return (free(tmp), -1);
+	}
+	return (free(tmp), 0);
+}
+int	ft_open_solo_fd(t_token **tokens, t_list *env)
 {
 	t_token	*curr;
 	t_token	*tmp;
@@ -95,15 +135,18 @@ int	ft_open_solo_fd(t_token **tokens)
 	while (curr)
 	{
 		tmp = curr->next;
+		if (export_and_wildcard2(curr, env) == -1)
+			return (ft_clean_tokens(tokens), -1);
 		fd = file_redir(curr);
 		if (fd == -1917)
 			return (-1917);
 		if (fd == -1)
-			return (ft_clean_tokens(tokens), -1);
+			return (handle_error(fd, curr->file_redir),ft_clean_tokens(tokens), -1);
 		close(fd);
 		ft_tokenlstdelone(&curr);
 		curr = tmp;
 	}
+	*tokens = NULL;
 	return (-1);
 }
 

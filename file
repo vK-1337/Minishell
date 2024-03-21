@@ -6,10 +6,7 @@ exec_command
 exit
 expand
 file
-file1
-file2
 get_next_line
-hola
 lexer
 libft
 main
@@ -19,9 +16,7 @@ minishell.h
 minishell_tester
 prompt
 pwd
-pwdd
 signals
 suppression.supp
 test21
 tokens
-wdwdwd

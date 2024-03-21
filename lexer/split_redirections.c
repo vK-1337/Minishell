@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 10:51:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:02:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	ft_front(t_token **command)
 		temp2 = curr->prev;
 	else
 		temp2 = NULL;
-	
 	while (curr && curr->type == OPERATOR && (is(curr->token, "<")
 			|| is(curr->token, ">") || is(curr->token, "<<") || is(curr->token,
 				">>")))
@@ -145,7 +144,7 @@ void	ft_back(t_token **command)
 		ft_token_addition(command, &curr);
 		curr = curr->prev;
 	}
-	while ((*command) && ((*command)->type != COMMAND || (*command)->type != PARENTHESIS))
+	while ((*command) && ((*command)->type != COMMAND && (*command)->type != PARENTHESIS))
 		(*command) = (*command)->next;
 	if (temp2 && (*command)  && temp2 != (*command))
 	{

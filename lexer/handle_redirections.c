@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 14:59:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:29:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	ft_putnbr_redir(t_token **tokens)
 		curr = curr->next;
 	}
 }
-int	ft_redirections(t_token **listed_tokens)
+int	ft_redirections(t_token **listed_tokens, t_list *env)
 {
 	int	status;
 
-	status = ft_open_solo_fd(listed_tokens);
+	status = ft_open_solo_fd(listed_tokens, env);
 	if (status == -1 || status == -1917)
 		return (status);
 	status = ft_open_fd(listed_tokens);
@@ -103,8 +103,22 @@ int	ft_open_fd(t_token **tokens)
 	}
 	return (0);
 }
+int	export_and_wildcard2(t_token *token, t_list *env_list)
+{
+	char *tmp;
 
-int	ft_open_solo_fd(t_token **tokens)
+	tmp = ft_strdup(token->file_redir);
+	token->file_redir = ft_expand(token->file_redir, &env_list);
+	ft_replace_wildcards(&token->file_redir);
+	if (!token->file_redir)
+	{
+		ft_putstr_fd(tmp, 2);
+		ft_putstr_fd(" :no such file or directory\n", 2);
+		return (free(tmp), -1);
+	}
+	return (free(tmp), 0);
+}
+int	ft_open_solo_fd(t_token **tokens, t_list *env)
 {
 	t_token	*curr;
 	t_token	*tmp;
@@ -121,11 +135,13 @@ int	ft_open_solo_fd(t_token **tokens)
 	while (curr)
 	{
 		tmp = curr->next;
+		if (export_and_wildcard2(curr, env) == -1)
+			return (ft_clean_tokens(tokens), -1);
 		fd = file_redir(curr);
 		if (fd == -1917)
 			return (-1917);
 		if (fd == -1)
-			return (ft_clean_tokens(tokens), -1);
+			return (handle_error(fd, curr->file_redir),ft_clean_tokens(tokens), -1);
 		close(fd);
 		ft_tokenlstdelone(&curr);
 		curr = tmp;

@@ -30,7 +30,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	if (!listed_tokens)
 		return (NULL);
 	ft_reunite_tokens(&listed_tokens);
-	status = ft_redirections(&listed_tokens);
+	status = ft_redirections(&listed_tokens, *env);
 	if (status == -1)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
 	if (status == -1917)

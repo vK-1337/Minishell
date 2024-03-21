@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
 /*   Updated: 2024/03/21 15:46:15 by vda-conc         ###   ########.fr       */
@@ -142,7 +142,7 @@ int					exec_shell_command(t_ast *command, t_list *env_list,
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char *command, char **env, t_list *env_list,
+int					exec_command(char **command, char **env, t_list *env_list,
 						t_ast *ast);
 int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
@@ -267,8 +267,8 @@ void				*ft_join_export(t_token **tokens, t_token *curr,
 						t_token *next);
 void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
-int					ft_redirections(t_token **listed_tokens);
-int					ft_open_solo_fd(t_token **tokens);
+int					ft_redirections(t_token **listed_tokens, t_list *env);
+int					ft_open_solo_fd(t_token **tokens, t_list *env);
 t_token				*ft_clean_tokens(t_token **tokens);
 int					file_redir(t_token *token);
 int					ft_open_fd(t_token **tokens);

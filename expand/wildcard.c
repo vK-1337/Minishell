@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/19 19:04:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:29:43 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
 	char			*new_token;
 
 	count = 0;
+	new_token = NULL;
 	dr = opendir(".");
 	if (dr == NULL)
 		return (0);

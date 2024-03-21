@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 14:35:42 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:40:46 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	free_file_redir(t_token *file_redir)
 		return ;
 	while (file_redir != NULL)
 	{
+		printf("file_redir: %s\n", file_redir->token);
 		next = file_redir->next;
 		free(file_redir->token);
+		free(file_redir->file_redir);
 		free(file_redir);
 		file_redir = next;
 	}

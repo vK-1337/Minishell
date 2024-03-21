@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 11:53:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:02:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 		*exit_status = -1917;
 	}
 	launch_ast_recursive(ast, env_list, exit_status);
-	ft_free_ast(ast);
+	ft_free_ast(&ast);
 	return (*exit_status);
 }
 

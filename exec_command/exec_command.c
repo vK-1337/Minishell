@@ -6,12 +6,34 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/18 16:05:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:11:17 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int open_file_error(char *file, t_list **env_list)
+{
+	ft_end_minishell(env_list);
+	if (access(file ,F_OK) == -1)
+	{
+		perror(file);
+		return (127);
+	}
+	else if (chdir(file) == -1)
+	{
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (126);
+	
+	}
+	else
+	{
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		return (126);
+	}
+}
 int	exec_command(char *command, char **env, t_list *env_list, t_ast *ast)
 {
 	char	*instruct;
@@ -26,24 +48,26 @@ int	exec_command(char *command, char **env, t_list *env_list, t_ast *ast)
 	}
 	cmd_split = ft_split(command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
-	if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
+	if (instruct == NULL  &&  (ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0], "/", 1) == 0))
+		exit_status = open_file_error(cmd_split[0], &env_list);
+	else if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
 		instruct = cmd_split[0];
-	if (instruct == NULL)
+	else if (instruct == NULL)
 	{
-		ft_putstr_fd(command, 2);
+		ft_putstr_fd(cmd_split[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit_status = 1;
+		exit_status = 127;
 		ft_end_minishell(&env_list);
 	}
 	else
 	{
 		execve(instruct, cmd_split, env);
-		printf("execve error\n");
-		exit_status = 1;
+		ft_putstr_fd("Is a directory", 2);
+		exit_status = 126;
 		ft_end_minishell(&env_list);
 	}
-	free(instruct);
-	return (ft_free_char_tab(cmd_split), exit_status);
+    ft_free_char_tab(cmd_split);
+	return (exit_status);
 }
 
 char	*check_valid_command(char **cmd_split, char *path)
@@ -102,7 +126,9 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env, t_ast *ast)
 		exit_status = exec_command(command_str, env, env_list, ast);
 	}
 	else
+    {
 		waitpid(id, &exit_status, 0);
-	exit_status = exit_status >> 8;
+        exit_status = exit_status >> 8;
+    }
 	return (ft_free_char_tab(env), free(command_str), exit_status);
 }

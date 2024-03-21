@@ -6,13 +6,13 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/17 13:03:16 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:32:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token	*ft_convert_tokens(char **tokens)
+t_token	*ft_convert_tokens(char **tokens, t_list **env)
 {
 	t_norme	vars;
 	t_ttype	type;
@@ -25,6 +25,12 @@ t_token	*ft_convert_tokens(char **tokens)
 	vars.i = 0;
 	while (tokens[vars.i])
 	{
+		if (vars.i == 0 && ft_contain_variables(tokens[vars.i])
+			&& ft_empty_expand(tokens[vars.i], env))
+		{
+			tokens++;
+			continue ;
+		}
 		if (vars.i == 0)
 			type = ft_define_first_token_type(tokens, vars.j, type);
 		else
@@ -35,8 +41,18 @@ t_token	*ft_convert_tokens(char **tokens)
 		previous_type = type;
 		vars.i++;
 	}
-	// ft_print_token_list(&tokens_list);
+	// ft_print_token_lis   t(&tokens_list);
 	return (tokens_list);
+}
+
+int	ft_empty_expand(char *token, t_list **env)
+{
+	t_list	*env_var;
+
+	env_var = ft_find_var(env, token);
+	if (env_var == NULL)
+		return (1);
+	return (0);
 }
 
 int	ft_token_empty(char *token)

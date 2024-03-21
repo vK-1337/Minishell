@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/18 17:52:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 11:53:28 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	create_redirection(t_ast *node, t_list *env_list)
 	exec = malloc(sizeof(t_exec));
 	exec->saved_fd[0] = dup(0);
 	exec->saved_fd[1] = dup(1);
-	if (is(node->left->token->token, "|") == 1)
+	if (node->left->token->type == OPERATOR && is(node->left->token->token, "|") == 1)
 		exit_status = left_pipe(node, env_list, &exec);
-	else if (is(node->right->token->token, "|") == 1)
+	else if (node->right->token->type == OPERATOR && is(node->right->token->token, "|") == 1)
 		exit_status = right_pipe(node, env_list, &exec);
 	else
 	{
@@ -86,7 +86,7 @@ int	create_redirection(t_ast *node, t_list *env_list)
 			free(exec);
 			return (exit_status);
 		}
-		
+
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);

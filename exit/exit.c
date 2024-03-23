@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 12:43:07 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:07:02 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_exit(char **command, t_list **env_list)
 		}
 	}
 	printf("exit\n");
-	return (ft_free_char_tab(command), ft_end_minishell(env_list), ft_free_list(env_list), exit_status);
+	return (ft_free_char_tab(command), ft_end_minishell(env_list), exit_status);
 }
 
 void	ft_end_minishell(t_list **env_list)

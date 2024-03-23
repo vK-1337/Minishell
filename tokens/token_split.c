@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/17 13:30:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:35:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	**ft_token_split(char const *s)
 	char	**words;
 
 	vars.k = ft_count_tokens(s);
+    printf("Number of tokens => |%lu|\n", vars.k);
 	words = malloc((vars.k + 1) * sizeof(char *));
 	if (!words)
 		return (NULL);

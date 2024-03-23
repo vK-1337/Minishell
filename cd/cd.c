@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/17 12:00:32 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:38:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	ft_cd(char *path, t_list **env)
 	{
 		if (cdpath_find(path, env) == 0)
 			return (0);
-		ft_putstr_fd(" No such file or directory", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
+        ft_putstr_fd(path, 2);
+        ft_putstr_fd(": No such file or directory \n", 2);
 		return (1);
 	}
 	else

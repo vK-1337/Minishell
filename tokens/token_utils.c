@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:54:23 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/17 13:31:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:42:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ int	ft_go_next_parenthesis(const char *str, int index)
 
 	i = 0;
 	opening_parenthesis = 0;
-	while (str[index] != 41)
+	while (str[index])
 	{
-		if (str[index] == 40)
-		{
-			opening_parenthesis++;
-		}
+        if (str[index] == 41)
+            opening_parenthesis--;
+        else if (str[index] == 40)
+            opening_parenthesis++;
+        if (str[index] == 41 && opening_parenthesis == 0)
+            break;
 		index++;
 		i++;
 	}
-	return (i + 1 + opening_parenthesis);
+	return (i + 1);
 }
 
 int	ft_go_next(const char *str, int index)
@@ -78,7 +80,7 @@ int	ft_go_next(const char *str, int index)
 
 int	ft_is_separator(char c)
 {
-	if (c == 34 || c == 39 || c == 60 || c == 62 || c == 124 || c == '\0'
+	if (c == 60 || c == 62 || c == 124 || c == '\0'
 		|| c == ' ')
 		return (1);
 	return (0);

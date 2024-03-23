@@ -66,7 +66,7 @@ LDFLAGS = -L./libft -lft -lreadline
 
 LIBFT = ./libft/libft.a
 
-NAME = minishell
+NAME = minishell_bonus
 
 OBJS = $(SRCS:.c=.o) ./libft/libft.a
 

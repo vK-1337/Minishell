@@ -6,14 +6,13 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 14:47:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:04:16 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int	check_command(char *command);
-
 
 int	tablen(char **tab)
 {

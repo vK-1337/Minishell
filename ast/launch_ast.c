@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 12:35:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:20:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	create_redirection(t_ast *node, t_list **env_list)
 	exec = malloc(sizeof(t_exec));
 	exec->saved_fd[0] = dup(0);
 	exec->saved_fd[1] = dup(1);
+    exec->last = 0;
 	if (node->left->token->type == OPERATOR && is(node->left->token->token, "|") == 1)
 		exit_status = left_pipe(node, env_list, &exec);
 	else if (node->right->token->type == OPERATOR && is(node->right->token->token, "|") == 1)

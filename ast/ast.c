@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:50:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:10:46 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,5 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 		dup2((*exec)->fd[0], 0);
 		close((*exec)->fd[0]);
 	}
-	return (free(command2), -1);
+	return (ft_free_list(env_list), free(command2), -1);
 }

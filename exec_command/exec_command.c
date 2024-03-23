@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:49:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:59:58 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	exec_command(char **command, char **env, t_list *env_list, t_ast *ast)
 	}
 	else
 	{
+		free(*command);
 		execve(instruct, cmd_split, env);
 		ft_putstr_fd("Is a directory", 2);
 		exit_status = 126;

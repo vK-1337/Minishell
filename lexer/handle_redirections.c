@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 11:22:01 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:03:58 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	ft_open_fd(t_token **tokens)
 	curr = *tokens;
 	while (curr)
 	{
-		printf("curr->token = %s\n", curr->token);
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
 			printf("valid operator : %s\n", curr->token);

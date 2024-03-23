@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 13:10:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:05:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ int	do_redirections(t_ast *command, int saved_fd[2])
 		if (fd_in == -1)
 			return (-1917);
 	}
-	ft_putstr_fd("minishell:1 ", 2);
 	if (do_redirection2(command, &fd_in, &fd_out) == -1)
 	{
 		ft_putstr_fd("minishell: 2", 2);

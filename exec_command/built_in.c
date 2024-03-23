@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:48:20 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 11:41:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int	check_command(char *command);
-
 
 int	tablen(char **tab)
 {
@@ -24,7 +23,7 @@ int	tablen(char **tab)
 		i++;
 	return (i);
 }
-int manage_built_in2(char **brut_input, t_list *env_list, t_ast *ast)
+int	manage_built_in2(char **brut_input, t_list *env_list, t_ast *ast)
 {
 	char	**command;
 	int		exit_status;
@@ -32,13 +31,15 @@ int manage_built_in2(char **brut_input, t_list *env_list, t_ast *ast)
 	command = ft_split(*brut_input, ' ');
 	exit_status = check_command(command[0]);
 	if (exit_status == 2)
-		return (free(*brut_input), ft_free_char_tab(command), ft_exit(command, &env_list));
+		return (free(*brut_input), ft_free_char_tab(command), ft_exit(command,
+				&env_list));
 	exit_status = exec_built_in(command, env_list, *brut_input, ast);
 	ft_end_minishell(&env_list);
 	return (free(*brut_input), exit_status);
 }
 
-int	manage_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast)
+int	manage_built_in(char **command, t_list *env_list, char *brut_input,
+		t_ast *ast)
 {
 	int	exit_status;
 	int	saved_fd[2];
@@ -47,19 +48,21 @@ int	manage_built_in(char **command, t_list *env_list, char *brut_input, t_ast *a
 	saved_fd[0] = dup(0);
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
-		return (ft_free_char_tab(command), 1871);
-    if (do_redirections(ast, saved_fd) == -1917)
-		return (1);
+		return (close(saved_fd[0]), close(saved_fd[1]),
+			ft_free_char_tab(command), 1871);
+	if (do_redirections(ast, saved_fd) == -1917)
+		return (close(saved_fd[0]), close(saved_fd[1]), 1);
 	if (exit_status == 2)
 	{
-        dup2(saved_fd[0], 0);
-	    dup2(saved_fd[1], 1);
-        return (ft_exit(command, &env_list));
+		dup2(saved_fd[0], 0);
+		dup2(saved_fd[1], 1);
+		return (close(saved_fd[0]), close(saved_fd[1]), ft_exit(command,
+				&env_list));
 	}
 	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
 	dup2(saved_fd[1], 1);
-	return (exit_status);
+	return (close(saved_fd[0]), close(saved_fd[1]), exit_status);
 }
 
 int	check_command(char *command)
@@ -81,7 +84,8 @@ int	check_command(char *command)
 	return (0);
 }
 
-int	exec_built_in(char **command, t_list *env_list, char *brut_input, t_ast *ast)
+int	exec_built_in(char **command, t_list *env_list, char *brut_input,
+		t_ast *ast)
 {
 	int exit_status;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:50:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 12:10:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	pipe_chain(char **env, t_ast *command, t_list *env_list, t_exec **exec)
 {
 	int	id;
 	char *command2;
-	
+
 	command2 = build_command(command);
 	if (pipe((*exec)->fd) == -1)
 		handle_error(-1, "pipe");

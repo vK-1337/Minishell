@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:02:06 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:35:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	launch_ast(char *input, t_list *env_list, int *exit_status)
+int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {
 	t_ast	*ast;
 	t_token	*lexer;
@@ -20,7 +20,7 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 	ast = NULL;
 	if (!env_list)
 		return (-1917);
-	lexer = ft_lexer(input, &env_list);
+	lexer = ft_lexer(input, env_list);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);
@@ -38,9 +38,9 @@ int	launch_ast(char *input, t_list *env_list, int *exit_status)
 	return (*exit_status);
 }
 
-int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
+int	launch_ast_recursive(t_ast *ast, t_list **env_list, int *exit_status)
 {
-	export_and_wildcard(ast, env_list);
+	export_and_wildcard(ast, *env_list);
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)
@@ -54,11 +54,11 @@ int	launch_ast_recursive(t_ast *ast, t_list *env_list, int *exit_status)
 	else if (ast->token->type == 3 && is(ast->token->token, "|") == 1)
 		*exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-		*exit_status = exec_shell_command(ast, env_list, redo_env(env_list), ast);
+		*exit_status = exec_shell_command(ast, env_list, redo_env(*env_list), ast);
 	return (*exit_status);
 }
 
-int	create_redirection(t_ast *node, t_list *env_list)
+int	create_redirection(t_ast *node, t_list **env_list)
 {
 	int		exit_status;
 	t_exec	*exec;
@@ -72,16 +72,16 @@ int	create_redirection(t_ast *node, t_list *env_list)
 		exit_status = right_pipe(node, env_list, &exec);
 	else
 	{
-		exit_status = pipe_chain(redo_env(env_list), node->left, env_list, &exec);
-		if (ft_find_var(&env_list, "$?")->should_end == 1)
+		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list, &exec);
+		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{
 			close(exec->fd[0]);
 			close(exec->fd[1]);
 			return (exit_status);
 		}
-		exit_status = last_pipe(redo_env(env_list), node->right, env_list,
+		exit_status = last_pipe(redo_env(*env_list), node->right, env_list,
 				&exec);
-		if (ft_find_var(&env_list, "$?")->should_end == 1)
+		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{
 			free(exec);
 			return (exit_status);

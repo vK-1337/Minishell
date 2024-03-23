@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:43:24 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 15:02:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:06:29 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*remove_parenthesis(t_token **token);
 
-void	parenthesis(t_ast *ast, t_list *env_list, int *exit_status)
+void	parenthesis(t_ast *ast, t_list **env_list, int *exit_status)
 {
 	t_ast	*new_ast;
 	char	*new_token;
@@ -24,7 +24,7 @@ void	parenthesis(t_ast *ast, t_list *env_list, int *exit_status)
 	fd[1] = dup(1);
 	new_token = remove_parenthesis(&ast->token);
 	new_ast = NULL;
-	if (create_ast_list(&new_ast, ft_lexer(new_token, &env_list)) == NULL)
+	if (create_ast_list(&new_ast, ft_lexer(new_token, env_list)) == NULL)
 	{
 		*exit_status = -1917;
 		return ;

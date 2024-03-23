@@ -6,13 +6,13 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/20 18:18:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 13:10:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	configure_fd_out2(int fd_out, char *token, char *file)
+int configure_fd_out2(int fd_out, char *token, char *file)
 {
 	if (fd_out != 0)
 		close(fd_out);
@@ -164,8 +164,12 @@ int	do_redirections(t_ast *command, int saved_fd[2])
 		if (fd_in == -1)
 			return (-1917);
 	}
+	ft_putstr_fd("minishell:1 ", 2);
 	if (do_redirection2(command, &fd_in, &fd_out) == -1)
+	{
+		ft_putstr_fd("minishell: 2", 2);
 		return (-1917);
+	}
 	return (0);
 }
 

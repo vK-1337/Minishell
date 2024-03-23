@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 13:13:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:47:23 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,23 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input, t_ast *
 	{
 		dup2(saved_fd[0], 0);
 		dup2(saved_fd[1], 1);
+		close(saved_fd[0]);
+		close(saved_fd[1]);
 		return (1);
 	}
 	if (exit_status == 2)
 	{
         dup2(saved_fd[0], 0);
 	    dup2(saved_fd[1], 1);
+		close(saved_fd[0]);
+		close(saved_fd[1]);
         return (ft_exit(command, env_list));
 	}
 	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
 	dup2(saved_fd[1], 1);
+	close(saved_fd[0]);
+	close(saved_fd[1]);
 	return (exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 12:35:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:31:05 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (!env_list)
 		return (-1917);
 	lexer = ft_lexer(input, env_list);
+	ft_print_token_list(&lexer);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);

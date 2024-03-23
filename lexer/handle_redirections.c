@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 11:22:01 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:08:13 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,10 @@ int	ft_open_fd(t_token **tokens)
 	curr = *tokens;
 	while (curr)
 	{
-		printf("curr->token = %s\n", curr->token);
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
-			printf("valid operator : %s\n", curr->token);
 			update_token_link(curr);
 			status = handle_fd(curr, tokens);
-			printf("status = %d\n", status);
 			if (status != 0)
 				return (status);
 			curr = curr->next;

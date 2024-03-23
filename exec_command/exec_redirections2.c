@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:05:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:14:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,7 @@ int	do_redirections(t_ast *command, int saved_fd[2])
 			return (-1917);
 	}
 	if (do_redirection2(command, &fd_in, &fd_out) == -1)
-	{
-		ft_putstr_fd("minishell: 2", 2);
 		return (-1917);
-	}
 	return (0);
 }
 

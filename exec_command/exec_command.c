@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 13:11:09 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:52:43 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,11 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast
 	exit_status = 1871;
 	exit_status = manage_built_in(ft_split(command_str, ' '), env_list, command_str, command);
 	if (exit_status != 1871)
+	{
+		close(saved_std[0]);
+		close(saved_std[1]);
 		return (ft_free_char_tab(env), free(command_str), exit_status);
+	}
 	id = fork();
 	handle_error(id, "fork");
 	if (id == 0)
@@ -121,8 +125,12 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast
 		if (do_redirections(command, saved_std) == -1917)
 		{
 			ft_end_minishell(env_list);
+			close(saved_std[0]);
+			close(saved_std[1]);
 			return (ft_free_char_tab(env), free(command_str), 1);
 		}
+		close(saved_std[0]);
+		close(saved_std[1]);
 		exit_status = exec_command(&command_str, env, env_list, ast);
 	}
 	else
@@ -131,5 +139,13 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast
         exit_status = exit_status >> 8;
 		free(command_str);
     }
+	close(saved_std[0]);
+	close(saved_std[1]);
 	return (ft_free_char_tab(env), exit_status);
+}
+
+void	ft_close_fd(int fd[2])
+{
+	close(fd[0]);
+	close(fd[1]);
 }

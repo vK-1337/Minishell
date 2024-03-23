@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 12:07:31 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 14:52:57 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int					manage_built_in(char **command, t_list **env_list,
 						char *brut_input, t_ast *ast);
 int					exec_built_in(char **command, t_list **env_list,
 						char *brut_input, t_ast *ast);
+void				ft_close_fd(int fd[2]);
 
 /******************************************************************************/
 /*                                                                            */
@@ -428,7 +429,8 @@ int					ft_replace_wildcards(char **token);
 char				*ft_join_match_helper(char *prev_new_token, char *de_name,
 						int count, int total_count);
 void				ft_trim_quotes(char **input);
-int	ft_count_matches(char **token, int (*ft_match)(char *, char *));
+int					ft_count_matches(char **token, int (*ft_match)(char *,
+							char *));
 
 /******************************************************************************/
 /*                                                                            */
@@ -442,7 +444,8 @@ void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
 int					is(char *token, char *comp);
 void				ft_free_ast(t_ast **ast);
-int					launch_ast(char *input, t_list **env_list, int *exit_status);
+int					launch_ast(char *input, t_list **env_list,
+						int *exit_status);
 int					launch_ast_recursive(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					create_redirection(t_ast *node, t_list **env_list);
@@ -452,7 +455,8 @@ int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				handle_error(int err, char *msg);
-void				parenthesis(t_ast *ast, t_list **env_list, int *exit_status);
+void				parenthesis(t_ast *ast, t_list **env_list,
+						int *exit_status);
 int					file_redir(t_token *token);
 t_token				*get_last_strongest_operator(t_token *token_list);
 void				send_to_build(t_ast **node, int direction);

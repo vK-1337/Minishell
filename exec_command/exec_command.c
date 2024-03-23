@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 13:11:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int open_file_error(char *file, t_list **env_list)
 		return (126);
 	}
 }
-int	exec_command(char **command, char **env, t_list *env_list, t_ast *ast)
+int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 {
 	char	*instruct;
 	char	**cmd_split;
@@ -43,13 +43,13 @@ int	exec_command(char **command, char **env, t_list *env_list, t_ast *ast)
 	exit_status = manage_built_in(ft_split(*command, ' '), env_list, *command, ast);
 	if (exit_status != 1871)
 	{
-		ft_end_minishell(&env_list);
+		ft_end_minishell(env_list);
 		return (ft_free_char_tab(env), exit_status);
 	}
 	cmd_split = ft_split(*command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
 	if (instruct == NULL  &&  (ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0], "/", 1) == 0))
-		exit_status = open_file_error(cmd_split[0], &env_list);
+		exit_status = open_file_error(cmd_split[0], env_list);
 	else if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
 		instruct = cmd_split[0];
 	else if (instruct == NULL)
@@ -57,7 +57,7 @@ int	exec_command(char **command, char **env, t_list *env_list, t_ast *ast)
 		ft_putstr_fd(cmd_split[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		exit_status = 127;
-		ft_end_minishell(&env_list);
+		ft_end_minishell(env_list);
 	}
 	else
 	{
@@ -65,7 +65,7 @@ int	exec_command(char **command, char **env, t_list *env_list, t_ast *ast)
 		execve(instruct, cmd_split, env);
 		ft_putstr_fd("Is a directory", 2);
 		exit_status = 126;
-		ft_end_minishell(&env_list);
+		ft_end_minishell(env_list);
 	}
 	return (free(*command), ft_free_char_tab(cmd_split), exit_status);
 }
@@ -98,7 +98,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 	return (ft_free_char_tab(path_split), path);
 }
 
-int	exec_shell_command(t_ast *command, t_list *env_list, char **env, t_ast *ast)
+int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast)
 {
 	int		id;
 	int		exit_status;
@@ -120,7 +120,7 @@ int	exec_shell_command(t_ast *command, t_list *env_list, char **env, t_ast *ast)
 	{
 		if (do_redirections(command, saved_std) == -1917)
 		{
-			ft_end_minishell(&env_list);
+			ft_end_minishell(env_list);
 			return (ft_free_char_tab(env), free(command_str), 1);
 		}
 		exit_status = exec_command(&command_str, env, env_list, ast);

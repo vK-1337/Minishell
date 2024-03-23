@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 16:35:00 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 12:07:31 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,12 @@ void				ft_update_xstatus(t_list **env, int x_status);
 /*                                                                            */
 /******************************************************************************/
 
-int					exec_shell_command(t_ast *command, t_list *env_list,
+int					exec_shell_command(t_ast *command, t_list **env_list,
 						char **env, t_ast *ast);
 char				*add_slash(char *cmd1);
 void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
-int					exec_command(char **command, char **env, t_list *env_list,
+int					exec_command(char **command, char **env, t_list **env_list,
 						t_ast *ast);
 int					do_redirections(t_ast *command, int saved_std[2]);
 int					configure_fd_out(int fd_out, char *token, char *file);
@@ -152,9 +152,9 @@ void				here_doc(char *limiter, int fd[2]);
 char				*check_valid_command(char **cmd_split, char *path);
 char				*take_path(char **env);
 void				ft_add_front(t_token **command, t_token **curr);
-int					manage_built_in(char **command, t_list *env_list,
+int					manage_built_in(char **command, t_list **env_list,
 						char *brut_input, t_ast *ast);
-int					exec_built_in(char **command, t_list *env_list,
+int					exec_built_in(char **command, t_list **env_list,
 						char *brut_input, t_ast *ast);
 
 /******************************************************************************/
@@ -442,17 +442,17 @@ void				*create_ast_list(t_ast **node, t_token *token_list);
 void				read_ast(t_ast *node, int depth);
 int					is(char *token, char *comp);
 void				ft_free_ast(t_ast **ast);
-int					launch_ast(char *input, t_list *env_list, int *exit_status);
-int					launch_ast_recursive(t_ast *ast, t_list *env_list,
+int					launch_ast(char *input, t_list **env_list, int *exit_status);
+int					launch_ast_recursive(t_ast *ast, t_list **env_list,
 						int *exit_status);
-int					create_redirection(t_ast *node, t_list *env_list);
+int					create_redirection(t_ast *node, t_list **env_list);
 char				*build_command(t_ast *node);
-int					right_pipe(t_ast *node, t_list *env_list, t_exec **exec);
-int					left_pipe(t_ast *node, t_list *env_list, t_exec **exec);
-int					pipe_chain(char **env, t_ast *command, t_list *env_list,
+int					right_pipe(t_ast *node, t_list **env_list, t_exec **exec);
+int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
+int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				handle_error(int err, char *msg);
-void				parenthesis(t_ast *ast, t_list *env_list, int *exit_status);
+void				parenthesis(t_ast *ast, t_list **env_list, int *exit_status);
 int					file_redir(t_token *token);
 t_token				*get_last_strongest_operator(t_token *token_list);
 void				send_to_build(t_ast **node, int direction);
@@ -461,7 +461,7 @@ t_ast				*build_tree(t_ast **node, t_token *strongest);
 t_ast				*init_branch(t_ast *parent, t_token *token, int is_left);
 int					do_pipe_redirections(t_ast *command, t_exec **exec);
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
-int					last_pipe(char **env, t_ast *command, t_list *env_list,
+int					last_pipe(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				export_and_wc_helper(t_token *travel, t_list *env_list);
 void				export_and_wc_helper2(t_token *travel, t_list *env_list);

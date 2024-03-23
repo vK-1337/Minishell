@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 15:01:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:48:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,13 @@ int	ft_syntax_pipes(char *input)
 	{
 		if (input[i + 1] && input[i + 1] == '|')
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-				2);
-			return (0);
+			return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
+					2), 0);
 		}
 		else
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-				2);
-			return (0);
+			return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
+					2), 0);
 		}
 	}
 	while (input[i])
@@ -111,9 +109,8 @@ int	ft_pipes_synt_error(char *input, int index)
 		{
 			if (input[index + 1] && input[index + 1] == '|')
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-					2);
-				return (0);
+				return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
+						2), 0);
 			}
 			else
 			{

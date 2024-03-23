@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 15:03:06 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:30:21 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ t_token	*ft_lexer(char *input, t_list **env)
 	tokens = ft_token_split(input);
 	if (!tokens)
 		return (NULL);
-    // ft_print_tab(tokens);
 	listed_tokens = ft_convert_tokens(tokens, env);
-	// ft_print_token_list(&listed_tokens);
 	free(tokens);
 	if (!listed_tokens)
 		return (NULL);
@@ -35,18 +33,19 @@ t_token	*ft_lexer(char *input, t_list **env)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
 	if (status == -1917)
 		return (ft_tokenlstnew(NULL, ERROR));
-	// ft_print_token_list(&listed_tokens);
 	return (listed_tokens);
 }
 
-void ft_print_tab(char **tokens)
+void	ft_print_tab(char **tokens)
 {
-    int i = 0;
-    while (tokens[i])
-    {
-        printf("tokens[%d] = %s\n", i, tokens[i]);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		printf("tokens[%d] = %s\n", i, tokens[i]);
+		i++;
+	}
 }
 
 void	*ft_reunite_tokens(t_token **tokens)
@@ -70,8 +69,8 @@ void	*ft_reunite_tokens(t_token **tokens)
 
 t_token	*ft_handle_next_token(t_token **tokens, t_token *curr, t_token *next)
 {
-	if (next->next && next->next->type == COMMAND && curr->type == COMMAND && strncmp(curr->token, "export",
-			6) == 0)
+	if (next->next && next->next->type == COMMAND && curr->type == COMMAND
+		&& strncmp(curr->token, "export", 6) == 0)
 		return (ft_handle_command_export(tokens, curr));
 	else if (curr->type == OPTION && next->type == OPTION)
 		return (ft_handle_option(tokens, curr, next));

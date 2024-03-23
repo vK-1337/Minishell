@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 14:52:43 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:34:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int open_file_error(char *file, t_list **env_list)
+int	open_file_error(char *file, t_list **env_list)
 {
 	ft_end_minishell(env_list);
-	if (access(file ,F_OK) == -1)
+	if (access(file, F_OK) == -1)
 	{
 		perror(file);
 		return (127);
@@ -25,7 +25,6 @@ int open_file_error(char *file, t_list **env_list)
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 		return (126);
-	
 	}
 	else
 	{
@@ -34,13 +33,15 @@ int open_file_error(char *file, t_list **env_list)
 		return (126);
 	}
 }
+
 int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 {
 	char	*instruct;
 	char	**cmd_split;
 	int		exit_status;
 
-	exit_status = manage_built_in(ft_split(*command, ' '), env_list, *command, ast);
+	exit_status = manage_built_in(ft_split(*command, ' '), env_list, *command,
+			ast);
 	if (exit_status != 1871)
 	{
 		ft_end_minishell(env_list);
@@ -48,7 +49,8 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 	}
 	cmd_split = ft_split(*command, ' ');
 	instruct = check_valid_command(cmd_split, take_path(env));
-	if (instruct == NULL  &&  (ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0], "/", 1) == 0))
+	if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
+			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
 		exit_status = open_file_error(cmd_split[0], env_list);
 	else if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
 		instruct = cmd_split[0];
@@ -98,12 +100,13 @@ char	*check_valid_command(char **cmd_split, char *path)
 	return (ft_free_char_tab(path_split), path);
 }
 
-int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast)
+int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
+		t_ast *ast)
 {
 	int		id;
 	int		exit_status;
 	char	*command_str;
-	int     saved_std[2];
+	int		saved_std[2];
 
 	saved_std[0] = dup(0);
 	saved_std[1] = dup(1);
@@ -111,7 +114,8 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast
 		return (ft_free_char_tab(env), 0);
 	command_str = build_command(command);
 	exit_status = 1871;
-	exit_status = manage_built_in(ft_split(command_str, ' '), env_list, command_str, command);
+	exit_status = manage_built_in(ft_split(command_str, ' '), env_list,
+			command_str, command);
 	if (exit_status != 1871)
 	{
 		close(saved_std[0]);
@@ -134,11 +138,11 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env, t_ast *ast
 		exit_status = exec_command(&command_str, env, env_list, ast);
 	}
 	else
-    {
+	{
 		waitpid(id, &exit_status, 0);
-        exit_status = exit_status >> 8;
+		exit_status = exit_status >> 8;
 		free(command_str);
-    }
+	}
 	close(saved_std[0]);
 	close(saved_std[1]);
 	return (ft_free_char_tab(env), exit_status);

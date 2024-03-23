@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenlstadd_front.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 22:24:47 by vk                #+#    #+#             */
-/*   Updated: 2024/03/18 15:11:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:28:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 void	ft_tokenlstadd_front(t_token **lst, t_token *new)
 {

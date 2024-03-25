@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 14:20:47 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:38:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (!env_list)
 		return (-1917);
 	lexer = ft_lexer(input, env_list);
+	ft_print_token_list(&lexer);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);
@@ -54,7 +55,8 @@ int	launch_ast_recursive(t_ast *ast, t_list **env_list, int *exit_status)
 	else if (ast->token->type == 3 && is(ast->token->token, "|") == 1)
 		*exit_status = create_redirection(ast, env_list);
 	else if (ast->token->type == 0)
-		*exit_status = exec_shell_command(ast, env_list, redo_env(*env_list), ast);
+		*exit_status = exec_shell_command(ast, env_list, redo_env(*env_list),
+				ast);
 	return (*exit_status);
 }
 
@@ -66,14 +68,17 @@ int	create_redirection(t_ast *node, t_list **env_list)
 	exec = malloc(sizeof(t_exec));
 	exec->saved_fd[0] = dup(0);
 	exec->saved_fd[1] = dup(1);
-    exec->last = 0;
-	if (node->left->token->type == OPERATOR && is(node->left->token->token, "|") == 1)
+	exec->last = 0;
+	if (node->left->token->type == OPERATOR && is(node->left->token->token,
+			"|") == 1)
 		exit_status = left_pipe(node, env_list, &exec);
-	else if (node->right->token->type == OPERATOR && is(node->right->token->token, "|") == 1)
+	else if (node->right->token->type == OPERATOR
+		&& is(node->right->token->token, "|") == 1)
 		exit_status = right_pipe(node, env_list, &exec);
 	else
 	{
-		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list, &exec);
+		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list,
+				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{
 			close(exec->fd[0]);
@@ -87,7 +92,6 @@ int	create_redirection(t_ast *node, t_list **env_list)
 			free(exec);
 			return (exit_status);
 		}
-
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:43:33 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 14:50:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:28:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 int	handle_parentheses(const char *str, int index)
 {
 	int	i;
-    int opening_parenthesis;
+	int	opening_parenthesis;
 
 	i = 0;
-    opening_parenthesis = 1;
+	opening_parenthesis = 1;
 	index++;
 	while (str[index])
 	{
-        if (str[index] == 41)
-            opening_parenthesis--;
+		if (str[index] == 41)
+			opening_parenthesis--;
 		if (str[index] == 40)
-        {
+		{
 			i++;
-            opening_parenthesis++;
-        }
-        if (str[index] == 41 && opening_parenthesis == 0)
-            break;
+			opening_parenthesis++;
+		}
+		if (str[index] == 41 && opening_parenthesis == 0)
+			break ;
 		index++;
 		i++;
 	}

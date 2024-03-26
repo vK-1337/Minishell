@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:38:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 14:32:21 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 23:08:40 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	ft_free_char_tab(char **str)
 {
 	int	i;
 
-	i = 0;	
+	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		free(str[i]);

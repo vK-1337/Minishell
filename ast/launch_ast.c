@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 15:12:03 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:24:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	create_redirection(t_ast *node, t_list **env_list)
 		{
 			close(exec->fd[0]);
 			close(exec->fd[1]);
-			return (ft_close_fd(exec->saved_fd), exit_status);
+			return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
 		}
         new_env = redo_env(*env_list);
 		exit_status = last_pipe(new_env, node->right, env_list,
@@ -97,6 +97,5 @@ int	create_redirection(t_ast *node, t_list **env_list)
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);
-	free(exec);
-	return (ft_close_fd(exec->saved_fd), exit_status);
+	return (ft_close_fd(exec->saved_fd),  exit_status);
 }

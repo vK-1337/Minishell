@@ -6,12 +6,29 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 13:35:32 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 15:00:50 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	check_here_doc(t_ast *ast)
+{
+	t_token *token;
+
+	if (ast == NULL)
+		return ;
+	token = ast->token->file_redir_in;
+	ast->here_doc = 0;
+	while (token)
+	{
+		if (is(token->token, "<<") == 1)
+			ast->here_doc = 1;
+		token = token->next;
+	}
+	check_here_doc(ast->left);
+	check_here_doc(ast->right);
+}
 int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {
 	t_ast	*ast;
@@ -21,7 +38,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (!env_list)
 		return (-1917);
 	lexer = ft_lexer(input, env_list);
-	ft_print_token_list(&lexer);
+	// ft_print_token_list(&lexer);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);
@@ -34,6 +51,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 		printf("Memory error\n");
 		*exit_status = -1917;
 	}
+	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
 	return (*exit_status);

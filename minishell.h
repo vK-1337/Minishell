@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 14:52:57 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:59:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_ast
 	struct s_ast	*daddy;
 	struct s_ast	*right;
 	struct s_ast	*left;
+	int				here_doc;
 }					t_ast;
 
 typedef struct s_exec

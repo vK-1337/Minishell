@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:35:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:43:33 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ void	ft_back(t_token **command)
 				">") || is(curr->token, "<<") || is(curr->token, ">>")))
 	{
 		ft_token_addition(command, &curr);
-		curr = curr->prev;
+		if (curr)
+			curr = curr->prev;
 	}
 	while ((*command) && ((*command)->type != COMMAND
 			&& (*command)->type != PARENTHESIS))

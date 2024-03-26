@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 13:39:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 14:33:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		ft_putstr_fd("Is a directory", 2);
 		exit_status = 126;
 		ft_end_minishell(env_list);
-	}
+	}	
 	return (free(*command), ft_free_char_tab(cmd_split), ft_free_char_tab(env), exit_status);
 }
 
@@ -135,7 +135,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 		}
 		close(saved_std[0]);
 		close(saved_std[1]);
-		exit_status = exec_command(&command_str, env, env_list, ast);
+		exit_status = exec_command(&command_str, redo_env(*env_list), env_list, ast);
 	}
 	else
 	{

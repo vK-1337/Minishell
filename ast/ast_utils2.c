@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:45:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:50:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	do_pipe_redirections(t_ast *command, t_exec **exec)
 		if (ft_strcmp(travel->token, "<<") == 0)
 			(*exec)->fd[0] = launch_here_doc(travel->file_redir,
 					(*exec)->saved_fd);
+		if ((*exec)->fd[0] == -1)
+			return (-1917);
 	}
 	if (command->token->file_redir_out != NULL)
 	{

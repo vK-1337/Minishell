@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:03:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:22:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,19 @@ int	create_redirection(t_ast *node, t_list **env_list)
 		{
 			close(exec->fd[0]);
 			close(exec->fd[1]);
-			return (exit_status);
+			return (ft_close_fd(exec->saved_fd), exit_status);
 		}
 		exit_status = last_pipe(redo_env(*env_list), node->right, env_list,
 				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{
 			free(exec);
-			return (exit_status);
+			return (ft_close_fd(exec->saved_fd), exit_status);
 		}
 
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);
-	close(exec->saved_fd[0]);
-	close(exec->saved_fd[1]);
 	free(exec);
-	return (exit_status);
+	return (ft_close_fd(exec->saved_fd), exit_status);
 }

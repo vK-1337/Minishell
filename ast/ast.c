@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 14:29:47 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:11:57 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-int manage_built_in2(char *brut_input, t_list **env_list, t_ast *ast);
+int manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast);
 int	check_command(char *command);
 
 int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
@@ -34,11 +34,11 @@ int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 			if (do_pipe_redirections(command, exec) == -1917)
 			{
 				ft_end_minishell(env_list);
-				return (free(command_str), 1);
+				return (ft_free_char_tab(env), free(command_str), 1);
 			}
 			return(exec_command(&command_str, env, env_list, command));
 		}
-		return (manage_built_in2(command_str, env_list, command));
+		return (ft_free_char_tab(env), manage_built_in2(&command_str, env_list, command));
 	}
 	else
 	{
@@ -48,7 +48,7 @@ int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 			continue ;
 		exit_status = exit_status >> 8;
 	}
-	return (free(command_str), exit_status);
+	return (ft_free_char_tab(env), free(command_str), exit_status);
 }
 
 int	right_pipe(t_ast *node, t_list **env_list, t_exec **exec)
@@ -128,7 +128,7 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 			return (ft_free_char_tab(env), 1);
 		}
         command3 = build_command(command);
-		return (ft_free_char_tab(env), manage_built_in2(command3, env_list, command));
+		return (ft_free_char_tab(env), manage_built_in2(&command3, env_list, command));
 	}
 	else
 	{

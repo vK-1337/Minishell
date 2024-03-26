@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 13:39:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 22:28:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		exit_status = 126;
 		ft_end_minishell(env_list);
 	}
-	return (free(*command), ft_free_char_tab(cmd_split), ft_free_char_tab(env), exit_status);
+	return (free(*command), ft_free_char_tab(cmd_split), exit_status);
 }
 
 char	*check_valid_command(char **cmd_split, char *path)

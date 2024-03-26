@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 15:20:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:47:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,5 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 		dup2((*exec)->fd[0], 0);
 		close((*exec)->fd[0]);
 	}
-	return (ft_free_char_tab(env), free(command2), -1);
+	return (free(command2), -1);
 }

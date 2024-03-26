@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 22:34:36 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:48:55 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int	create_redirection(t_ast *node, t_list **env_list)
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);
-	return (ft_close_fd(exec->saved_fd),  exit_status);
+	return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
 }

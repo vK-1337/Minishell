@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:34:06 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:39:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		exit_status = 126;
 		ft_end_minishell(env_list);
 	}
-	return (free(*command), ft_free_char_tab(cmd_split), exit_status);
+	return (free(*command), ft_free_char_tab(cmd_split), ft_free_char_tab(env), exit_status);
 }
 
 char	*check_valid_command(char **cmd_split, char *path)
@@ -120,7 +120,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	{
 		close(saved_std[0]);
 		close(saved_std[1]);
-		return (ft_free_char_tab(env), free(command_str), exit_status);
+		return (ft_close_fd(saved_std), ft_free_char_tab(env), free(command_str), exit_status);
 	}
 	id = fork();
 	handle_error(id, "fork");
@@ -131,7 +131,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 			ft_end_minishell(env_list);
 			close(saved_std[0]);
 			close(saved_std[1]);
-			return (ft_free_char_tab(env), free(command_str), 1);
+			return (ft_close_fd(saved_std), ft_free_char_tab(env), free(command_str), 1);
 		}
 		close(saved_std[0]);
 		close(saved_std[1]);
@@ -142,10 +142,8 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 		waitpid(id, &exit_status, 0);
 		exit_status = exit_status >> 8;
 		free(command_str);
-	}
-	close(saved_std[0]);
-	close(saved_std[1]);
-	return (ft_free_char_tab(env), exit_status);
+    }
+	return (ft_close_fd(saved_std), ft_free_char_tab(env), exit_status);
 }
 
 void	ft_close_fd(int fd[2])

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 23:08:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 23:46:28 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		return (ft_free_char_tab(env), exit_status);
 	}
 	cmd_split = ft_split(*command, ' ');
-	instruct = check_valid_command(cmd_split, take_path(env));
+	if (access(*command, F_OK | X_OK) != 0)
+		instruct = check_valid_command(cmd_split, take_path(env));
+	else
+		instruct = ft_strdup(*command);
 	if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
 			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
 		exit_status = open_file_error(cmd_split[0], env_list);
@@ -81,6 +84,8 @@ char	*check_valid_command(char **cmd_split, char *path)
 	i = 0;
 	if (path == NULL)
 		return (NULL);
+	if (access(path, F_OK | X_OK) == 0)
+		return (ft_strdup(path));
 	path_split = ft_split(path + 5, ':');
 	if (!path_split)
 		return (NULL);
@@ -92,7 +97,10 @@ char	*check_valid_command(char **cmd_split, char *path)
 			return (ft_free_char_tab(path_split), NULL);
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
+		{
+			printf("path: %s\n", path);
 			return (ft_free_char_tab(path_split), path);
+		}
 		free(path);
 		i++;
 	}

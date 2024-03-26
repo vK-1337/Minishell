@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/20 11:32:09 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:30:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_token	*ft_convert_tokens(char **tokens, t_list **env)
 		previous_type = type;
 		vars.i++;
 	}
-	// ft_print_token_lis   t(&tokens_list);
 	return (tokens_list);
 }
 

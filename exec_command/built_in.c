@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 16:10:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:35:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	tablen(char **tab)
 		i++;
 	return (i);
 }
-int manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast)
+
+int	manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast)
 {
 	char	**command;
 	int		exit_status;
@@ -31,13 +32,15 @@ int manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast)
 	command = ft_split(*brut_input, ' ');
 	exit_status = check_command(command[0]);
 	if (exit_status == 2)
-		return (free(*brut_input), ft_free_char_tab(command), ft_exit(command, env_list));
+		return (free(*brut_input), ft_free_char_tab(command), ft_exit(command,
+				env_list));
 	exit_status = exec_built_in(command, env_list, *brut_input, ast);
 	ft_end_minishell(env_list);
 	return (free(*brut_input), exit_status);
 }
 
-int	manage_built_in(char **command, t_list **env_list, char *brut_input, t_ast *ast)
+int	manage_built_in(char **command, t_list **env_list, char *brut_input,
+		t_ast *ast)
 {
 	int	exit_status;
 	int	saved_fd[2];
@@ -84,7 +87,8 @@ int	check_command(char *command)
 	return (0);
 }
 
-int	exec_built_in(char **command, t_list **env_list, char *brut_input, t_ast *ast)
+int	exec_built_in(char **command, t_list **env_list, char *brut_input,
+		t_ast *ast)
 {
 	int exit_status;
 

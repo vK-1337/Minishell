@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 15:13:14 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:40:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int	main(int ac, char **av, char **env)
 		ft_init_signals();
 		input = readline(prompt);
 		if (input == NULL)
-		{
-			printf("exit\n");
 			break ;
-		}
 		while (ft_unclosed_input(input))
 		{
 			input = ft_strjoin(input, readline(">"), 1);
@@ -47,17 +44,17 @@ int	main(int ac, char **av, char **env)
 				return (printf("Error: malloc failed\n"),
 					ft_free_list(&env_list), free(prompt), 1);
 		}
-        if (!input[0])
-        {
-            ft_find_var(&env_list, "$?")->xit_status = 0;
+		if (!input[0])
+		{
+			ft_find_var(&env_list, "$?")->xit_status = 0;
 			continue ;
-        }
+		}
 		add_history(input);
 		if (check_syntax(input) == 0)
-        {
-            ft_find_var(&env_list, "$?")->xit_status = 2;
+		{
+			ft_find_var(&env_list, "$?")->xit_status = 2;
 			continue ;
-        }
+		}
 		ft_change_signals();
 		launch_ast(input, &env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)

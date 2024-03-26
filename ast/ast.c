@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 14:15:36 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 15:40:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,15 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 		if (do_pipe_redirections(command, exec) == -1917)
 		{
 			ft_end_minishell(env_list);
-			return (ft_free_char_tab(env), 1);
+			return (free(command2), ft_free_char_tab(env), 1);
 		}
 		if (check_command(command2) == 0)
 		{
 			exec_command(&command2, env, env_list, command);
-			return (ft_free_char_tab(env), 1);
+			return (free(command2), ft_free_char_tab(env), 1);
 		}
         command3 = build_command(command);
-		return (ft_free_char_tab(env), manage_built_in2(&command3, env_list, command));
+		return (ft_free_char_tab(env), free(command2), manage_built_in2(&command3, env_list, command));
 	}
 	else
 	{

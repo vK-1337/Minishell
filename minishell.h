@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 22:47:07 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:35:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,9 +433,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
+int					ft_join_matching_dir(char **token, int (*ft_match)(char *,
+							char *));
 char				*ft_join_match_helper(char *prev_new_token, char *de_name,
 						int count, int total_count);
 void				ft_trim_quotes(char **input);
+void				ft_trim_quotes_utils(char *trimed_token, char **input,
+						int *i, int *j);
 int					ft_count_matches(char **token, int (*ft_match)(char *,
 							char *));
 

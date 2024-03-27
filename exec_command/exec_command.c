@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
 /*   Updated: 2024/03/27 04:49:26 by vda-conc         ###   ########.fr       */
@@ -63,8 +63,6 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 	if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
 			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
 		exit_status = open_file_error(cmd_split[0], env_list);
-	else if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
-		instruct = cmd_split[0];
 	else if (instruct == NULL)
 	{
 		ft_putstr_fd(cmd_split[0], 2);
@@ -72,13 +70,14 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		exit_status = 127;
 		ft_end_minishell(env_list);
 	}
-	else
+	if (instruct != NULL)
 	{
 		free(*command);
 		execve(instruct, cmd_split, env);
-		ft_putstr_fd("Is a directory", 2);
-		exit_status = 126;
-		ft_end_minishell(env_list);
+		exit_status = 127;
+		exit_status = open_file_error(cmd_split[0], env_list);
+		return (ft_end_minishell(env_list), ft_free_char_tab(env),
+			ft_free_char_tab(cmd_split), exit_status);
 	}
 	return (ft_free_char_tab(env), free(*command), ft_free_char_tab(cmd_split),
 		exit_status);
@@ -93,8 +92,6 @@ char	*check_valid_command(char **cmd_split, char *path)
 	i = 0;
 	if (path == NULL)
 		return (NULL);
-	if (access(path, F_OK | X_OK) == 0)
-		return (ft_strdup(path));
 	path_split = ft_split(path + 5, ':');
 	if (!path_split)
 		return (NULL);
@@ -106,10 +103,7 @@ char	*check_valid_command(char **cmd_split, char *path)
 			return (ft_free_char_tab(path_split), NULL);
 		free(temp);
 		if (access(path, F_OK | X_OK) == 0)
-		{
-			printf("path: %s\n", path);
 			return (ft_free_char_tab(path_split), path);
-		}
 		free(path);
 		i++;
 	}

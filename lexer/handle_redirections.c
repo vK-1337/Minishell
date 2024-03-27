@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 15:39:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 02:25:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_putnbr_redir(t_token **tokens)
 	}
 }
 
-int	ft_redirections(t_token **listed_tokens, t_list *env)
+int	ft_redirections(t_token **listed_tokens, t_list **env)
 {
 	int	status;
 
@@ -47,7 +47,7 @@ int	ft_redirections(t_token **listed_tokens, t_list *env)
 		return (status);
 	status = ft_open_fd(listed_tokens);
 	if (status == -1917)
-		return (-1917);
+		return (ft_tokenlstclear(listed_tokens), ft_end_minishell(env), -1917);
 	if (check_only_operator(listed_tokens) == 1)
 		return (ft_tokenlstclear(listed_tokens), -1);
 	ft_clean_operator(listed_tokens);
@@ -95,6 +95,8 @@ int	ft_open_fd(t_token **tokens)
 		{
 			update_token_link(curr);
 			status = handle_fd(curr, tokens);
+			if (status == -1917)
+				return (ft_clean_tokens(tokens), -1917);
 			if (status != 0)
 				return (status);
 			curr = curr->next;
@@ -121,7 +123,7 @@ int	export_and_wildcard2(t_token *token, t_list *env_list)
 	return (free(tmp), 0);
 }
 
-int	ft_open_solo_fd(t_token **tokens, t_list *env)
+int	ft_open_solo_fd(t_token **tokens, t_list **env)
 {
 	t_token	*curr;
 	t_token	*tmp;
@@ -138,11 +140,11 @@ int	ft_open_solo_fd(t_token **tokens, t_list *env)
 	while (curr)
 	{
 		tmp = curr->next;
-		if (export_and_wildcard2(curr, env) == -1)
+		if (export_and_wildcard2(curr, *env) == -1)
 			return (ft_clean_tokens(tokens), -1);
 		fd = file_redir(curr);
 		if (fd == -1917)
-			return (-1917);
+			return (ft_end_minishell(env), ft_clean_tokens(tokens), -1917);
 		if (fd == -1)
 			return (handle_error(fd, curr->file_redir), ft_clean_tokens(tokens),
 				-1);
@@ -150,7 +152,7 @@ int	ft_open_solo_fd(t_token **tokens, t_list *env)
 		ft_tokenlstdelone(&curr);
 		curr = tmp;
 	}
-	*tokens = NULL;
+	*tokens = curr;
 	return (-1);
 }
 

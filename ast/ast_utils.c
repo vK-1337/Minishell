@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:44:31 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:12:52 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	free_file_redir(t_token *file_redir)
 		next = file_redir->next;
 		free(file_redir->token);
 		free(file_redir->file_redir);
-		free(file_redir);
 		file_redir = next;
 	}
 }

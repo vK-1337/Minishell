@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 23:35:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:54:04 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ char				*ft_join_xstatus(char *final_input, t_list *x_var,
 						char *input);
 char				*ft_join_other_var(char *final_input, t_list *env_var);
 void				ft_join_helper(int *j, char *new_str, char *final_input);
+void				ft_join_helper3(char *input, char *new_str, int *i, int *j);
+void				ft_join_helper2(char *itoa, char *new_str, int *i, int *j);
 void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
 void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
 void				is_expandable_helper(t_norme *vars, char *input);

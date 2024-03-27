@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:11:31 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 22:58:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:45:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ t_token	*ft_convert_tokens(char **tokens, t_list **env)
 {
 	t_norme	vars;
 	t_ttype	type;
-	t_ttype	previous_type;
+	t_ttype	p;
 	t_token	*tokens_list;
 
 	tokens_list = NULL;
 	vars.j = ft_check_first_redir(tokens, &type);
-	vars.i = 0;
-	while (tokens[vars.i])
+	vars.i = -1;
+	while (tokens[++vars.i])
 	{
 		if (vars.i == 0 && ft_contain_variables(tokens[vars.i])
 			&& ft_empty_expand(tokens[vars.i], env))
@@ -33,12 +33,10 @@ t_token	*ft_convert_tokens(char **tokens, t_list **env)
 		if (vars.i == 0)
 			type = ft_define_first_token_type(tokens, vars.j, type);
 		else
-			type = ft_define_subsequent_token_type(tokens, vars.i, vars.j,
-					previous_type);
+			type = ft_define_subsequent_token_type(tokens, vars.i, vars.j, p);
 		ft_tokenlstadd_back(&tokens_list, ft_tokenlstnew(tokens[vars.i], type));
 		vars.str = tokens[vars.i];
-		previous_type = type;
-		vars.i++;
+		p = type;
 	}
 	return (tokens_list);
 }

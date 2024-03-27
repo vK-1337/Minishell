@@ -25,6 +25,7 @@ SRCS =			cd/cd.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \
 				expand/expand_utils_three.c \
+				expand/expand_utils_four.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				expand/wildcard_utils_two.c \

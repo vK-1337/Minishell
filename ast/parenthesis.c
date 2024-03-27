@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:43:24 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 14:34:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 05:27:55 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	parenthesis(t_ast *ast, t_list **env_list, int *exit_status)
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
 	ft_free_ast(&new_ast);
+    free(new_token);
 }
 
 char	*remove_parenthesis(t_token **token)

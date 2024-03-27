@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:12:42 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 00:32:37 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:34:03 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 	if (!new_node)
 		return (NULL);
 	new_node->next = next->next;
-    if (new_node->next)
-	    new_node->next->prev = new_node;
+	if (new_node->next)
+		new_node->next->prev = new_node;
 	if (curr->prev)
 	{
 		curr->prev->next = new_node;
@@ -66,7 +66,7 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 	else
 		*tokens = new_node;
 	free(curr);
-    free(next->token);
+	free(next->token);
 	free(next);
 	return ((void *)1);
 }

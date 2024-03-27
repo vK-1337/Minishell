@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 07:11:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:10:39 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	**ft_token_split(char const *s)
 			vars.j++;
 		}
 		vars.i++;
+        if (vars.i > ft_strlen(s) - 1)
+            break;
 	}
 	words[vars.k] = NULL;
 	return (words);

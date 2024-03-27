@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 01:52:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:57:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	here_doc(char *limiter, int fd[2])
 {
 	char	*line;
+    ft_here_doc_signal_child();
 	while (1)
 	{
 		ft_putstr_fd("> ", 1);

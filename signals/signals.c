@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:19:24 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 01:22:14 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:56:33 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	ft_change_signals(void)
 	signal(SIGINT, wait_p_handler);
 	signal(SIGQUIT, wait_p_handler);
 }
-void here_doc_handler(int signum)
-{
-    if (signum == SIGQUIT)
-        printf("yoooo\n");
-    printf("Signal => |%d|\n", signum);
-}
+
 void ft_here_doc_signals(void)
 {
     signal(SIGQUIT, SIG_IGN);
+}
+
+void ft_here_doc_signal_child(void)
+{
+    signal(SIGINT, SIG_DFL);
 }

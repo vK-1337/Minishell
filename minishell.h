@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/27 00:18:39 by vda-conc         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/26 23:51:21 by udumas           ###   ########.fr       */
->>>>>>> refs/remotes/origin/AST
+/*   Updated: 2024/03/27 01:57:36 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +366,7 @@ void				sig_handler(int signum);
 void				wait_p_handler(int signum);
 void				ft_here_doc_signals(void);
 void				here_doc_handler(int signum);
+void				ft_here_doc_signal_child(void);
 
 /******************************************************************************/
 /*                                                                            */

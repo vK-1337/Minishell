@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/27 06:00:14 by vda-conc         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/27 06:12:46 by udumas           ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +42,8 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (!env_list)
 		return (-1917);
 	lexer = ft_lexer(input, env_list);
+	if (!lexer)
+		return (-1917);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);

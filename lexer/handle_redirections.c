@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 06:16:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:49:21 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,23 +87,30 @@ int	ft_open_fd(t_token **tokens)
 {
 	t_token	*curr;
 	int		status;
+	t_token	*tmp;
 
+	tmp = *tokens;
 	curr = *tokens;
+	while (tmp && (tmp->type != COMMAND && tmp->type != PARENTHESIS))
+		tmp = tmp->next;
 	while (curr)
 	{
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
+
 			status = handle_fd(curr, tokens);
 			update_token_link(curr);
 			if (status == -1917)
-				return (ft_clean_tokens(tokens), -1917);
+				return (ft_clean_tokens(tokens, &tmp), -1917);
 			if (status != 0)
 				return (status);
-			curr = curr->next;
+			curr = update_token_link(curr);
+			tmp = curr;
 		}
 		else
 			curr = curr->next;
 	}
+	*tokens = tmp;
 	return (0);
 }
 
@@ -141,12 +148,12 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 	{
 		tmp = curr->next;
 		if (export_and_wildcard2(curr, *env) == -1)
-			return (ft_clean_tokens(tokens), -1);
+			return (ft_clean_tokens(tokens, NULL), -1);
 		fd = file_redir(curr);
 		if (fd == -1917)
-			return (ft_end_minishell(env), ft_clean_tokens(tokens), -1917);
+			return (ft_end_minishell(env), ft_clean_tokens(tokens, NULL), -1917);
 		if (fd == -1)
-			return (handle_error(fd, curr->file_redir), ft_clean_tokens(tokens),
+			return (handle_error(fd, curr->file_redir), ft_clean_tokens(tokens, NULL),
 				-1);
 		close(fd);
 		ft_tokenlstdelone(&curr);

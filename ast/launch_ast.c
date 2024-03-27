@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:43:51 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 20:54:45 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
-	ft_tokenlstclear(&lexer);
+	//ft_tokenlstclear(&lexer);
 	return (*exit_status);
 }
 
@@ -67,7 +67,7 @@ int	launch_ast_recursive(t_ast *ast, t_list **env_list, int *exit_status)
 	if (ast == NULL)
 		return (0);
 	else if (ast->token->type == PARENTHESIS)
-		parenthesis(ast, env_list, exit_status);
+		*exit_status = parenthesis(ast, env_list, exit_status);
 	else if (is(ast->token->token, "&&") == 1 && launch_ast_recursive(ast->left,
 			env_list, exit_status) == 0)
 		launch_ast_recursive(ast->right, env_list, exit_status);

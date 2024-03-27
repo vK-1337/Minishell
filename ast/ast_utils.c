@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 18:12:52 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:00:04 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	free_token(t_token **token)
 			free(file_redir);
 		free_file_redir((*token)->file_redir_in);
 		free_file_redir((*token)->file_redir_out);
+		free((*token)->token);
+		free((*token));
 		(*token) = next;
 	}
 	(*token) = NULL;

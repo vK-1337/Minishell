@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 16:54:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:30:49 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,7 +459,7 @@ int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				handle_error(int err, char *msg);
-void				parenthesis(t_ast *ast, t_list **env_list,
+int				parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);

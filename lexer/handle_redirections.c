@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 09:45:22 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:43:48 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_open_fd(t_token **tokens)
 			if (status != 0)
 				return (ft_tokenlstclear(tokens), status);
 		}
-		else
+		// else
 			curr = curr->next;
 	}
 	*tokens = tmp;

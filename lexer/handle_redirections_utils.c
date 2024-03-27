@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 10:38:52 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:57:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_token	*ft_clean_tokens(t_token **tokens, t_token **tokens2)
 		curr = *tokens;
 	while (curr)
 	{
-        printf("curr->token = %s\n", curr->token);
+		printf("curr->token = %s\n", curr->token);
 		tmp = curr->next;
 		if (curr->file_redir != NULL)
 			free(curr->file_redir);
-        free(curr->file_redir_in);
-        free(curr->file_redir_out);
+		free(curr->file_redir_in);
+		free(curr->file_redir_out);
 		free(curr->token);
 		free(curr);
 		curr = tmp;
@@ -56,10 +56,10 @@ int	handle_fd(t_token *curr, t_token **tokens)
 	return (0);
 }
 
-t_token *	update_token_link(t_token *curr)
+t_token	*update_token_link(t_token *curr)
 {
-	t_token *travel;
-	t_token *tmp;
+	t_token	*travel;
+	t_token	*tmp;
 
 	travel = curr;
 	while (travel && travel->type == OPERATOR && travel->file_redir == NULL)
@@ -90,12 +90,21 @@ int	check_only_operator(t_token **tokens)
 	}
 	return (1);
 }
+int		ft_no_command(t_token *token);
 
 void	ft_clean_operator(t_token **tokens)
 {
 	t_token	*curr;
 
 	curr = *tokens;
+	while ((*tokens)->type == OPERATOR && (*tokens)->file_redir != NULL
+		&& ft_no_command(*tokens))
+	{
+		curr = (*tokens)->next;
+		ft_tokenlstdelone(tokens);
+		*tokens = curr;
+		(*tokens)->prev = NULL;
+	}
 	if ((*tokens)->type == OPERATOR && (*tokens)->file_redir == NULL)
 	{
 		curr = (*tokens)->next;

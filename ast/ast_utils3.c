@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:12:14 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/18 19:20:50 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 22:37:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,40 @@ void	ft_add_front(t_token **command, t_token **curr)
 		ft_tokenlstadd_front(&(*command)->file_redir_out, *curr);
 		*curr = NULL;
 	}
+}
+
+int	configure_fd_in3(int fd_in, char *token, char *file)
+{
+	if (is(token, "<") == 1)
+		fd_in = open(file, O_RDWR, 0777);
+	handle_error(fd_in, file);
+	if (fd_in == -1)
+		return (-1);
+	close(fd_in);
+	return (fd_in);
+}
+
+int	ft_utils_fd(t_token *travel, t_exec **exec, t_list *env)
+{
+	while (travel->next)
+	{
+		if (configure_fd_in3((*exec)->fd[0], travel->token,
+				travel->file_redir) == -1)
+			return (-1917);
+		if (ft_strncmp(travel->token, "<<", 2) == 0)
+		{
+			if (launch_here_doc(travel->file_redir, (*exec)->saved_fd, env)
+				== -1)
+				return (-1917);
+		}
+		travel = travel->next;
+	}
+	(*exec)->fd[0] = configure_fd_in((*exec)->fd[0], travel->token,
+			travel->file_redir);
+	if (ft_strcmp(travel->token, "<<") == 0)
+		(*exec)->fd[0] = launch_here_doc(travel->file_redir, (*exec)->saved_fd,
+				env);
+	if ((*exec)->fd[0] == -1)
+		return (-1917);
+	return (0);
 }

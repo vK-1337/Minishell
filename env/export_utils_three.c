@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_three.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:44:52 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 17:45:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:51:10 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ int	ft_var_exists(t_list **env_list, char *var)
 		curr = curr->next;
 	}
 	return (0);
+}
+
+int	tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

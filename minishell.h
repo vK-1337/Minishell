@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 23:54:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:40:54 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int					ft_set_pwd(t_list **env);
 int					old_pwd_use(char *path, t_list **env);
 int					back_home(char *path, t_list **env);
 int					cdpath_find(char *path, t_list **env);
-
+void				ft_print_error(char *path);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
@@ -160,6 +160,8 @@ int					manage_built_in(char **command, t_list **env_list,
 int					exec_built_in(char **command, t_list **env_list,
 						char *brut_input, t_ast *ast);
 void				ft_close_fd(int fd[2]);
+int					setup_built_in(t_ast *command, char **command_str,
+						int *exit_status, t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */
@@ -467,8 +469,8 @@ int					right_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
-void				handle_error(int err, char *msg);
-int					parenthesis(t_ast *ast, t_list **env_list,
+int				handle_error(int err, char *msg);
+int				parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);
@@ -483,5 +485,10 @@ int					last_pipe(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				export_and_wc_helper(t_token *travel, t_list *env_list);
 void				export_and_wc_helper2(t_token *travel, t_list *env_list);
-
+int					ft_manage_fd(t_exec **exec);
+int					ft_utils_fd(t_token *travel, t_exec **exec, t_list *env);
+int					wxs(int id, int *exit_status);
+int					exit_pc(t_ast *command, t_exec **exec, int id);
+void				initialize_fd_ast(int fd[2], t_ast **ast);
+void				init_exec(t_exec **exec);
 #endif

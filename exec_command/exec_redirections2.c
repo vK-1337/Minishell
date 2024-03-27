@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:50:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:40:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,12 +181,13 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 	return (0);
 }
 
-void	handle_error(int err, char *msg)
+int	handle_error(int err, char *msg)
 {
 	if (err == -1)
 	{
 		perror(msg);
 	}
+	return (err);
 }
 
 int	ft_tablen(char **tab)

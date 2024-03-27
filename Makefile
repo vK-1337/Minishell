@@ -6,6 +6,7 @@ SRCS =			cd/cd.c \
 				ast/ast_utils.c \
 				ast/ast_utils2.c \
 				ast/ast_utils3.c \
+				ast/ast_utils4.c \
 				ast/parenthesis.c \
 				cd/cd_utils.c \
 				echo/echo.c \
@@ -17,6 +18,7 @@ SRCS =			cd/cd.c \
 				env/unset.c \
 				exec_command/built_in.c \
 				exec_command/exec_command.c \
+				exec_command/exec_command_utils.c \
 				exec_command/exec_redirections.c \
 				exec_command/exec_redirections2.c \
 				exec_command/exec_utils.c \

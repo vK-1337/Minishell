@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 00:12:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 02:41:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		return (ft_free_char_tab(env), exit_status);
 	}
 	cmd_split = ft_split(*command, ' ');
+	if (cmd_split[0] == NULL)
+		return (1);
 	if (access(*command, F_OK | X_OK) != 0)
 		instruct = check_valid_command(cmd_split, take_path(env));
 	else
@@ -72,7 +74,8 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		exit_status = 126;
 		ft_end_minishell(env_list);
 	}
-	return (ft_free_char_tab(env), free(*command), ft_free_char_tab(cmd_split), exit_status);
+	return (ft_free_char_tab(env), free(*command), ft_free_char_tab(cmd_split),
+		exit_status);
 }
 
 char	*check_valid_command(char **cmd_split, char *path)
@@ -128,7 +131,8 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	{
 		close(saved_std[0]);
 		close(saved_std[1]);
-		return (ft_close_fd(saved_std), ft_free_char_tab(env), free(command_str), exit_status);
+		return (ft_close_fd(saved_std), ft_free_char_tab(env),
+			free(command_str), exit_status);
 	}
 	id = fork();
 	handle_error(id, "fork");
@@ -139,18 +143,20 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 			ft_end_minishell(env_list);
 			close(saved_std[0]);
 			close(saved_std[1]);
-			return (ft_close_fd(saved_std), ft_free_char_tab(env), free(command_str), 1);
+			return (ft_close_fd(saved_std), ft_free_char_tab(env),
+				free(command_str), 1);
 		}
 		close(saved_std[0]);
 		close(saved_std[1]);
-		exit_status = exec_command(&command_str, redo_env(*env_list), env_list, ast);
+		exit_status = exec_command(&command_str, redo_env(*env_list), env_list,
+				ast);
 	}
 	else
 	{
 		waitpid(id, &exit_status, 0);
 		exit_status = exit_status >> 8;
 		free(command_str);
-    }
+	}
 	return (ft_close_fd(saved_std), ft_free_char_tab(env), exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 07:19:22 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:39:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_token	*ft_lexer(char *input, t_list **env)
 	status = ft_redirections(&listed_tokens, env);
 	if (status == -1 || status == -1917)
 		return (ft_tokenlstclear(&listed_tokens), NULL);
-	ft_print_token_list(&listed_tokens);
 	return (listed_tokens);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 07:49:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:45:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_redirections(t_token **listed_tokens, t_list **env)
 	if (status == -1917)
 		return (ft_tokenlstclear(listed_tokens), ft_end_minishell(env), -1917);
 	if (check_only_operator(listed_tokens) == 1)
-		return (ft_tokenlstclear(listed_tokens), -1);
+		return (-1);
 	ft_clean_operator(listed_tokens);
 	ft_putnbr_redir(listed_tokens);
 	ft_reunite_redirection(listed_tokens);
@@ -91,21 +91,15 @@ int	ft_open_fd(t_token **tokens)
 
 	tmp = *tokens;
 	curr = *tokens;
-	while (tmp && (tmp->type != COMMAND && tmp->type != PARENTHESIS))
-		tmp = tmp->next;
 	while (curr)
 	{
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
-
 			status = handle_fd(curr, tokens);
-			update_token_link(curr);
 			if (status == -1917)
-				return (ft_clean_tokens(tokens, &tmp), -1917);
+				return (ft_tokenlstclear(tokens), -1917);
 			if (status != 0)
-				return (status);
-			curr = update_token_link(curr);
-			tmp = curr;
+				return (ft_tokenlstclear(tokens), status);
 		}
 		else
 			curr = curr->next;
@@ -170,7 +164,6 @@ int	file_redir(t_token *token)
 
 	fd = 0;
 	file = token->file_redir;
-	fd = 0;
 	if (is(token->token, ">") == 1)
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (is(token->token, ">>") == 1)

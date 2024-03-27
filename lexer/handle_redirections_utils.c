@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 07:49:29 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:38:52 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ t_token	*ft_clean_tokens(t_token **tokens, t_token **tokens2)
 		curr = *tokens;
 	while (curr)
 	{
+        printf("curr->token = %s\n", curr->token);
 		tmp = curr->next;
 		if (curr->file_redir != NULL)
 			free(curr->file_redir);
+        free(curr->file_redir_in);
+        free(curr->file_redir_out);
 		free(curr->token);
 		free(curr);
 		curr = tmp;
@@ -63,18 +66,12 @@ t_token *	update_token_link(t_token *curr)
 	{
 		tmp = travel->next;
 		free(travel->token);
-		if (travel->file_redir)
-			free(travel->file_redir);
 		free(travel);
 		travel = tmp;
 	}
 	if (travel && travel == curr)
 	{
 		travel = travel->next;
-		free(curr->token);
-		if (curr->file_redir)
-			free(curr->file_redir);
-		free(curr);
 		curr = NULL;
 	}
 	return (travel);
@@ -101,7 +98,6 @@ void	ft_clean_operator(t_token **tokens)
 	curr = *tokens;
 	if ((*tokens)->type == OPERATOR && (*tokens)->file_redir == NULL)
 	{
-		printf("tokens->token = %s\n", (*tokens)->token);
 		curr = (*tokens)->next;
 		ft_tokenlstdelone(tokens);
 		*tokens = curr;

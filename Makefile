@@ -34,6 +34,7 @@ SRCS =			cd/cd.c \
 				lexer/lexer_utils.c \
 				lexer/lexer_utils_two.c \
 				lexer/lexer_utils_three.c \
+				lexer/lexer_utils_four.c \
 				lexer/quotes.c \
 				lexer/syntax.c \
 				lexer/syntax_utils.c \
@@ -44,6 +45,7 @@ SRCS =			cd/cd.c \
 				prompt/prompt.c \
 				pwd/pwd.c \
 				signals/signals.c \
+				signals/signals_utils.c \
 				tokens/token_split.c \
 				tokens/ft_tokenlstadd_front.c \
 				tokens/ft_tokenlstclear.c \

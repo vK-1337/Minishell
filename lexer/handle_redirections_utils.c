@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 15:57:00 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:53:09 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ t_token	*ft_clean_tokens(t_token **tokens, t_token **tokens2)
 	return (curr);
 }
 
-int	handle_fd(t_token *curr, t_token **tokens)
+int	handle_fd(t_token *curr, t_token **tokens, t_list *env)
 {
 	int		fd;
 	t_token	*tmp;
 
-	fd = file_redir(curr);
+	fd = file_redir(curr, env);
 	tmp = curr->next;
 	if (fd == -1)
 	{

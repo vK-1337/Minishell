@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 01:52:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:34:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	configure_fd_in3(int fd_in, char *token, char *file)
 	return (fd_in);
 }
 
-int	do_pipe_redirections(t_ast *command, t_exec **exec)
+int	do_pipe_redirections(t_ast *command, t_exec **exec, t_list *env)
 {
 	t_token	*travel;
 
@@ -106,7 +106,7 @@ int	do_pipe_redirections(t_ast *command, t_exec **exec)
 				return (-1917);
 			if (ft_strncmp(travel->token, "<<", 2) == 0)
 			{
-				if (launch_here_doc(travel->file_redir, (*exec)->saved_fd) ==
+				if (launch_here_doc(travel->file_redir, (*exec)->saved_fd, env) ==
 					-1)
 					return (-1917);
 			}
@@ -116,7 +116,7 @@ int	do_pipe_redirections(t_ast *command, t_exec **exec)
 				travel->file_redir);
 		if (ft_strcmp(travel->token, "<<") == 0)
 			(*exec)->fd[0] = launch_here_doc(travel->file_redir,
-					(*exec)->saved_fd);
+					(*exec)->saved_fd, env);
 		if ((*exec)->fd[0] == -1)
 			return (-1917);
 	}

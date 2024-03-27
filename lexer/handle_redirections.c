@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 15:43:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:54:54 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_redirections(t_token **listed_tokens, t_list **env)
 	status = ft_open_solo_fd(listed_tokens, env);
 	if (status == -1 || status == -1917)
 		return (status);
-	status = ft_open_fd(listed_tokens);
+	status = ft_open_fd(listed_tokens, *env);
 	if (status == -1917)
 		return (ft_tokenlstclear(listed_tokens), ft_end_minishell(env), -1917);
 	if (check_only_operator(listed_tokens) == 1)
@@ -83,7 +83,7 @@ int	ft_no_command(t_token *token)
 	return (1);
 }
 
-int	ft_open_fd(t_token **tokens)
+int	ft_open_fd(t_token **tokens, t_list *env)
 {
 	t_token	*curr;
 	int		status;
@@ -95,7 +95,7 @@ int	ft_open_fd(t_token **tokens)
 	{
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
-			status = handle_fd(curr, tokens);
+			status = handle_fd(curr, tokens, env);
 			if (status == -1917)
 				return (ft_tokenlstclear(tokens), -1917);
 			if (status != 0)
@@ -143,7 +143,7 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 		tmp = curr->next;
 		if (export_and_wildcard2(curr, *env) == -1)
 			return (ft_clean_tokens(tokens, NULL), -1);
-		fd = file_redir(curr);
+		fd = file_redir(curr, *env);
 		if (fd == -1917)
 			return (ft_end_minishell(env), ft_clean_tokens(tokens, NULL), -1917);
 		if (fd == -1)
@@ -157,7 +157,7 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 	return (-1);
 }
 
-int	file_redir(t_token *token)
+int	file_redir(t_token *token, t_list *env)
 {
 	char	*file;
 	int		fd;
@@ -172,7 +172,7 @@ int	file_redir(t_token *token)
 		fd = open(file, O_RDWR, 0777);
 	else if (is(token->token, "<<") == 1)
 	{
-		fd = launch_here_doc(token->file_redir, (int[2]){0, 1});
+		fd = launch_here_doc(token->file_redir, (int[2]){0, 1}, env);
 		if (fd == -1)
 			return (-1917);
 	}

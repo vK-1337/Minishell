@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 03:51:32 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 07:37:30 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,12 +271,12 @@ void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
 int					ft_redirections(t_token **listed_tokens, t_list **env);
 int					ft_open_solo_fd(t_token **tokens, t_list **env);
-t_token				*ft_clean_tokens(t_token **tokens);
+t_token				*ft_clean_tokens(t_token **tokens, t_token **tokens_2);
 int					file_redir(t_token *token);
 int					ft_open_fd(t_token **tokens);
 int					check_only_operator(t_token **tokens);
 void				ft_clean_operator(t_token **tokens);
-void				update_token_link(t_token *curr);
+t_token				*update_token_link(t_token *curr);
 int					handle_fd(t_token *curr, t_token **tokens);
 void				ft_front(t_token **command);
 void				ft_back(t_token **command);

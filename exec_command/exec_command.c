@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 04:49:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 06:14:48 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 			free(command_str), exit_status);
 	}
 	id = fork();
-	handle_error(id, "fork");
+	handle_error(id, "fork");	
 	if (id == 0)
 	{
 		if (do_redirections(command, saved_std) == -1917)

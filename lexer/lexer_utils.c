@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 13:14:03 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/26 13:44:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_print_token_list(t_token **tokens)
 		printf("\nNoeud numero |%d|\n", i++);
 		printf("Token => |%s|\n", curr->token);
 		printf("Type => |%s|\n", ft_print_type(curr->type));
-		if (curr->file_redir)
-			printf("File redir => |%s|\n", curr->file_redir);
-		if (curr->file_redir_in)
-			printf("File redir out => |%s|\n", curr->file_redir_out->token);
+		// if (curr->file_redir)
+		// 	printf("File redir => |%s|\n", curr->file_redir);
+		// if (curr->file_redir_in)
+		// 	printf("File redir out => |%s|\n", curr->file_redir_out->token);
 		curr = curr->next;
 	}
 }

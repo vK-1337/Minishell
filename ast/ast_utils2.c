@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 00:58:31 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:52:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int	do_pipe_redirections(t_ast *command, t_exec **exec)
 		if (ft_strcmp(travel->token, "<<") == 0)
 			(*exec)->fd[0] = launch_here_doc(travel->file_redir,
 					(*exec)->saved_fd);
+		if ((*exec)->fd[0] == -1)
+			return (-1917);
 	}
 	if (command->token->file_redir_out != NULL)
 	{

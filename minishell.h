@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 18:30:49 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:48:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,12 @@ void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char **command, char **env, t_list **env_list,
 						t_ast *ast);
-int					do_redirections(t_ast *command, int saved_std[2], t_list *env);
+int					do_redirections(t_ast *command, int saved_std[2],
+						t_list *env);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
-int					launch_here_doc(char *limiter, int saved_std[2], t_list *env);
+int					launch_here_doc(char *limiter, int saved_std[2],
+						t_list *env);
 void				here_doc(char *limiter, int fd[2], t_list *env_list);
 char				*check_valid_command(char **cmd_split, char *path);
 char				*take_path(char **env);
@@ -370,7 +372,7 @@ void				ft_here_doc_signal_child(void);
 
 /******************************************************************************/
 /*                                                                            */
-/*                        _out                                                    */
+/*                                                                            */
 /*                             TOKEN LST UTILS                                */
 /*                                                                            */
 /*                                                                            */
@@ -459,7 +461,7 @@ int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
 void				handle_error(int err, char *msg);
-int				parenthesis(t_ast *ast, t_list **env_list,
+int					parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);
@@ -467,7 +469,8 @@ void				send_to_build(t_ast **node, int direction);
 t_token				*get_first_strongest_operator(t_token *token_list);
 t_ast				*build_tree(t_ast **node, t_token *strongest);
 t_ast				*init_branch(t_ast *parent, t_token *token, int is_left);
-int					do_pipe_redirections(t_ast *command, t_exec **exec, t_list *env_list);
+int					do_pipe_redirections(t_ast *command, t_exec **exec,
+						t_list *env_list);
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
 int					last_pipe(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);

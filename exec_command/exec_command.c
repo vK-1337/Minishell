@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:50:05 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:50:10 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,20 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 	}
 	cmd_split = ft_split(*command, ' ');
 	if (cmd_split[0] == NULL)
-    {
-        free(cmd_split[0]);
-        free(cmd_split);
-        cmd_split = malloc(2 * sizeof (char *));
+	{
+		free(cmd_split[0]);
+		free(cmd_split);
+		cmd_split = malloc(2 * sizeof(char *));
 		cmd_split[0] = ft_strdup("''");
-        cmd_split[1] = NULL;
-    }
+		cmd_split[1] = NULL;
+	}
 	if (access(cmd_split[0], F_OK | X_OK) != 0)
 	{
-		if ((ft_strncmp(cmd_split[0], "./", 2) == 0
-			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
+		if ((ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0],
+					"/", 1) == 0))
 			exit_status = open_file_error(cmd_split[0], env_list);
 		else
 			instruct = check_valid_command(cmd_split, take_path(env));
-		
 	}
 	else
 		instruct = ft_strdup(cmd_split[0]);
@@ -140,7 +139,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 			free(command_str), exit_status);
 	}
 	id = fork();
-	handle_error(id, "fork");	
+	handle_error(id, "fork");
 	if (id == 0)
 	{
 		if (do_redirections(command, saved_std, *env_list) == -1917)

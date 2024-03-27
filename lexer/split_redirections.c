@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:34:03 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:53:46 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 void	ft_reunite_redirection(t_token **tokens)
 {
@@ -125,7 +123,7 @@ void	ft_back(t_token **command)
 		curr = (*command);
 	else if (!(*command)->prev)
 		return ;
-	else	
+	else
 		curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")

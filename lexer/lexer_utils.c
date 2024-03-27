@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:56:17 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 08:19:07 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:54:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_print_token_list(t_token **tokens)
 			printf("File redir => |%s|\n", curr->file_redir);
 		if (curr->file_redir_out)
 			printf("File redir out => |%s|\n", curr->file_redir_out->token);
-        if (curr->file_redir_in)
-            printf("File redir in => |%s|\n", curr->file_redir_in->token);
+		if (curr->file_redir_in)
+			printf("File redir in => |%s|\n", curr->file_redir_in->token);
 		curr = curr->next;
 	}
 }

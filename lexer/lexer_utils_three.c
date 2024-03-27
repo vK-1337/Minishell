@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils_three.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:12:42 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 21:35:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:53:20 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_join_file_path(t_token *curr, t_token *next)
 	curr->next = next->next;
 	if (next->next)
 		next->next->prev = curr;
-
 	free(next);
 	next = NULL;
 }

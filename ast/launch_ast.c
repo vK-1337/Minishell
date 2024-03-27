@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:09:03 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:49:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	check_here_doc(t_ast *ast)
 	check_here_doc(ast->left);
 	check_here_doc(ast->right);
 }
+
 int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {
 	t_ast	*ast;
@@ -43,7 +44,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (lexer && lexer->type == ERROR)
 	{
 		ft_tokenlstclear(&lexer);
-        lexer = NULL;
+		lexer = NULL;
 		*exit_status = -1917;
 	}
 	if (create_ast_list(&ast, lexer) == NULL)
@@ -57,7 +58,6 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
-	//ft_tokenlstclear(&lexer);
 	return (*exit_status);
 }
 

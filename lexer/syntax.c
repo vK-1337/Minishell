@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/23 15:48:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:57:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	ft_syntax_redir(char *input)
 int	ft_rredir_synt_err(char *input, int index, char redir_char)
 {
 	if (!input[index + 1] || (input[index + 1] == redir_char && !input[index
-			+ 2]))
+				+ 2]))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
 			2);
 		return (1);
 	}
 	if (!input[index + 1] || (input[index + 1] == redir_char && input[index
-			+ 2] == redir_char))
+				+ 2] == redir_char))
 	{
 		if (input[index + 3] && input[index + 3] == redir_char)
 		{
@@ -100,7 +100,7 @@ int	ft_pipes_synt_error(char *input, int index)
 		return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
 				2), 0);
 	else if (input[index] == '|' && input[index + 1] == '|' && !input[index
-		+ 2])
+			+ 2])
 		return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
 				2), 0);
 	else if (input[index] == '|')

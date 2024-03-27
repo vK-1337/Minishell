@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:48:53 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:48:37 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-int manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast);
+
+int	manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast);
 int	check_command(char *command);
 
 int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
@@ -37,7 +38,8 @@ int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 			}
 			return (exec_command(&command_str, env, env_list, command));
 		}
-		return (ft_free_char_tab(env), manage_built_in2(&command_str, env_list, command));
+		return (ft_free_char_tab(env), manage_built_in2(&command_str, env_list,
+				command));
 	}
 	else
 	{
@@ -58,7 +60,8 @@ int	right_pipe(t_ast *node, t_list **env_list, t_exec **exec)
 	travel = node;
 	while (is(travel->right->token->token, "|") == 1)
 	{
-		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list, exec);
+		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list,
+				exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 			return (exit_status);
 		travel = travel->left;
@@ -88,7 +91,8 @@ int	left_pipe(t_ast *node, t_list **env_list, t_exec **exec)
 		return (exit_status);
 	while (travel != node)
 	{
-		exit_status = pipe_chain(redo_env(*env_list), travel->right, env_list, exec);
+		exit_status = pipe_chain(redo_env(*env_list), travel->right, env_list,
+				exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 			return (exit_status);
 		travel = travel->daddy;
@@ -123,8 +127,9 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 			exec_command(&command2, env, env_list, command);
 			return (free(command2), ft_free_char_tab(env), 1);
 		}
-        command3 = build_command(command);
-		return (ft_free_char_tab(env), free(command2), manage_built_in2(&command3, env_list, command));
+		command3 = build_command(command);
+		return (ft_free_char_tab(env), free(command2),
+			manage_built_in2(&command3, env_list, command));
 	}
 	else
 	{
@@ -134,5 +139,5 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 		dup2((*exec)->fd[0], 0);
 		close((*exec)->fd[0]);
 	}
-	return (free(command2), ft_free_char_tab(env),  -1);
+	return (free(command2), ft_free_char_tab(env), -1);
 }

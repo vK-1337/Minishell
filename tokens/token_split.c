@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 21:10:39 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:13:28 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ char	**ft_token_split(char const *s)
 	{
 		if (s[vars.i] != ' ' && s[vars.i])
 		{
-			vars.l = ft_tokenlen(s, vars.i);
-			words[vars.j] = malloc((vars.l + 1) * sizeof(char));
+			words[vars.j] = malloc((ft_tokenlen(s, vars.i) + 1) * sizeof(char));
 			if (!words[vars.j])
-				return (free(words), NULL);
-			ft_add_token(words[vars.j], s, vars.i, vars.l);
-			vars.i += (vars.l - 1);
+				return (ft_free_char_tab(words), NULL);
+			ft_add_token(words[vars.j], s, vars.i, ft_tokenlen(s, vars.i));
+			vars.i += (ft_tokenlen(s, vars.i) - 1);
 			vars.j++;
 		}
-		vars.i++;
-        if (vars.i > ft_strlen(s) - 1)
-            break;
+		if (++vars.i > ft_strlen(s) - 1)
+			break ;
 	}
 	words[vars.k] = NULL;
 	return (words);

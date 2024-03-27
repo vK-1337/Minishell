@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:45:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:50:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		travel = command->token->file_redir_out;
 		while (travel->next)
 		{
-			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) ==
-				-1)
+			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) == -1)
 				return (-1);
 			travel = travel->next;
 		}
@@ -73,7 +72,8 @@ int	configure_fd_in2(int fd_in, char *token, char *file)
 	return (fd_in);
 }
 
-int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2], t_list *env_list)
+int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
+		t_list *env_list)
 {
 	t_token	*travel_in;
 	t_token	*travel_out;
@@ -91,7 +91,8 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2], t_list *env
 				fd[0] = configure_fd_in(fd[0], travel_in->token,
 						travel_in->file_redir);
 				if (ft_strncmp(travel_in->token, "<<", 2) == 0)
-					fd[0] = launch_here_doc(travel_in->file_redir, saved_fd, env_list);
+					fd[0] = launch_here_doc(travel_in->file_redir, saved_fd,
+							env_list);
 				if (fd[0] == -1)
 					return (-1917);
 			}
@@ -102,7 +103,8 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2], t_list *env
 					return (-1917);
 				if (ft_strncmp(travel_in->token, "<<", 2) == 0)
 				{
-					if (launch_here_doc(travel_in->file_redir, saved_fd, env_list) == -1)
+					if (launch_here_doc(travel_in->file_redir, saved_fd,
+							env_list) == -1)
 						return (-1917);
 				}
 			}
@@ -150,7 +152,8 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 	fd_in = 0;
 	if (command->token->file_redir_in != NULL
 		&& command->token->file_redir_out != NULL)
-		return (do_redirectionsorder(command, saved_fd, (int[2]){fd_in, fd_out}, env_list));
+		return (do_redirectionsorder(command, saved_fd, (int[2]){fd_in, fd_out},
+				env_list));
 	if (command->token->file_redir_in != NULL)
 	{
 		travel = command->token->file_redir_in;
@@ -161,7 +164,8 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 				return (-1917);
 			if (ft_strncmp(travel->token, "<<", 2) == 0)
 			{
-				if (launch_here_doc(travel->file_redir, saved_fd, env_list) == -1)
+				if (launch_here_doc(travel->file_redir, saved_fd, env_list) ==
+					-1)
 					return (-1917);
 			}
 			travel = travel->next;

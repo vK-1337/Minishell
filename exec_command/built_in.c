@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:49:40 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:49:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
 		return (ft_close_fd(saved_fd), ft_free_char_tab(command), 1871);
-    if (do_redirections(ast, saved_fd, *env_list) == -1917)
+	if (do_redirections(ast, saved_fd, *env_list) == -1917)
 	{
 		dup2(saved_fd[0], 0);
 		dup2(saved_fd[1], 1);
@@ -58,9 +58,9 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	}
 	if (exit_status == 2)
 	{
-        dup2(saved_fd[0], 0);
-	    dup2(saved_fd[1], 1);
-        return (ft_close_fd(saved_fd), ft_exit(command, env_list));
+		dup2(saved_fd[0], 0);
+		dup2(saved_fd[1], 1);
+		return (ft_close_fd(saved_fd), ft_exit(command, env_list));
 	}
 	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
@@ -90,7 +90,7 @@ int	check_command(char *command)
 int	exec_built_in(char **command, t_list **env_list, char *brut_input,
 		t_ast *ast)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 1871;
 	if (!command)

@@ -2,11 +2,11 @@ ast
 cd
 echo
 env
-errors.txt
 exec_command
 exit
 expand
 file1
+file2
 get_next_line
 lexer
 libft

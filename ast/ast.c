@@ -6,12 +6,13 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:48:53 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 23:08:48 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-int manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast);
+
+int	manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast);
 int	check_command(char *command);
 
 int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
@@ -22,32 +23,25 @@ int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 
 	command_str = build_command(command);
 	id = fork();
+	if (handle_error(id, "fork") == -1)
+		return (ft_end_minishell(env_list), ft_free_char_tab(env),
+			free(command_str), 1);
 	(*exec)->last = 1;
 	(*exec)->fd[0] = -1000;
 	(*exec)->fd[1] = -1000;
-	handle_error(id, "fork");
 	if (id == 0)
 	{
 		if (check_command(command_str) == 0)
 		{
 			if (do_pipe_redirections(command, exec, *env_list) == -1917)
-			{
-				ft_end_minishell(env_list);
-				return (ft_free_char_tab(env), free(command_str), 1);
-			}
+				return (ft_end_minishell(env_list), ft_free_char_tab(env),
+					free(command_str), 1);
 			return (exec_command(&command_str, env, env_list, command));
 		}
-		return (ft_free_char_tab(env), manage_built_in2(&command_str, env_list, command));
+		return (ft_free_char_tab(env), manage_built_in2(&command_str, env_list,
+				command));
 	}
-	else
-	{
-		waitpid(id, &exit_status, 0);
-		close(0);
-		while (wait(NULL) > 0)
-			continue ;
-		exit_status = exit_status >> 8;
-	}
-	return (ft_free_char_tab(env), free(command_str), exit_status);
+	return (ft_free_char_tab(env), free(command_str), wxs(id, &exit_status));
 }
 
 int	right_pipe(t_ast *node, t_list **env_list, t_exec **exec)
@@ -58,7 +52,8 @@ int	right_pipe(t_ast *node, t_list **env_list, t_exec **exec)
 	travel = node;
 	while (is(travel->right->token->token, "|") == 1)
 	{
-		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list, exec);
+		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list,
+				exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 			return (exit_status);
 		travel = travel->left;
@@ -88,7 +83,8 @@ int	left_pipe(t_ast *node, t_list **env_list, t_exec **exec)
 		return (exit_status);
 	while (travel != node)
 	{
-		exit_status = pipe_chain(redo_env(*env_list), travel->right, env_list, exec);
+		exit_status = pipe_chain(redo_env(*env_list), travel->right, env_list,
+				exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 			return (exit_status);
 		travel = travel->daddy;
@@ -114,25 +110,14 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 	{
 		close((*exec)->fd[0]);
 		if (do_pipe_redirections(command, exec, *env_list) == -1917)
-		{
-			ft_end_minishell(env_list);
-			return (free(command2), ft_free_char_tab(env), 1);
-		}
+			return (ft_end_minishell(env_list), free(command2),
+				ft_free_char_tab(env), 1);
 		if (check_command(command2) == 0)
-		{
-			exec_command(&command2, env, env_list, command);
-			return (free(command2), ft_free_char_tab(env), 1);
-		}
-        command3 = build_command(command);
-		return (ft_free_char_tab(env), free(command2), manage_built_in2(&command3, env_list, command));
+			return (exec_command(&command2, env, env_list, command),
+				free(command2), 1);
+		command3 = build_command(command);
+		return (ft_free_char_tab(env), free(command2),
+			manage_built_in2(&command3, env_list, command));
 	}
-	else
-	{
-		if (command->here_doc == 1)
-			waitpid(id, NULL, 0);
-		close((*exec)->fd[1]);
-		dup2((*exec)->fd[0], 0);
-		close((*exec)->fd[0]);
-	}
-	return (free(command2), ft_free_char_tab(env),  -1);
+	return (free(command2), ft_free_char_tab(env), exit_pc(command, exec, id));
 }

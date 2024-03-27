@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:50:05 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 00:20:43 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,20 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 	}
 	cmd_split = ft_split(*command, ' ');
 	if (cmd_split[0] == NULL)
-    {
-        free(cmd_split[0]);
-        free(cmd_split);
-        cmd_split = malloc(2 * sizeof (char *));
+	{
+		free(cmd_split[0]);
+		free(cmd_split);
+		cmd_split = malloc(2 * sizeof(char *));
 		cmd_split[0] = ft_strdup("''");
-        cmd_split[1] = NULL;
-    }
+		cmd_split[1] = NULL;
+	}
 	if (access(cmd_split[0], F_OK | X_OK) != 0)
 	{
-		if ((ft_strncmp(cmd_split[0], "./", 2) == 0
-			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
+		if ((ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0],
+					"/", 1) == 0))
 			exit_status = open_file_error(cmd_split[0], env_list);
 		else
 			instruct = check_valid_command(cmd_split, take_path(env));
-		
 	}
 	else
 		instruct = ft_strdup(cmd_split[0]);
@@ -122,37 +121,18 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	int		id;
 	int		exit_status;
 	char	*command_str;
-	int		saved_std[2];
 
-	saved_std[0] = dup(0);
-	saved_std[1] = dup(1);
-	if (command->token->token == NULL)
+	if (setup_built_in(command, &command_str, &exit_status, env_list) == 0)
 		return (ft_free_char_tab(env), 0);
-	command_str = build_command(command);
-	exit_status = 1871;
-	exit_status = manage_built_in(ft_split(command_str, ' '), env_list,
-			command_str, command);
 	if (exit_status != 1871)
-	{
-		close(saved_std[0]);
-		close(saved_std[1]);
-		return (ft_close_fd(saved_std), ft_free_char_tab(env),
-			free(command_str), exit_status);
-	}
+		return (ft_free_char_tab(env), free(command_str), exit_status);
 	id = fork();
-	handle_error(id, "fork");	
+	handle_error(id, "fork");
 	if (id == 0)
 	{
-		if (do_redirections(command, saved_std, *env_list) == -1917)
-		{
-			ft_end_minishell(env_list);
-			close(saved_std[0]);
-			close(saved_std[1]);
-			return (ft_close_fd(saved_std), ft_free_char_tab(env),
+		if (do_redirections(command, (int[2]){0, 1}, *env_list) == -1917)
+			return (ft_end_minishell(env_list), ft_free_char_tab(env),
 				free(command_str), 1);
-		}
-		close(saved_std[0]);
-		close(saved_std[1]);
 		exit_status = exec_command(&command_str, redo_env(*env_list), env_list,
 				ast);
 	}
@@ -162,7 +142,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 		exit_status = exit_status >> 8;
 		free(command_str);
 	}
-	return (ft_close_fd(saved_std), ft_free_char_tab(env), exit_status);
+	return (ft_free_char_tab(env), exit_status);
 }
 
 void	ft_close_fd(int fd[2])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:09:03 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:43:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	check_here_doc(t_ast *ast)
 	check_here_doc(ast->left);
 	check_here_doc(ast->right);
 }
+
 int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {
 	t_ast	*ast;
@@ -43,21 +44,16 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (lexer && lexer->type == ERROR)
 	{
 		ft_tokenlstclear(&lexer);
-        lexer = NULL;
+		lexer = NULL;
 		*exit_status = -1917;
 	}
 	if (create_ast_list(&ast, lexer) == NULL)
 		return (ft_tokenlstclear(&lexer), -1917);
 	if (!ast)
-	{
-		ft_tokenlstclear(&lexer);
-		printf("Memory error\n");
-		*exit_status = -1917;
-	}
+		return (ft_tokenlstclear(&lexer), 1917);
 	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
-	//ft_tokenlstclear(&lexer);
 	return (*exit_status);
 }
 
@@ -87,10 +83,7 @@ int	create_redirection(t_ast *node, t_list **env_list)
 	int		exit_status;
 	t_exec	*exec;
 
-	exec = malloc(sizeof(t_exec));
-	exec->saved_fd[0] = dup(0);
-	exec->saved_fd[1] = dup(1);
-	exec->last = 0;
+	init_exec(&exec);
 	if (node->left->token->type == OPERATOR && is(node->left->token->token,
 			"|") == 1)
 		exit_status = left_pipe(node, env_list, &exec);
@@ -102,18 +95,12 @@ int	create_redirection(t_ast *node, t_list **env_list)
 		exit_status = pipe_chain(redo_env(*env_list), node->left, env_list,
 				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
-		{
-			close(exec->fd[0]);
-			close(exec->fd[1]);
-			return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
-		}
+			return (ft_close_fd(exec->fd), ft_close_fd(exec->saved_fd),
+				free(exec), exit_status);
 		exit_status = last_pipe(redo_env(*env_list), node->right, env_list,
 				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
-		{
-			free(exec);
-			return (ft_close_fd(exec->saved_fd), exit_status);
-		}
+			return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
 	}
 	dup2(exec->saved_fd[0], 0);
 	dup2(exec->saved_fd[1], 1);

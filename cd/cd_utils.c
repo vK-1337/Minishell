@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/14 11:38:53 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:47:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ int	ft_replace_pwd(t_list **env)
 	free(pwd->content);
 	pwd->content = ft_strdup(current_directory);
 	return (free(current_directory), 1);
+}
+
+void	ft_print_error(char *path)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(path, 2);
+	ft_putstr_fd(": No such file or directory \n", 2);
 }

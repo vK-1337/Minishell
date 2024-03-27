@@ -6,22 +6,26 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:49:40 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 23:53:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_command(char *command);
+int		check_command(char *command);
+int		tablen(char **tab);
 
-int	tablen(char **tab)
+void	cd_management(char **command, int *exit_status, t_list **env_list)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
+	if (tablen(command) > 2)
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		*exit_status = 1;
+	}
+	else if (command[1] == NULL)
+		*exit_status = ft_cd(ft_find_var(env_list, "$HOME")->content, env_list);
+	else
+		*exit_status = ft_cd(command[1], env_list);
 }
 
 int	manage_built_in2(char **brut_input, t_list **env_list, t_ast *ast)
@@ -50,7 +54,7 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
 		return (ft_close_fd(saved_fd), ft_free_char_tab(command), 1871);
-    if (do_redirections(ast, saved_fd, *env_list) == -1917)
+	if (do_redirections(ast, saved_fd, *env_list) == -1917)
 	{
 		dup2(saved_fd[0], 0);
 		dup2(saved_fd[1], 1);
@@ -58,9 +62,9 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	}
 	if (exit_status == 2)
 	{
-        dup2(saved_fd[0], 0);
-	    dup2(saved_fd[1], 1);
-        return (ft_close_fd(saved_fd), ft_exit(command, env_list));
+		dup2(saved_fd[0], 0);
+		dup2(saved_fd[1], 1);
+		return (ft_close_fd(saved_fd), ft_exit(command, env_list));
 	}
 	exit_status = exec_built_in(command, env_list, brut_input, ast);
 	dup2(saved_fd[0], 0);
@@ -90,7 +94,7 @@ int	check_command(char *command)
 int	exec_built_in(char **command, t_list **env_list, char *brut_input,
 		t_ast *ast)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 1871;
 	if (!command)
@@ -104,18 +108,7 @@ int	exec_built_in(char **command, t_list **env_list, char *brut_input,
 	else if (ft_strcmp("echo", command[0]) == 0)
 		exit_status = ft_echo(command, brut_input, ast);
 	else if (ft_strcmp("cd", command[0]) == 0)
-	{
-		if (tablen(command) > 2)
-		{
-			ft_putstr_fd("cd: too many arguments\n", 2);
-			exit_status = 1;
-		}
-		else if (command[1] == NULL)
-			exit_status = ft_cd(ft_find_var(env_list, "$HOME")->content,
-					env_list);
-		else
-			exit_status = ft_cd(command[1], env_list);
-	}
+		cd_management(command, &exit_status, env_list);
 	else if (ft_strcmp("pwd", command[0]) == 0)
 		exit_status = ft_pwd();
 	return (ft_free_char_tab(command), exit_status);

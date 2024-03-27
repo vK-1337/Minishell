@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:45:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 22:42:59 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,12 +177,13 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 	return (0);
 }
 
-void	handle_error(int err, char *msg)
+int	handle_error(int err, char *msg)
 {
 	if (err == -1)
 	{
 		perror(msg);
 	}
+	return (err);
 }
 
 int	ft_tablen(char **tab)

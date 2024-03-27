@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:38:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 04:50:24 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:15:08 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_free_char_tab(char **str)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str || !*str)
 		return ;
 	while (str[i])
 	{

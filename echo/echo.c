@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:17:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 13:41:46 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:45:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	ft_echo(char **str, char *brut_input, t_ast *ast)
 		return (0);
 	while (str[i] && ft_is_n_option(str[i]))
 	{
-		print_start += ft_strlen(str[i]);
+		print_start += ft_strlen(str[i]) + 1;
 		i++;
 		n_option = 1;
 	}
 	if (n_option >=  1)
 		print_start++;
     if (str[i])
-	    ft_putstr_fd(brut_input + 5 + print_start, 1);
+	    ft_putstr_fd(brut_input + 4 + print_start, 1);
 	if (!n_option)
 		ft_putchar_fd('\n', 1);
 	return (0);

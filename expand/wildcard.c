@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/21 16:35:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 22:55:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	ft_join_matching_dir(char **token, int (*ft_match)(char *, char *))
-{
-	struct dirent	*de;
-	DIR				*dr;
-	int				count;
-	char			*new_token;
-	int				total_matches;
-
-	count = 0;
-	total_matches = ft_count_matches(token, ft_match);
-	if (total_matches == 0)
-		return (0);
-	dr = opendir(".");
-	if (dr == NULL)
-		return (0);
-	de = readdir(dr);
-	while (de != NULL)
-	{
-		if (ft_match(*token, de->d_name))
-		{
-			new_token = ft_join_match_helper(new_token, de->d_name, count,
-					total_matches);
-			if (new_token == NULL)
-				return (0);
-			count++;
-		}
-		de = readdir(dr);
-	}
-	*token = new_token;
-	if (!count)
-		return (closedir(dr), 1);
-	return (closedir(dr), 0);
-}
 
 int	ft_count_matches(char **token, int (*ft_match)(char *, char *))
 {

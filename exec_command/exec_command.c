@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 04:49:26 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:50:05 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 
 	exit_status = manage_built_in(ft_split(*command, ' '), env_list, *command,
 			ast);
+	instruct = NULL;
 	if (exit_status != 1871)
 	{
 		ft_end_minishell(env_list);
@@ -56,14 +57,18 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		cmd_split[0] = ft_strdup("''");
         cmd_split[1] = NULL;
     }
-	if (access(*command, F_OK | X_OK) != 0)
-		instruct = check_valid_command(cmd_split, take_path(env));
-	else
-		instruct = ft_strdup(*command);
-	if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
+	if (access(cmd_split[0], F_OK | X_OK) != 0)
+	{
+		if ((ft_strncmp(cmd_split[0], "./", 2) == 0
 			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
-		exit_status = open_file_error(cmd_split[0], env_list);
-	else if (instruct == NULL)
+			exit_status = open_file_error(cmd_split[0], env_list);
+		else
+			instruct = check_valid_command(cmd_split, take_path(env));
+		
+	}
+	else
+		instruct = ft_strdup(cmd_split[0]);
+	if (instruct == NULL && exit_status == 1871)
 	{
 		ft_putstr_fd(cmd_split[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
@@ -135,10 +140,10 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 			free(command_str), exit_status);
 	}
 	id = fork();
-	handle_error(id, "fork");
+	handle_error(id, "fork");	
 	if (id == 0)
 	{
-		if (do_redirections(command, saved_std) == -1917)
+		if (do_redirections(command, saved_std, *env_list) == -1917)
 		{
 			ft_end_minishell(env_list);
 			close(saved_std[0]);

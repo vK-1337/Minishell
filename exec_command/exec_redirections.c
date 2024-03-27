@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 01:57:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:44:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	here_doc(char *limiter, int fd[2])
+void	here_doc(char *limiter, int fd[2], t_list *env_list)
 {
 	char	*line;
     ft_here_doc_signal_child();
@@ -20,6 +20,7 @@ void	here_doc(char *limiter, int fd[2])
 	{
 		ft_putstr_fd("> ", 1);
 		line = get_next_line(0, 1);
+		line = ft_expand(line, &env_list);
         if (!line)
         {
     		ft_putstr_fd("\nminishell: warning: here-document delimited by end-of-file (wanted `", 1);
@@ -43,7 +44,7 @@ void	here_doc(char *limiter, int fd[2])
 	}
 }
 
-int	launch_here_doc(char *limiter, int saved_std[2])
+int	launch_here_doc(char *limiter, int saved_std[2], t_list *env_list)
 {
 	int	fd[2];
 	int	id;
@@ -55,7 +56,7 @@ int	launch_here_doc(char *limiter, int saved_std[2])
     ft_here_doc_signals();
 	if (id == 0)
 	{
-		here_doc(limiter, fd);
+		here_doc(limiter, fd, env_list);
 		return (-1);
 	}
 	else

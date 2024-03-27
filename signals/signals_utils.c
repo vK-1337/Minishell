@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenlstclear.c                                 :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 23:52:20 by vk                #+#    #+#             */
-/*   Updated: 2024/03/27 16:28:01 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/03/27 07:07:20 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/03/27 07:08:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_tokenlstclear(t_token **lst)
+void	ft_here_doc_signals(void)
 {
-	t_token	*current;
-	t_token	*next;
+	signal(SIGQUIT, SIG_IGN);
+}
 
-	if (!lst || !*lst)
-		return ;
-	current = *lst;
-	if (current->token == NULL)
-	{
-		free(*lst);
-		*lst = NULL;
-		return ;
-	}
-	while (current != NULL)
-	{
-		next = current->next;
-		ft_tokenlstdelone(&current);
-		current = next;
-	}
-	(*lst) = NULL;
+void	ft_here_doc_signal_child(void)
+{
+	signal(SIGINT, SIG_DFL);
 }

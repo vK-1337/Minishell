@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 03:51:32 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:54:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,11 @@ void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char **command, char **env, t_list **env_list,
 						t_ast *ast);
-int					do_redirections(t_ast *command, int saved_std[2]);
+int					do_redirections(t_ast *command, int saved_std[2], t_list *env);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
-int					launch_here_doc(char *limiter, int saved_std[2]);
-void				here_doc(char *limiter, int fd[2]);
+int					launch_here_doc(char *limiter, int saved_std[2], t_list *env);
+void				here_doc(char *limiter, int fd[2], t_list *env_list);
 char				*check_valid_command(char **cmd_split, char *path);
 char				*take_path(char **env);
 void				ft_add_front(t_token **command, t_token **curr);
@@ -271,13 +271,13 @@ void				ft_reunite_redirection(t_token **tokens);
 void				ft_initialize_redirection(t_token **tokens);
 int					ft_redirections(t_token **listed_tokens, t_list **env);
 int					ft_open_solo_fd(t_token **tokens, t_list **env);
-t_token				*ft_clean_tokens(t_token **tokens);
-int					file_redir(t_token *token);
-int					ft_open_fd(t_token **tokens);
+t_token				*ft_clean_tokens(t_token **tokens, t_token **tokens_2);
+int					file_redir(t_token *token, t_list *env);
+int					ft_open_fd(t_token **tokens, t_list *env);
 int					check_only_operator(t_token **tokens);
 void				ft_clean_operator(t_token **tokens);
-void				update_token_link(t_token *curr);
-int					handle_fd(t_token *curr, t_token **tokens);
+t_token				*update_token_link(t_token *curr);
+int					handle_fd(t_token *curr, t_token **tokens, t_list *env);
 void				ft_front(t_token **command);
 void				ft_back(t_token **command);
 t_token				*ft_handle_operator_path_file(t_token **tokens,
@@ -370,7 +370,7 @@ void				ft_here_doc_signal_child(void);
 
 /******************************************************************************/
 /*                                                                            */
-/*                                                                            */
+/*                        _out                                                    */
 /*                             TOKEN LST UTILS                                */
 /*                                                                            */
 /*                                                                            */
@@ -461,13 +461,13 @@ int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 void				handle_error(int err, char *msg);
 void				parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
-int					file_redir(t_token *token);
+int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);
 void				send_to_build(t_ast **node, int direction);
 t_token				*get_first_strongest_operator(t_token *token_list);
 t_ast				*build_tree(t_ast **node, t_token *strongest);
 t_ast				*init_branch(t_ast *parent, t_token *token, int is_left);
-int					do_pipe_redirections(t_ast *command, t_exec **exec);
+int					do_pipe_redirections(t_ast *command, t_exec **exec, t_list *env_list);
 void				export_and_wildcard(t_ast *ast, t_list *env_list);
 int					last_pipe(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);

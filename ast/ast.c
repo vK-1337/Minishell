@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:55:09 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 00:09:59 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:48:53 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	last_pipe(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 	{
 		if (check_command(command_str) == 0)
 		{
-			if (do_pipe_redirections(command, exec) == -1917)
+			if (do_pipe_redirections(command, exec, *env_list) == -1917)
 			{
 				ft_end_minishell(env_list);
 				return (ft_free_char_tab(env), free(command_str), 1);
@@ -113,7 +113,7 @@ int	pipe_chain(char **env, t_ast *command, t_list **env_list, t_exec **exec)
 	if (id == 0)
 	{
 		close((*exec)->fd[0]);
-		if (do_pipe_redirections(command, exec) == -1917)
+		if (do_pipe_redirections(command, exec, *env_list) == -1917)
 		{
 			ft_end_minishell(env_list);
 			return (free(command2), ft_free_char_tab(env), 1);

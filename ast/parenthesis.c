@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:43:24 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 14:34:58 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:49:22 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ void	parenthesis(t_ast *ast, t_list **env_list, int *exit_status)
 		*exit_status = -1917;
 		return ;
 	}
-	do_redirections(ast, NULL);
+	do_redirections(ast, NULL, *env_list);
 	*exit_status = launch_ast_recursive(new_ast, env_list, exit_status);
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
 	ft_free_ast(&new_ast);
+    free(new_token);
 }
 
 char	*remove_parenthesis(t_token **token)

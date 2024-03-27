@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 13:35:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:49:40 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
 		return (ft_close_fd(saved_fd), ft_free_char_tab(command), 1871);
-    if (do_redirections(ast, saved_fd) == -1917)
+    if (do_redirections(ast, saved_fd, *env_list) == -1917)
 	{
 		dup2(saved_fd[0], 0);
 		dup2(saved_fd[1], 1);

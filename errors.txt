@@ -1,0 +1,3 @@
+echo solo invalid read size 1
+echo avec plein d'option -nnnnnn -n -n -n invalid read dans tous les sens
+invalid read recurrent quand juste 0 

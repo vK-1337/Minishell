@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:36:29 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:53:04 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_putnbr_redir(t_token **tokens)
 		curr = curr->next;
 	}
 }
+
 void	ft_print_reverse(t_token *tokens)
 {
 	t_token	*curr;
@@ -114,8 +115,7 @@ int	ft_open_fd(t_token **tokens, t_list *env)
 			if (status != 0)
 				return (ft_tokenlstclear(tokens), status);
 		}
-		// else
-			curr = curr->next;
+		curr = curr->next;
 	}
 	*tokens = tmp;
 	return (0);
@@ -158,10 +158,11 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 			return (ft_clean_tokens(tokens, NULL), -1);
 		fd = file_redir(curr, *env);
 		if (fd == -1917)
-			return (ft_end_minishell(env), ft_clean_tokens(tokens, NULL), -1917);
+			return (ft_end_minishell(env), ft_clean_tokens(tokens, NULL),
+				-1917);
 		if (fd == -1)
-			return (handle_error(fd, curr->file_redir), ft_clean_tokens(tokens, NULL),
-				-1);
+			return (handle_error(fd, curr->file_redir), ft_clean_tokens(tokens,
+					NULL), -1);
 		close(fd);
 		ft_tokenlstdelone(&curr);
 		curr = tmp;

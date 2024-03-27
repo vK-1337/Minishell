@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:53:14 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/14 17:43:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:56:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,32 +121,9 @@ char	*ft_join_xstatus(char *final_input, t_list *x_var, char *input)
 	if (final_input)
 		ft_join_helper(&j, new_str, final_input);
 	i = 0;
-	while (itoa[i])
-	{
-		new_str[j] = itoa[i];
-		j++;
-		i++;
-	}
+	ft_join_helper2(itoa, new_str, &i, &j);
 	if (input_len > 2)
-	{
-		i = 2;
-		while (input[i])
-		{
-			new_str[j] = input[i];
-			j++;
-			i++;
-		}
-	}
+		ft_join_helper3(input, new_str, &i, &j);
 	new_str[j] = '\0';
 	return (free(itoa), new_str);
-}
-
-void	ft_join_helper(int *j, char *new_str, char *final_input)
-{
-	while (final_input[*j])
-	{
-		new_str[*j] = final_input[*j];
-		(*j)++;
-	}
-	free(final_input);
 }

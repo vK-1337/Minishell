@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 16:40:02 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:52:04 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	ft_exit(char **command, t_list **env_list)
 	else if (command[1] != NULL)
 	{
 		if (ft_isnumber(command[1]) == 0)
-		{
-			ft_putstr_fd(" numeric argument required\n", 2);
-			return (2);
-		}
+			return (ft_putstr_fd(" numeric argument required\n", 2), 2);
 		else
 		{
 			exit_status = ft_atoi(command[1]);

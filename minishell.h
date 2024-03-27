@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 00:18:57 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 00:40:54 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ char				*ft_join_xstatus(char *final_input, t_list *x_var,
 						char *input);
 char				*ft_join_other_var(char *final_input, t_list *env_var);
 void				ft_join_helper(int *j, char *new_str, char *final_input);
+void				ft_join_helper3(char *input, char *new_str, int *i, int *j);
+void				ft_join_helper2(char *itoa, char *new_str, int *i, int *j);
 void				ft_expand_helper1(t_norme *vars, char *input, t_list **env);
 void				ft_expand_helper2(t_norme *vars, char *input, t_list **env);
 void				is_expandable_helper(t_norme *vars, char *input);
@@ -321,6 +323,7 @@ int					ft_rredir_synt_err(char *input, int index, char redir_char);
 int					ft_spaces_parenthesis(char *str);
 int					ft_syntax_parenthesis(char *input);
 int					ft_not_quoted(char *input, int char_index);
+void				ft_print_err_message(char *str);
 
 /******************************************************************************/
 /*                                                                            */
@@ -374,7 +377,7 @@ void				ft_here_doc_signal_child(void);
 
 /******************************************************************************/
 /*                                                                            */
-/*                        _out                                                    */
+/*                                                                            */
 /*                             TOKEN LST UTILS                                */
 /*                                                                            */
 /*                                                                            */
@@ -434,9 +437,13 @@ int					ft_next_char_found(char pattern_char, char *name);
 int					ft_match_multiple_wc(char *pattern, char *name);
 int					ft_match_single_wc(char *pattern, char *name);
 int					ft_replace_wildcards(char **token);
+int					ft_join_matching_dir(char **token, int (*ft_match)(char *,
+							char *));
 char				*ft_join_match_helper(char *prev_new_token, char *de_name,
 						int count, int total_count);
 void				ft_trim_quotes(char **input);
+void				ft_trim_quotes_utils(char *trimed_token, char **input,
+						int *i, int *j);
 int					ft_count_matches(char **token, int (*ft_match)(char *,
 							char *));
 
@@ -462,8 +469,8 @@ int					right_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
-int					handle_error(int err, char *msg);
-int					parenthesis(t_ast *ast, t_list **env_list,
+int				handle_error(int err, char *msg);
+int				parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);

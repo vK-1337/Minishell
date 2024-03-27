@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenlstdelone.c                                :+:      :+:    :+:   */
+/*   syntax_utils_two.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 23:46:41 by vk                #+#    #+#             */
-/*   Updated: 2024/03/27 21:51:56 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/03/27 22:47:49 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/03/27 22:48:40 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_tokenlstdelone(t_token **lst)
+void	ft_print_err_message(char *str)
 {
-	if (!lst || !*lst)
-		return ;
-	if ((*lst)->token)
-		free((*lst)->token);
-	if ((*lst)->file_redir)
-		free((*lst)->file_redir);
-	if ((*lst)->file_redir_in)
-		free((*lst)->file_redir_in);
-	if ((*lst)->file_redir_out)
-		free((*lst)->file_redir_out);
-	free((*lst));
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("'\n", 2);
 }

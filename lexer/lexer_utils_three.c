@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:12:42 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 00:22:44 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 00:41:25 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 	char	*new_token;
 	t_token	*new_node;
 
-	new_token = ft_strjoin(curr->token, " ", 0);
+	new_token = ft_strjoin(curr->token, " ", 1);
 	new_token = ft_strjoin(new_token, next->token, 1);
 	if (!new_token)
 		return (NULL);
@@ -56,7 +56,7 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 	if (!new_node)
 		return (NULL);
 	new_node->next = next->next;
-	if (new_node->next)
+	if (next->next)
 		new_node->next->prev = new_node;
 	if (curr->prev)
 	{
@@ -66,6 +66,7 @@ void	*ft_join_options(t_token **tokens, t_token *curr, t_token *next)
 	else
 		*tokens = new_node;
 	free(curr);
+    free(next->token);
 	free(next);
 	return ((void *)1);
 }
@@ -78,7 +79,6 @@ void	ft_join_file_path(t_token *curr, t_token *next)
 	curr->next = next->next;
 	if (next->next)
 		next->next->prev = curr;
-
 	free(next);
 	next = NULL;
 }

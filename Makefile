@@ -27,6 +27,7 @@ SRCS =			cd/cd.c \
 				expand/expand_utils.c \
 				expand/expand_utils_two.c \
 				expand/expand_utils_three.c \
+				expand/expand_utils_four.c \
 				expand/wildcard.c \
 				expand/wildcard_utils.c \
 				expand/wildcard_utils_two.c \
@@ -38,8 +39,10 @@ SRCS =			cd/cd.c \
 				lexer/lexer_utils_three.c \
 				lexer/lexer_utils_four.c \
 				lexer/quotes.c \
+				lexer/quotes_utils.c \
 				lexer/syntax.c \
 				lexer/syntax_utils.c \
+				lexer/syntax_utils_two.c \
 				lexer/handle_redirections.c \
 				lexer/handle_redirections_utils.c \
 				lexer/split_redirections.c \

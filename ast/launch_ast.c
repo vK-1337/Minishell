@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 05:06:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 06:00:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_here_doc(t_ast *ast)
 {
-	t_token *token;
+	t_token	*token;
 
 	if (ast == NULL)
 		return ;
@@ -38,22 +38,24 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 	if (!env_list)
 		return (-1917);
 	lexer = ft_lexer(input, env_list);
-	ft_print_token_list(&lexer);
 	if (lexer && lexer->type == ERROR)
 	{
 		free(lexer);
+        lexer = NULL;
 		*exit_status = -1917;
 	}
 	if (create_ast_list(&ast, lexer) == NULL)
 		return (-1917);
 	if (!ast)
 	{
+		free(lexer);
 		printf("Memory error\n");
 		*exit_status = -1917;
 	}
 	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
+	free(lexer);
 	return (*exit_status);
 }
 

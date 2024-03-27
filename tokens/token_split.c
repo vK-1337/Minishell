@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 09:46:12 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 05:30:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:11:28 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	**ft_token_split(char const *s)
 		return (NULL);
 	vars.i = 0;
 	vars.j = 0;
-    printf("S => [%s]\n", s);
 	while (s[vars.i])
 	{
 		if (s[vars.i] != ' ' && s[vars.i])

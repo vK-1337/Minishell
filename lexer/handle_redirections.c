@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 02:25:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 06:16:18 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	ft_open_fd(t_token **tokens)
 	{
 		if (curr->type == OPERATOR && curr->file_redir && ft_no_command(curr))
 		{
-			update_token_link(curr);
 			status = handle_fd(curr, tokens);
+			update_token_link(curr);
 			if (status == -1917)
 				return (ft_clean_tokens(tokens), -1917);
 			if (status != 0)

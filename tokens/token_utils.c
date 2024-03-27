@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:54:23 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/26 23:24:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:11:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_go_next(const char *str, int index)
 
 	i = 0;
 	go_to = str[index];
-    if (index == 0 || str[index - 1] != go_to)
+	if (index == 0 || str[index - 1] != go_to)
 	{
 		i++;
 		index++;

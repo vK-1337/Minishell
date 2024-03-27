@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 21:48:01 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:47:07 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,7 @@ int					ft_rredir_synt_err(char *input, int index, char redir_char);
 int					ft_spaces_parenthesis(char *str);
 int					ft_syntax_parenthesis(char *input);
 int					ft_not_quoted(char *input, int char_index);
+void				ft_print_err_message(char *str);
 
 /******************************************************************************/
 /*                                                                            */

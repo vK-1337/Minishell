@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 21:57:35 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:49:54 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 	if (!input[index + 1] || (input[index + 1] == redir_char && !input[index
 				+ 2]))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-			2);
+		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+		ft_putstr_fd("`newline'\n", 2);
 		return (1);
 	}
 	if (!input[index + 1] || (input[index + 1] == redir_char && input[index
@@ -52,9 +52,7 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 			ft_putchar_fd(redir_char, 2);
-			ft_putchar_fd(redir_char, 2);
-			ft_putstr_fd("'\n", 2);
-			return (1);
+			return (ft_putchar_fd(redir_char, 2), ft_putstr_fd("'\n", 2), 1);
 		}
 		else
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
@@ -75,15 +73,9 @@ int	ft_syntax_pipes(char *input)
 	if (input[i] == '|')
 	{
 		if (input[i + 1] && input[i + 1] == '|')
-		{
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-					2), 0);
-		}
+			return (ft_print_err_message("||"), 0);
 		else
-		{
-			return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-					2), 0);
-		}
+			return (ft_print_err_message("|"), 0);
 	}
 	while (input[i])
 	{
@@ -97,27 +89,24 @@ int	ft_syntax_pipes(char *input)
 int	ft_pipes_synt_error(char *input, int index)
 {
 	if (input[index] == '|' && !input[index + 1])
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-				2), 0);
+	{
+		ft_print_err_message("|");
+		return (0);
+	}
 	else if (input[index] == '|' && input[index + 1] == '|' && !input[index
 			+ 2])
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-				2), 0);
+	{
+		ft_print_err_message("||");
+		return (0);
+	}
 	else if (input[index] == '|')
 	{
 		if (ft_only_spaces_behind(input, index - 1))
 		{
 			if (input[index + 1] && input[index + 1] == '|')
-			{
-				return (ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-						2), 0);
-			}
+				return (ft_print_err_message("|"), 0);
 			else
-			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-					2);
-				return (0);
-			}
+				return (ft_print_err_message("||"), 0);
 		}
 	}
 	return (1);
@@ -136,8 +125,7 @@ int	ft_syntax_parenthesis(char *input)
 		{
 			if (ft_spaces_parenthesis(&input[i + 1]) == 1)
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `('\n",
-					2);
+				ft_print_err_message("(");
 				return (0);
 			}
 			parenthesis++;
@@ -147,7 +135,6 @@ int	ft_syntax_parenthesis(char *input)
 		i++;
 	}
 	if (parenthesis < 0)
-		return (ft_putstr_fd("minishell: syntax error near unexpected token `)'\n",
-				2), 0);
+		return (ft_print_err_message(")"), 0);
 	return (1);
 }

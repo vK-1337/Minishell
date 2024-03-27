@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 08:43:24 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 20:57:22 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:07:00 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parenthesis(t_ast *ast, t_list **env_list, int *exit_status)
 	if (lexer && lexer->type == ERROR)
 	{
 		ft_tokenlstclear(&lexer);
-        lexer = NULL;
+		lexer = NULL;
 		*exit_status = -1917;
 	}
 	new_ast = NULL;
@@ -46,10 +46,8 @@ int	parenthesis(t_ast *ast, t_list **env_list, int *exit_status)
 	*exit_status = launch_ast_recursive(new_ast, env_list, exit_status);
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
-	ft_close_fd(fd);
-	ft_free_ast(&new_ast);
-    free(new_token);
-	return (*exit_status);
+	return (ft_close_fd(fd), ft_free_ast(&new_ast), free(new_token),
+		*exit_status);
 }
 
 char	*remove_parenthesis(t_token **token)

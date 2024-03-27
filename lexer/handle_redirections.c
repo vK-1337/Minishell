@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:54:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:36:29 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ void	ft_putnbr_redir(t_token **tokens)
 		if (curr->type == OPERATOR && curr->file_redir == NULL)
 			curr->order = 1;
 		curr = curr->next;
+	}
+}
+void	ft_print_reverse(t_token *tokens)
+{
+	t_token	*curr;
+
+	curr = tokens;
+	while (curr->next)
+		curr = curr->next;
+	while (curr)
+	{
+		printf("token = %s\n", curr->token);
+		curr = curr->prev;
 	}
 }
 

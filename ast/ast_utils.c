@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:03:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 21:06:12 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_ast_right(t_ast **ast);
 
 void	ft_free_ast(t_ast **ast)
 {
-	if (ast == NULL)
+	if (ast == NULL || *ast == NULL)
 		return ;
 	free_ast_right(ast);
 }

@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 11:33:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:34:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_print_reverse(t_token *tokens)
-{
-	t_token	*curr;
 
-	curr = tokens;
-	while (curr->next)
-		curr = curr->next;
-	while (curr)
-	{
-		printf("token = %s\n", curr->token);
-		curr = curr->prev;
-	}
-}
 
 void	ft_reunite_redirection(t_token **tokens)
 {
@@ -135,7 +123,9 @@ void	ft_back(t_token **command)
 	if ((*command)->prev && ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION
 		|| (*command)->prev->type == PARENTHESIS))
 		curr = (*command);
-	else
+	else if (!(*command)->prev)
+		return ;
+	else	
 		curr = (*command)->prev;
 	temp2 = curr;
 	while (temp2 && ((is(temp2->token, "<") || is(temp2->token, ">")

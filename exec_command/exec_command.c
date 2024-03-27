@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 03:03:21 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 03:50:36 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		return (ft_free_char_tab(env), exit_status);
 	}
 	cmd_split = ft_split(*command, ' ');
-	instruct = check_valid_command(cmd_split, take_path(env));
-	if (instruct == NULL && access(cmd_split[0], F_OK | X_OK) == 0)
-		instruct = cmd_split[0];
-	else if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
+	if (cmd_split[0] == NULL)
+		return (1);
+	if (access(*command, F_OK | X_OK) != 0)
+		instruct = check_valid_command(cmd_split, take_path(env));
+	else
+		instruct = ft_strdup(*command);
+	if (instruct == NULL && (ft_strncmp(cmd_split[0], "./", 2) == 0
 			|| ft_strncmp(cmd_split[0], "/", 1) == 0))
 		exit_status = open_file_error(cmd_split[0], env_list);
 	else if (instruct == NULL)

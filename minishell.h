@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 02:12:01 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 03:51:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,9 @@ void				ft_init_signals(void);
 void				ft_change_signals(void);
 void				sig_handler(int signum);
 void				wait_p_handler(int signum);
+void				ft_here_doc_signals(void);
+void				here_doc_handler(int signum);
+void				ft_here_doc_signal_child(void);
 
 /******************************************************************************/
 /*                                                                            */

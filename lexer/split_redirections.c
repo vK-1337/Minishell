@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 13:43:33 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 11:33:48 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ void	ft_back(t_token **command)
 	t_token	*curr;
 	t_token	*temp2;
 
-	if ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION
-		|| (*command)->prev->type == PARENTHESIS)
+	if ((*command)->prev && ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION
+		|| (*command)->prev->type == PARENTHESIS))
 		curr = (*command);
 	else
 		curr = (*command)->prev;

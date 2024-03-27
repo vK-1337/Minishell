@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:12:42 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 09:09:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:02:14 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_join_file_path(t_token *curr, t_token *next)
 	curr->next = next->next;
 	if (next->next)
 		next->next->prev = curr;
-    
+
 	free(next);
 	next = NULL;
 }

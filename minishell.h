@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/27 00:18:39 by vda-conc         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/26 23:51:21 by udumas           ###   ########.fr       */
+>>>>>>> refs/remotes/origin/AST
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +59,7 @@ typedef struct s_ast
 	struct s_ast	*daddy;
 	struct s_ast	*right;
 	struct s_ast	*left;
+	int				here_doc;
 }					t_ast;
 
 typedef struct s_exec

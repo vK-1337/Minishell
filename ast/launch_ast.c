@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   launch_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 23:48:55 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:13:30 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	check_here_doc(t_ast *ast)
+{
+	t_token *token;
+
+	if (ast == NULL)
+		return ;
+	token = ast->token->file_redir_in;
+	ast->here_doc = 0;
+	while (token)
+	{
+		if (is(token->token, "<<") == 1)
+			ast->here_doc = 1;
+		token = token->next;
+	}
+	check_here_doc(ast->left);
+	check_here_doc(ast->right);
+}
 int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {
 	t_ast	*ast;
@@ -34,6 +51,7 @@ int	launch_ast(char *input, t_list **env_list, int *exit_status)
 		printf("Memory error\n");
 		*exit_status = -1917;
 	}
+	check_here_doc(ast);
 	launch_ast_recursive(ast, env_list, exit_status);
 	ft_free_ast(&ast);
 	return (*exit_status);
@@ -64,7 +82,6 @@ int	create_redirection(t_ast *node, t_list **env_list)
 {
 	int		exit_status;
 	t_exec	*exec;
-    char **new_env;
 
 	exec = malloc(sizeof(t_exec));
 	exec->saved_fd[0] = dup(0);
@@ -86,8 +103,7 @@ int	create_redirection(t_ast *node, t_list **env_list)
 			close(exec->fd[1]);
 			return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
 		}
-        new_env = redo_env(*env_list);
-		exit_status = last_pipe(new_env, node->right, env_list,
+		exit_status = last_pipe(redo_env(*env_list), node->right, env_list,
 				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{

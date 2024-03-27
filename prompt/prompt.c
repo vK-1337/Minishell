@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/26 23:43:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:03:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ char	*ft_build_prompt(t_list **env)
 	char	*hostname;
 	char	*username;
 	t_list	*pwd;
+	t_list	*user_node;
 	char	*final_prompt;
 
+	username = NULL;
 	hostname = ft_extract_hostname(ft_find_var(env,
 				"$SESSION_MANAGER")->content);
 	if (!hostname)
 		return (NULL);
-	username = ft_find_var(env, "$USER")->content;
+	user_node = ft_find_var(env, "$USER");
+	if (user_node)
+		username = user_node->content;
 	pwd = ft_find_var(env, "$PWD");
 	final_prompt = ft_strjoin(username, "@", 0);
 	final_prompt = ft_strjoin(final_prompt, hostname, 1);
@@ -32,9 +36,8 @@ char	*ft_build_prompt(t_list **env)
 	final_prompt = ft_strjoin(final_prompt, trim_pwd(pwd->content), 1);
 	final_prompt = ft_strjoin(final_prompt, "$ ", 1);
 	if (!final_prompt)
-		return (NULL);
-	free(hostname);
-	return (final_prompt);
+		final_prompt = ft_strdup("minishell>");
+	return (free(hostname), final_prompt);
 }
 
 char	*ft_extract_hostname(char *session_manager)

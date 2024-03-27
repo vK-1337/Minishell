@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 02:41:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 04:49:26 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 	}
 	cmd_split = ft_split(*command, ' ');
 	if (cmd_split[0] == NULL)
-		return (1);
+    {
+        free(cmd_split[0]);
+        free(cmd_split);
+        cmd_split = malloc(2 * sizeof (char *));
+		cmd_split[0] = ft_strdup("''");
+        cmd_split[1] = NULL;
+    }
 	if (access(*command, F_OK | X_OK) != 0)
 		instruct = check_valid_command(cmd_split, take_path(env));
 	else

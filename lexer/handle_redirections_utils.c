@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/23 14:08:21 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 02:25:01 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	handle_fd(t_token *curr, t_token **tokens)
 	}
 	else if (fd == -1917)
 		return (-1917);
+	close(fd);
 	return (0);
 }
 

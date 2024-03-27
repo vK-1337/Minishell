@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 23:46:28 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 00:12:41 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		exit_status = 126;
 		ft_end_minishell(env_list);
 	}
-	return (free(*command), ft_free_char_tab(cmd_split), exit_status);
+	return (ft_free_char_tab(env), free(*command), ft_free_char_tab(cmd_split), exit_status);
 }
 
 char	*check_valid_command(char **cmd_split, char *path)

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/26 23:53:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/27 00:13:30 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	create_redirection(t_ast *node, t_list **env_list)
 {
 	int		exit_status;
 	t_exec	*exec;
-    char **new_env;
 
 	exec = malloc(sizeof(t_exec));
 	exec->saved_fd[0] = dup(0);
@@ -104,8 +103,7 @@ int	create_redirection(t_ast *node, t_list **env_list)
 			close(exec->fd[1]);
 			return (ft_close_fd(exec->saved_fd), free(exec), exit_status);
 		}
-        new_env = redo_env(*env_list);
-		exit_status = last_pipe(new_env, node->right, env_list,
+		exit_status = last_pipe(redo_env(*env_list), node->right, env_list,
 				&exec);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
 		{

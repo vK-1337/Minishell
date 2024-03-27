@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 05:55:27 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:44:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	free_token(t_token **token)
 	while ((*token) != NULL)
 	{
 		next = (*token)->next;
-		free((*token)->token);
 		if ((*token)->file_redir != NULL)
 			free(file_redir);
 		free_file_redir((*token)->file_redir_in);

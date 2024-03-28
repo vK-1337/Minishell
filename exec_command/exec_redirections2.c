@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 00:40:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:02:04 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		travel = command->token->file_redir_out;
 		while (travel->next)
 		{
-			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir) == -1)
+			if (configure_fd_out2(*fd_out, travel->token, travel->file_redir)
+				== -1)
 				return (-1);
 			travel = travel->next;
 		}
@@ -46,30 +47,8 @@ int	do_redirection2(t_ast *command, int *fd_in, int *fd_out)
 		if (*fd_out == -1)
 			return (-1);
 	}
-	if (*fd_out != 1)
-	{
-		dup2(*fd_out, 1);
-		close(*fd_out);
-	}
-	if (*fd_in != 0)
-	{
-		dup2(*fd_in, 0);
-		close(*fd_in);
-	}
+	replace_fd(fd_out, fd_in);
 	return (0);
-}
-
-int	configure_fd_in2(int fd_in, char *token, char *file)
-{
-	if (fd_in != 0)
-		close(fd_in);
-	else if (is(token, "<") == 1)
-		fd_in = open(file, O_RDWR, 0777);
-	handle_error(fd_in, file);
-	if (fd_in == -1)
-		return (-1);
-	close(fd_in);
-	return (fd_in);
 }
 
 int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
@@ -87,58 +66,18 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 		if (travel_in && (travel_in->order == count))
 		{
 			if (!travel_in->next)
-			{
-				fd[0] = configure_fd_in(fd[0], travel_in->token,
-						travel_in->file_redir);
-				if (ft_strncmp(travel_in->token, "<<", 2) == 0)
-					fd[0] = launch_here_doc(travel_in->file_redir, saved_fd,
-							env_list);
-				if (fd[0] == -1)
-					return (-1917);
-			}
+				ft_in_redir_o1(&fd[0], travel_in, saved_fd, env_list);
 			else
-			{
-				if (configure_fd_in2(fd[0], travel_in->token,
-						travel_in->file_redir) == -1)
-					return (-1917);
-				if (ft_strncmp(travel_in->token, "<<", 2) == 0)
-				{
-					if (launch_here_doc(travel_in->file_redir, saved_fd,
-							env_list) == -1)
-						return (-1917);
-				}
-			}
+				fd[0] = ft_in_redir_o2(fd[0], travel_in, saved_fd, env_list);
+			if (fd[0] == -1917 || fd[0] == -1)
+				return (-1917);
 			travel_in = travel_in->next;
 		}
-		if (travel_out && (travel_out->order == count))
-		{
-			if (!travel_out->next)
-			{
-				fd[1] = configure_fd_out(fd[1], travel_out->token,
-						travel_out->file_redir);
-				if (fd[1] == -1)
-					return (-1917);
-			}
-			else
-			{
-				if (configure_fd_out2(fd[1], travel_out->token,
-						travel_out->file_redir) == -1)
-					return (-1917);
-			}
-			travel_out = travel_out->next;
-		}
-		count++;
+		if (travel_out && (travel_out->order == count++))
+			if (ft_out_redirections_order(&fd[1], &travel_out) == -1917)
+				return (-1917);
 	}
-	if (fd[1] != 1)
-	{
-		dup2(fd[1], 1);
-		close(fd[1]);
-	}
-	if (fd[0] != 0)
-	{
-		dup2(fd[0], 0);
-		close(fd[0]);
-	}
+	replace_fd(&fd[1], &fd[0]);
 	return (0);
 }
 
@@ -152,24 +91,13 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 	fd_in = 0;
 	if (command->token->file_redir_in != NULL
 		&& command->token->file_redir_out != NULL)
-		return (do_redirectionsorder(command, saved_fd, (int[2]){fd_in, fd_out},
-				env_list));
+		return (do_redirectionsorder(command, saved_fd,
+				(int [2]){fd_in, fd_out}, env_list));
 	if (command->token->file_redir_in != NULL)
 	{
-		travel = command->token->file_redir_in;
-		while (travel->next)
-		{
-			if (configure_fd_in2(fd_in, travel->token, travel->file_redir) ==
-				-1)
-				return (-1917);
-			if (ft_strncmp(travel->token, "<<", 2) == 0)
-			{
-				if (launch_here_doc(travel->file_redir, saved_fd, env_list) ==
-					-1)
-					return (-1917);
-			}
-			travel = travel->next;
-		}
+		travel = ft_in_redirections(command, fd_in, saved_fd, &env_list);
+		if (travel == NULL)
+			return (-1917);
 		fd_in = configure_fd_in(fd_in, travel->token, travel->file_redir);
 		if (ft_strncmp(travel->token, "<<", 2) == 0)
 			fd_in = launch_here_doc(travel->file_redir, saved_fd, env_list);
@@ -179,23 +107,4 @@ int	do_redirections(t_ast *command, int saved_fd[2], t_list *env_list)
 	if (do_redirection2(command, &fd_in, &fd_out) == -1)
 		return (-1917);
 	return (0);
-}
-
-int	handle_error(int err, char *msg)
-{
-	if (err == -1)
-	{
-		perror(msg);
-	}
-	return (err);
-}
-
-int	ft_tablen(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
 }

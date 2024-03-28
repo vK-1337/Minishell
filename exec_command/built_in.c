@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 00:38:49 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 02:32:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		check_command(char *command);
 int		tablen(char **tab);
+void	dup_dup2(int *saved_fd);
 
 void	cd_management(char **command, int *exit_status, t_list **env_list)
 {
@@ -49,6 +50,8 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	int	exit_status;
 	int	saved_fd[2];
 
+	if (!command || !command[0])
+		return (free(command[0]), free(command), 1871);
 	exit_status = check_command(command[0]);
 	saved_fd[0] = dup(0);
 	saved_fd[1] = dup(1);
@@ -56,19 +59,16 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 		return (ft_close_fd(saved_fd), ft_free_char_tab(command), 1871);
 	if (do_redirections(ast, saved_fd, *env_list) == -1917)
 	{
-		dup2(saved_fd[0], 0);
-		dup2(saved_fd[1], 1);
+		dup_dup2(saved_fd);
 		return (ft_close_fd(saved_fd), 1);
 	}
 	if (exit_status == 2)
 	{
-		dup2(saved_fd[0], 0);
-		dup2(saved_fd[1], 1);
+		dup_dup2(saved_fd);
 		return (ft_close_fd(saved_fd), ft_exit(command, env_list));
 	}
 	exit_status = exec_built_in(command, env_list, brut_input, ast);
-	dup2(saved_fd[0], 0);
-	dup2(saved_fd[1], 1);
+	dup_dup2(saved_fd);
 	return (ft_close_fd(saved_fd), exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 00:39:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 02:33:55 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,8 @@ int	exec_command(char **command, char **env, t_list **env_list, t_ast *ast)
 		ft_end_minishell(env_list);
 		return (ft_free_char_tab(env), exit_status);
 	}
-	cmd_split = ft_split(*command, ' ');
-	if (cmd_split[0] == NULL)
-	{
-		free(cmd_split[0]);
-		free(cmd_split);
-		cmd_split = malloc(2 * sizeof(char *));
-		cmd_split[0] = ft_strdup("''");
-		cmd_split[1] = NULL;
-	}
-	if (access(cmd_split[0], F_OK | X_OK) != 0)
-	{
-		if ((ft_strncmp(cmd_split[0], "./", 2) == 0 || ft_strncmp(cmd_split[0],
-					"/", 1) == 0))
-			exit_status = open_file_error(cmd_split[0], env_list);
-		else
-			instruct = check_valid_command(cmd_split, take_path(env));
-	}
-	else
-		instruct = ft_strdup(cmd_split[0]);
-	if (instruct == NULL && exit_status == 1871)
-	{
-		ft_putstr_fd(cmd_split[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		exit_status = 127;
-		ft_end_minishell(env_list);
-	}
+	cmd_split = setup_command_split(command);
+	create_absolute_command(cmd_split, env_list, &exit_status, &instruct);
 	if (instruct != NULL)
 	{
 		free(*command);
@@ -130,7 +106,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		if (do_redirections(command, (int[2]){0, 1}, *env_list) == -1917)
+		if (do_redirections(command, (int [2]){0, 1}, *env_list) == -1917)
 			return (ft_end_minishell(env_list), ft_free_char_tab(env),
 				free(command_str), 1);
 		exit_status = exec_command(&command_str, redo_env(*env_list), env_list,

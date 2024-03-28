@@ -21,6 +21,8 @@ SRCS =			cd/cd.c \
 				exec_command/exec_command_utils.c \
 				exec_command/exec_redirections.c \
 				exec_command/exec_redirections2.c \
+				exec_command/exec_redirections_utils.c \
+				exec_command/exec_redirections_utils2.c \
 				exec_command/exec_utils.c \
 				exit/exit.c \
 				expand/expand.c \
@@ -45,7 +47,9 @@ SRCS =			cd/cd.c \
 				lexer/syntax_utils_two.c \
 				lexer/handle_redirections.c \
 				lexer/handle_redirections_utils.c \
+				lexer/handle_redirections_utils2.c \
 				lexer/split_redirections.c \
+				lexer/split_redirections_utils.c \
 				main/minishell.c \
 				prompt/prompt.c \
 				pwd/pwd.c \
@@ -65,6 +69,7 @@ SRCS =			cd/cd.c \
 				tokens/lst_utils.c \
 				tokens/token_utils.c \
 				tokens/token_utils_two.c \
+				main/main_prompt.c \
 
 
 CFLAGS = -Wall -Werror -Wextra -g3

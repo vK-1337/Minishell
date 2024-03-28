@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 22:50:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:11:42 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,7 @@ void	ft_front(t_token **command)
 		handle_token_addition(command, &curr);
 		if (curr && (curr->type == COMMAND || curr->type == PARENTHESIS)
 			&& curr->next)
-		{
-			temp2->next = curr;
-			curr->prev = temp2;
-			temp2 = curr;
-			curr = curr->next;
-		}
+			manage_next_prev(&temp2, &curr);
 		else if (temp2)
 		{
 			temp2->next = curr;
@@ -118,8 +113,9 @@ void	ft_back(t_token **command)
 	t_token	*curr;
 	t_token	*temp2;
 
-	if ((*command)->prev && ((*command)->prev->type == COMMAND || (*command)->prev->type == OPTION
-		|| (*command)->prev->type == PARENTHESIS))
+	if ((*command)->prev && ((*command)->prev->type == COMMAND
+			|| (*command)->prev->type == OPTION
+			|| (*command)->prev->type == PARENTHESIS))
 		curr = (*command);
 	else if (!(*command)->prev)
 		return ;
@@ -136,12 +132,5 @@ void	ft_back(t_token **command)
 		if (curr)
 			curr = curr->prev;
 	}
-	while ((*command) && ((*command)->type != COMMAND
-			&& (*command)->type != PARENTHESIS))
-		(*command) = (*command)->next;
-	if (temp2 && (*command) && temp2 != (*command))
-	{
-		temp2->next = (*command);
-		(*command)->prev = temp2;
-	}
+	manage_next_prev2(&temp2, command);
 }

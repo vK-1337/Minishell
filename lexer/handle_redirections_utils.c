@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 16:53:09 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:15:52 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	check_only_operator(t_token **tokens)
 	return (1);
 }
 int		ft_no_command(t_token *token);
+void	small_loop(t_token **curr);
 
 void	ft_clean_operator(t_token **tokens)
 {
@@ -112,8 +113,7 @@ void	ft_clean_operator(t_token **tokens)
 		*tokens = curr;
 		(*tokens)->prev = NULL;
 	}
-	while (curr->next != NULL)
-		curr = curr->next;
+	small_loop(&curr);
 	if (curr->type == OPERATOR && curr->file_redir == NULL)
 	{
 		curr = curr->prev;

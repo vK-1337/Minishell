@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 16:24:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:35:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		ft_init_signals();
-		input = readline(prompt);
-		if (input == NULL)
+		if (main_prompt(&prompt, &input, &env_list) == 1)
 			break ;
-		while (ft_unclosed_input(input))
-		{
-			input = ft_strjoin(input, readline(">"), 1);
-			if (!input)
-				return (printf("Error: malloc failed\n"),
-					ft_free_list(&env_list), free(prompt), 1);
-		}
-		if (!input[0])
-		{
-			ft_find_var(&env_list, "$?")->xit_status = 0;
-			continue ;
-		}
-		add_history(input);
-		if (check_syntax(input) == 0)
-		{
-			ft_find_var(&env_list, "$?")->xit_status = 2;
-			continue ;
-		}
 		ft_change_signals();
 		launch_ast(input, &env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)

@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 21:53:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/03/28 04:24:21 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_putnbr_redir(t_token **tokens)
-{
-	t_token	*curr;
-	int		i;
-
-	curr = *tokens;
-	while (curr)
-	{
-		curr->order = 0;
-		curr = curr->next;
-	}
-	i = 1;
-	curr = *tokens;
-	while (curr)
-	{
-		if (curr->type == OPERATOR && curr->file_redir != NULL)
-		{
-			curr->order = i;
-			i++;
-		}
-		if (curr->type == OPERATOR && curr->file_redir == NULL)
-			curr->order = 1;
-		curr = curr->next;
-	}
-}
-
-void	ft_print_reverse(t_token *tokens)
-{
-	t_token	*curr;
-
-	curr = tokens;
-	while (curr->next)
-		curr = curr->next;
-	while (curr)
-	{
-		printf("token = %s\n", curr->token);
-		curr = curr->prev;
-	}
-}
 
 int	ft_redirections(t_token **listed_tokens, t_list **env)
 {
@@ -143,13 +103,8 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 	t_token	*tmp;
 	int		fd;
 
-	curr = *tokens;
-	while (curr)
-	{
-		if ((curr->type != OPERATOR) || !curr->file_redir)
-			return (1);
-		curr = curr->next;
-	}
+	if (special_loop(*tokens) == 1)
+		return (1);
 	curr = *tokens;
 	while (curr)
 	{
@@ -169,26 +124,4 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 	}
 	*tokens = curr;
 	return (-1);
-}
-
-int	file_redir(t_token *token, t_list *env)
-{
-	char	*file;
-	int		fd;
-
-	fd = 0;
-	file = token->file_redir;
-	if (is(token->token, ">") == 1)
-		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (is(token->token, ">>") == 1)
-		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else if (is(token->token, "<") == 1)
-		fd = open(file, O_RDWR, 0777);
-	else if (is(token->token, "<<") == 1)
-	{
-		fd = launch_here_doc(token->file_redir, (int[2]){0, 1}, env);
-		if (fd == -1)
-			return (-1917);
-	}
-	return (fd);
 }

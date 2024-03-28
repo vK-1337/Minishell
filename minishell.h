@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 00:40:54 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:33:05 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,19 @@ int					exec_built_in(char **command, t_list **env_list,
 void				ft_close_fd(int fd[2]);
 int					setup_built_in(t_ast *command, char **command_str,
 						int *exit_status, t_list **env_list);
+char				**setup_command_split(char **command);
+void				create_absolute_command(char **cmd_split, t_list **env_list,
+						int *exit_status, char **instruct);
+void				replace_fd(int *fd_out, int *fd_in);
+t_token				*ft_in_redirections(t_ast *command, int fd_in,
+						int saved_fd[2], t_list **env_list);
+int					configure_fd_in2(int fd_in, char *token, char *file);
+int					ft_out_redirections_order(int *fd, t_token **travel_out);
+int					ft_in_redir_o2(int fd, t_token *travel_in, int saved_fd[2],
+						t_list *env_list);
+int					ft_in_redir_o1(int fd[1], t_token *travel_in,
+						int saved_fd[2], t_list *env_list);
+int					configure_fd_out2(int fd_out, char *token, char *file);
 
 /******************************************************************************/
 /*                                                                            */
@@ -302,6 +315,10 @@ int					ft_only_spaces_between(char *token);
 int					ft_token_empty(char *token);
 int					ft_contain_quotes(char *token);
 int					ft_count_quotes(char *input);
+void				manage_next_prev(t_token **temp2, t_token **curr);
+void				manage_next_prev2(t_token **temp2, t_token **command);
+void				ft_putnbr_redir(t_token **tokens);
+int					special_loop(t_token *tokens);
 
 /******************************************************************************/
 /*                                                                            */
@@ -348,6 +365,7 @@ void				ft_delete_connect(t_list *env_node);
 char				*ft_extract_hostname(char *session_manager);
 char				*trim_pwd(char *pwd);
 char				*ft_build_prompt(t_list **env);
+int					main_prompt(char **prompt, char **input, t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */
@@ -469,8 +487,8 @@ int					right_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					left_pipe(t_ast *node, t_list **env_list, t_exec **exec);
 int					pipe_chain(char **env, t_ast *command, t_list **env_list,
 						t_exec **exec);
-int				handle_error(int err, char *msg);
-int				parenthesis(t_ast *ast, t_list **env_list,
+int					handle_error(int err, char *msg);
+int					parenthesis(t_ast *ast, t_list **env_list,
 						int *exit_status);
 int					file_redir(t_token *token, t_list *env);
 t_token				*get_last_strongest_operator(t_token *token_list);

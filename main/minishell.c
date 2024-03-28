@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 04:35:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:45:11 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,9 @@ int	main(int ac, char **av, char **env)
 		launch_ast(input, &env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)
 			break ;
-		free(prompt);
-		free(input);
-		prompt = ft_build_prompt(&env_list);
-		if (!prompt)
-			return (printf("Error: malloc failed\n"), ft_free_list(&env_list),
-				1);
+		if (rebuild_prompt(&prompt, &input, &env_list) == 1)
+			return (1);
 	}
-	free(prompt);
-	last_exit_status = ft_find_var(&env_list, "$?")->xit_status;
-	ft_free_list(&env_list);
-	rl_clear_history();
+	final_free(&prompt, &last_exit_status, &env_list);
 	exit(last_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 04:33:05 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:45:32 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,7 +366,10 @@ char				*ft_extract_hostname(char *session_manager);
 char				*trim_pwd(char *pwd);
 char				*ft_build_prompt(t_list **env);
 int					main_prompt(char **prompt, char **input, t_list **env_list);
-
+int					rebuild_prompt(char **prompt, char **input,
+						t_list **env_list);
+void				final_free(char **prompt, int *last_exit_status,
+						t_list **env_list);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 04:45:32 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:52:06 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +370,9 @@ int					rebuild_prompt(char **prompt, char **input,
 						t_list **env_list);
 void				final_free(char **prompt, int *last_exit_status,
 						t_list **env_list);
+int					initialize_main(char **prompt, t_list **env_list,
+						char **env);
+void				manage_main_args(int ac, char **av);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

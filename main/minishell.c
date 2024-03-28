@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/28 04:45:11 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:52:27 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,12 @@ int	main(int ac, char **av, char **env)
 	t_list	*env_list;
 	int		last_exit_status;
 
-	(void)ac;
-	(void)av;
+	manage_main_args(ac, av);
 	rl_catch_signals = 0;
 	if (!env[0])
 		return (0);
-	rl_bind_key('\t', rl_complete);
-	env_list = ft_convert_env(env);
-	if (!env_list)
-		return (printf("Error: malloc failed\n"), 1);
-	prompt = ft_build_prompt(&env_list);
-	if (!prompt)
-		return (printf("Error: malloc failed\n"), ft_free_list(&env_list), 1);
+	if (initialize_main(&prompt, &env_list, env) == 1)
+		return (1);
 	while (1)
 	{
 		ft_init_signals();

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:28:14 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 04:46:52 by udumas           ###   ########.fr       */
+/*   Updated: 2024/03/28 04:51:49 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,34 @@ void    final_free(char **prompt, int *last_exit_status, t_list **env_list)
     *last_exit_status = ft_find_var(env_list, "$?")->xit_status;
     ft_free_list(env_list);
     rl_clear_history();
+}
+
+int initialize_main(char **prompt, t_list **env_list, char **env)
+{
+    rl_bind_key('\t', rl_complete);
+	*env_list = ft_convert_env(env);
+	if (!*env_list)
+		return (printf("Error: malloc failed\n"), 1);
+	*prompt = ft_build_prompt(env_list);
+	if (!*prompt)
+		return (printf("Error: malloc failed\n"), ft_free_list(env_list), 1);
+    return (0);
+}
+
+void manage_main_args(int ac, char **av)
+{
+    if (ac > 1)
+    {
+        printf("minishell: too many arguments\n");
+        exit(1);
+    }
+    if (ac == 1)
+        return ;
+    if (ft_strcmp(av[1], "-h") == 0)
+    {
+        printf("Usage: minishell\n");
+        exit(0);
+    }
+    printf("minishell: invalid option\n");
+    exit(1);
 }

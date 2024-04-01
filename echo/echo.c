@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:17:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:50:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:05:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,14 @@ int	ft_echo(char **str, char *brut_input, t_ast *ast)
 		if (vars.j >= 1)
 			vars.k++;
 		if (str[vars.i] && vars.j >= 1)
+        {
+            printf("Je passe ici\n");
 			ft_putstr_fd(brut_input + 4 + vars.k, STDOUT_FILENO);
+        }
 		else
+        {
 			ft_putstr_fd(brut_input + 5 + vars.k, STDOUT_FILENO);
+        }
 	}
 	if (!vars.j)
 		ft_putchar_fd('\n', STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:53:37 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 17:44:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 18:13:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	configure_fd_in2(int fd_in, char *token, char *file)
 		close(fd_in);
 	else if (is(token, "<") == 1)
 		fd_in = open(file, O_RDWR, 0777);
+	
 	handle_error(fd_in, file);
 	if (fd_in == -1)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:49:31 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:29:15 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	manage_built_in(char **command, t_list **env_list, char *brut_input,
 	saved_fd[1] = dup(1);
 	if (exit_status == 0)
 		return (ft_close_fd(saved_fd), ft_free_char_tab(command), 1871);
-	if (do_redirections(ast, saved_fd, *env_list) == -1917)
+	if (do_redirections(ast, saved_fd, *env_list) == -1)
 	{
 		dup_dup2(saved_fd);
 		return (ft_free_char_tab(command), ft_close_fd(saved_fd), 1);
@@ -104,7 +104,7 @@ int	exec_built_in(char **command, t_list **env_list, char *brut_input,
 	else if (ft_strcmp("unset", command[0]) == 0)
 		exit_status = ft_unset(env_list, command[1]);
 	else if (ft_strcmp("export", command[0]) == 0)
-		exit_status = ft_export(env_list, command[1]);
+		exit_status = ft_export(env_list, command);
 	else if (ft_strcmp("echo", command[0]) == 0)
 		exit_status = ft_echo(command, brut_input, ast);
 	else if (ft_strcmp("cd", command[0]) == 0)

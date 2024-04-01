@@ -6,30 +6,38 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:05:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:39:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_export(t_list **env_list, char *new_var)
+int	ft_export(t_list **env_list, char **vars)
 {
+	t_norme	t_vars;
+
+	t_vars.j = 0;
+	t_vars.i = 1;
 	if (!env_list)
 		return (1);
-	if (!new_var)
+	if (!vars[1])
 		return (ft_display_export(env_list), 1);
-	if (ft_correct_format(new_var))
+	while (vars[t_vars.i])
 	{
-		if (ft_var_exists(env_list, new_var))
-			ft_replace_var(env_list, new_var);
-		else if (ft_contain_equal(new_var))
-			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 1));
+		if (ft_correct_format(vars[t_vars.i]))
+		{
+			if (ft_var_exists(env_list, vars[t_vars.i]))
+				ft_replace_var(env_list, vars[t_vars.i]);
+			else if (ft_contain_equal(vars[t_vars.i]))
+				ft_lstadd_back(env_list, ft_lstnew(vars[t_vars.i], 1, 1));
+			else
+				ft_lstadd_back(env_list, ft_lstnew(vars[t_vars.i], 1, 0));
+		}
 		else
-			ft_lstadd_back(env_list, ft_lstnew(new_var, 1, 0));
-		return (0);
+			t_vars.j = 1;
+		t_vars.i++;
 	}
-	else
-		return (1);
+	return (t_vars.j);
 }
 
 int	ft_contain_equal(char *new_var)

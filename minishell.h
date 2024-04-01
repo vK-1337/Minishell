@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 17:04:11 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:34:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ t_list				**ft_sort_nodes(t_list **env_list);
 t_list				**ft_copy_env_list(t_list **env_list);
 void				ft_replace_var(t_list **env_list, char *new_var);
 int					ft_var_exists(t_list **env_list, char *var);
-int					ft_export(t_list **env_list, char *new_var);
+int					ft_export(t_list **env_list, char **vars);
 int					ft_correct_format(char *new_var);
 int					ft_forbidden_char(char c);
 int					ft_contain_equal(char *new_var);

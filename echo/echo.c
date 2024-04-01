@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:17:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 17:51:58 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:50:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,37 @@
 
 int	ft_echo(char **str, char *brut_input, t_ast *ast)
 {
-	int	i;
-	int	n_option;
-	int	print_start;
+	t_norme	vars;
 
-	i = 1;
-	n_option = 0;
+	ft_init_echo_vars(&vars);
 	ast++;
-	print_start = 0;
 	if (str[1] == NULL)
-		return (ft_putchar_fd('\n', 1), 0);
-	while (str[i] && ft_is_n_option(str[i]))
+		return (ft_putchar_fd('\n', STDOUT_FILENO), 0);
+	while (str[vars.i] && ft_is_n_option(str[vars.i]))
 	{
-		print_start += ft_strlen(str[i]) + 1;
-		i++;
-		n_option = 1;
+		vars.k += ft_strlen(str[vars.i]) + 1;
+		vars.i++;
+		vars.j = 1;
 	}
-    if (str[i])
-    {
-        if (n_option >= 1)
-            print_start++;
-        if (str[i] && n_option >= 1)
-            ft_putstr_fd(brut_input + 4 + print_start, 1);
-        else
-            ft_putstr_fd(brut_input + 5 + print_start, 1);
-    }
-	if (!n_option)
-		ft_putchar_fd('\n', 1);
+	if (str[vars.i])
+	{
+		if (vars.j >= 1)
+			vars.k++;
+		if (str[vars.i] && vars.j >= 1)
+			ft_putstr_fd(brut_input + 4 + vars.k, STDOUT_FILENO);
+		else
+			ft_putstr_fd(brut_input + 5 + vars.k, STDOUT_FILENO);
+	}
+	if (!vars.j)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
+}
+
+void	ft_init_echo_vars(t_norme *vars)
+{
+	vars->i = 0;
+	vars->j = 0;
+	vars->k = 0;
 }
 
 int	ft_is_n_option(char *str)

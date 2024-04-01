@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:28:14 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/30 17:39:28 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:10:07 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,37 @@
 
 int	main_prompt(char **prompt, char **input, t_list **env_list)
 {
+	char	*tmp;
+
 	*input = readline(*prompt);
 	if (*input == NULL)
 		return (2);
 	while (ft_unclosed_input(*input))
 	{
+		tmp = *input;
 		*input = ft_strjoin(*input, readline(">"), 1);
-        if (!*input)
-        {
-            free(*input);
-            ft_putstr_fd("bash: syntax error: unexpected end of file\n", 2);
-            ft_find_var(env_list, "$?")->xit_status = 2;
-            return (1);
-        }
+		if (!*input)
+		{
+			ft_putstr_fd("bash: syntax error: unexpected end of file\n",
+				STDERR_FILENO);
+			ft_find_var(env_list, "$?")->xit_status = 2;
+			return (free(tmp), free(*input), 1);
+		}
 	}
 	if (!(*input)[0])
 		ft_find_var(env_list, "$?")->xit_status = 0;
 	add_history(*input);
 	if (check_syntax(*input) == 0)
-    {
+	{
 		ft_find_var(env_list, "$?")->xit_status = 0;
-        return (1);
-    }
+		return (1);
+	}
 	return (0);
 }
 
 int	rebuild_prompt(char **prompt, char **input, t_list **env_list)
 {
-    free(*input);
+	free(*input);
 	free(*prompt);
 	*prompt = ft_build_prompt(env_list);
 	if (!*prompt)

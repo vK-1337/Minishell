@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/29 21:02:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:05:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int	ft_correct_format(char *new_var)
 		return (0);
 	if (!(ft_isalpha(new_var[i])) && new_var[i] != '_')
 	{
-		ft_putstr_fd(" not a valid identifier\n", 2);
+		ft_putstr_fd(" not a valid identifier\n", STDERR_FILENO);
 		return (0);
 	}
 	while (new_var[i])
 	{
 		if (ft_forbidden_char(new_var[i]) && ft_before_equal(new_var, i))
 		{
-			ft_putstr_fd(" not a valid identifier\n", 2);
+			ft_putstr_fd(" not a valid identifier\n", STDERR_FILENO);
 			return (0);
 		}
 		i++;

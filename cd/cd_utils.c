@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/27 23:47:41 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 13:44:48 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ char	*ft_get_current_directory(char *current_directory)
 	if (current_directory == NULL)
 		return (perror("malloc() error"), NULL);
 	if (getcwd(current_directory, SIZE) == NULL)
+	{
 		return (perror("getcwd() error"), free(current_directory), NULL);
+	}
 	return (current_directory);
 }
 
@@ -69,7 +71,7 @@ int	ft_replace_pwd(t_list **env)
 
 void	ft_print_error(char *path)
 {
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": No such file or directory \n", 2);
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory \n", STDERR_FILENO);
 }

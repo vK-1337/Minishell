@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:01:49 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/29 21:32:13 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:06:00 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	create_absolute_command(char **cmd_split, t_list **env_list,
 		*instruct = ft_strdup(cmd_split[0]);
 	if (*instruct == NULL && *exit_status == 1871)
 	{
-		ft_putstr_fd(cmd_split[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(cmd_split[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		*exit_status = 127;
 		ft_end_minishell(env_list);
 	}
@@ -76,8 +76,8 @@ void	dup_dup2(int *saved_fd)
 
 void	ft_here_doc_error(char *limiter)
 {
-	ft_putstr_fd("\nminishell: warning: here-document delimited by ", 1);
-	ft_putstr_fd("end-of-file (wanted '", 1);
-	ft_putstr_fd(limiter, 1);
-	ft_putstr_fd("')\n", 1);
+	ft_putstr_fd("\nminishell: warning: here-document delimited by ", STDOUT_FILENO);
+	ft_putstr_fd("end-of-file (wanted '", STDOUT_FILENO);
+	ft_putstr_fd(limiter, STDOUT_FILENO);
+	ft_putstr_fd("')\n", STDOUT_FILENO);
 }

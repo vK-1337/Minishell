@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 17:39:38 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:50:34 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void				ft_print_tab(char **tokens);
 
 int					ft_echo(char **str, char *brut_input, t_ast *ast);
 int					ft_is_n_option(char *str);
+void				ft_init_echo_vars(t_norme *vars);
 
 /******************************************************************************/
 /*                                                                            */
@@ -371,7 +372,8 @@ char				*ft_extract_hostname(char *session_manager);
 char				*trim_pwd(char *pwd);
 char				*ft_build_prompt(t_list **env);
 int					main_prompt(char **prompt, char **input, t_list **env_list);
-int					rebuild_prompt(char **prompt, char **input, t_list **env_list);
+int					rebuild_prompt(char **prompt, char **input,
+						t_list **env_list);
 void				final_free(char **prompt, int *last_exit_status,
 						t_list **env_list);
 int					initialize_main(char **prompt, t_list **env_list,

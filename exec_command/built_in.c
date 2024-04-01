@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/29 15:14:14 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:49:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cd_management(char **command, int *exit_status, t_list **env_list)
 {
 	if (tablen(command) > 2)
 	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		*exit_status = 1;
 	}
 	else if (command[1] == NULL)

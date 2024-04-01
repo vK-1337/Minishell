@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 12:43:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/18 17:55:06 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 13:05:17 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_print_env(t_list *env)
 	{
 		if (env->env_print == 1)
 		{
-			ft_putstr_fd((char *)env->var_name, 1);
+			ft_putstr_fd((char *)env->var_name, STDOUT_FILENO);
 			ft_putchar_fd('=', 1);
-			ft_putstr_fd((char *)env->content, 1);
+			ft_putstr_fd((char *)env->content, STDOUT_FILENO);
 			ft_putchar_fd('\n', 1);
 		}
 		env = env->next;

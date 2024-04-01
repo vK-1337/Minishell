@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 17:02:00 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:43:59 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 	if (!input[index + 1] || (input[index + 1] == redir_char && !input[index
 			+ 2]))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-		ft_putstr_fd("`newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token ",
+			STDERR_FILENO);
+		ft_putstr_fd("`newline'\n", STDERR_FILENO);
 		return (1);
 	}
 	if (!input[index + 1] || (input[index + 1] == redir_char && input[index
@@ -55,14 +56,17 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 	{
 		if (input[index + 3] && input[index + 3] == redir_char)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-			ft_putchar_fd(redir_char, 2);
-			return (ft_putchar_fd(redir_char, 2), ft_putstr_fd("'\n", 2), 1);
+			ft_putstr_fd("minishell: syntax error near unexpected token `",
+				STDERR_FILENO);
+			ft_putchar_fd(redir_char, STDERR_FILENO);
+			return (ft_putchar_fd(redir_char, STDERR_FILENO),
+				ft_putstr_fd("'\n", STDERR_FILENO), 1);
 		}
 		else
-			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-		ft_putchar_fd(redir_char, 2);
-		ft_putstr_fd("'\n", 2);
+			ft_putstr_fd("minishell: syntax error near unexpected token `",
+				STDERR_FILENO);
+		ft_putchar_fd(redir_char, STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 		return (1);
 	}
 	return (0);

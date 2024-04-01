@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:45:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 12:53:02 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:43:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_unset(t_list **env_list, char *var_to_del)
 
 	curr = *env_list;
 	if (!var_to_del)
+		return (0);
+	if (var_to_del[0] == '?')
 		return (0);
 	while (curr)
 	{

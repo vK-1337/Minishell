@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 17:39:00 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 13:43:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av, char **env)
 	char	*prompt;
 	t_list	*env_list;
 	int		last_exit_status;
-    int     main_prompt_ret;
+	int		main_prompt_ret;
 
 	manage_main_args(ac, av);
 	rl_catch_signals = 0;
@@ -30,10 +30,10 @@ int	main(int ac, char **av, char **env)
 	{
 		ft_init_signals();
 		main_prompt_ret = main_prompt(&prompt, &input, &env_list);
-        if (main_prompt_ret == 2)
+		if (main_prompt_ret == 2)
 			break ;
-        else if (main_prompt_ret == 1)
-            continue ;
+		else if (main_prompt_ret == 1)
+			continue ;
 		ft_change_signals();
 		launch_ast(input, &env_list, &ft_find_var(&env_list, "$?")->xit_status);
 		if (ft_find_var(&env_list, "$?")->should_end == 1)

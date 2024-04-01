@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/30 13:43:13 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 13:06:21 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	open_file_error(char *file, t_list **env_list)
 	}
 	else if (chdir(file) == -1)
 	{
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		return (126);
 	}
 	else
 	{
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 		return (126);
 	}
 }

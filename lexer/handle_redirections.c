@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/29 15:09:20 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 13:14:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	export_and_wildcard2(t_token *token, t_list *env_list)
 	}
 	if (!token->file_redir)
 	{
-		ft_putstr_fd(tmp, 2);
-		ft_putstr_fd(" :no such file or directory\n", 2);
+		ft_putstr_fd(tmp, STDERR_FILENO);
+		ft_putstr_fd(" :no such file or directory\n", STDERR_FILENO);
 		return (free(tmp), -1);
 	}
 	return (free(tmp), 0);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 16:13:03 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:13:40 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_exit(char **command, t_list **env_list)
 	exit_status_str = NULL;
 	if (command[1] != NULL && command[2] == NULL)
 	{
-		if (ft_isnumber(command[1]) == 0 || ft_itoa_check(command,
-                &exit_status, &exit_status_str) == 0)
+		if (ft_isnumber(command[1]) == 0 || ft_itoa_check(command, &exit_status,
+				&exit_status_str) == 0)
 			return (ft_print_error_exit(command[1], exit_status_str),
 				ft_free_char_tab(command), ft_end_minishell(env_list), 2);
 		ft_exit_status_helper(&exit_status);
@@ -47,7 +47,7 @@ int	ft_itoa_check(char **command, int *exit_status, char **exit_status_str)
 	*exit_status_str = ft_itoa(*exit_status);
 	if (ft_strcmp(*exit_status_str, command[1]) != 0 && command[1][0] != '+')
 		return (0);
-    return (1);
+	return (1);
 }
 
 void	ft_print_error_exit(char *command, char *exit_status_str)

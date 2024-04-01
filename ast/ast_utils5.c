@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 12:56:24 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 13:09:04 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 18:22:49 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_utils_fd2(t_token *token, t_exec **exec)
 	}
 	(*exec)->fd[1] = configure_fd_out((*exec)->fd[1], token->token,
 			token->file_redir);
-	if ((*exec)->fd[1] == -1917)
+	if ((*exec)->fd[1] == -1)
 		return (-1917);
 	return (0);
 }

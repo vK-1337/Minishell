@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:32:18 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/30 13:07:48 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:31:57 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ void	ft_back(t_token **command)
 				">") || is(curr->token, "<<") || is(curr->token, ">>")))
 	{
 		ft_token_addition(command, &curr);
-		if (curr)
-			curr = curr->prev;
 	}
 	manage_next_prev2(&temp2, command);
 }

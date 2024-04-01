@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 16:46:25 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 18:28:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	char	*command_str;
 
 	if (setup_built_in(command, &command_str, &exit_status, env_list) == 0)
-		return (ft_free_char_tab(env), 0);
+		return (ft_free_char_tab(env), exit_status);
 	if (exit_status != 1871)
 		return (ft_free_char_tab(env), free(command_str), exit_status);
 	id = fork();

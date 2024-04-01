@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:06:36 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:18:15 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,28 @@ int	launch_here_doc(char *limiter, int saved_std[2], t_list *env_list)
 
 int	configure_fd_in(int fd_in, char *token, char *file)
 {
+	if (file[ft_strlen(file) - 1] == ' ')
+		file[ft_strlen(file) - 1] = '\0';
 	if (is(token, "<") == 1)
 		fd_in = open(file, O_RDWR, 0777);
 	handle_error(fd_in, file);
+	if (fd_in == -1)
+		return (-1);
 	return (fd_in);
 }
 
 int	configure_fd_out(int fd_out, char *token, char *file)
 {
+	if (file[ft_strlen(file) - 1] == ' ')
+		file[ft_strlen(file) - 1] = '\0';
 	if (is(token, ">") == 1)
-	{
 		fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	}
 	else if (is(token, ">>") == 1)
 		fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd_out == -1)
 	{
 		handle_error(fd_out, file);
-		return (-1917);
+		return (-1);
 	}
 	dup2(fd_out, 1);
 	close(fd_out);

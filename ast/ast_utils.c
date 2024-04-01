@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:41 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/30 12:50:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:49:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	is(char *token, char *comp)
 // 	{
 // 		printf("    ");
 // 		printf("file_redir_in%d: %s\n", i, temp->token);
-// 		printf("file_redir : %s\n", temp->file_redir);
+// 		printf("file_redir : %saaaaaaa\n", temp->file_redir);
 // 		temp = temp->next;
 // 		i++;
 // 	}
@@ -130,7 +130,7 @@ int	is(char *token, char *comp)
 // 	{
 // 		printf("    ");
 // 		printf("file_redir_out%d: %s\n", i, temp->token);
-// 		printf("file_redir : %s\n", temp->file_redir);
+// 		printf("file_redir : %saaaaaaa\n", temp->file_redir);
 // 		temp = temp->next;
 // 		i++;
 // 	}

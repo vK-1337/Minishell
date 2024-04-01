@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 16:48:08 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:04:11 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,16 @@ typedef struct s_exec
 	int				saved_fd[2];
 	int				last;
 }					t_exec;
+
+/******************************************************************************/
+/*                                                                            */
+/*                                                                            */
+/*                                   MAIN                                     */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
+
+int					minishell(char **prompt, char **input, t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */
@@ -195,7 +205,7 @@ void				ft_exit_status_helper(long *exit_status);
 int					ft_itoa_check(char **command, long *exit_status,
 						char **exit_status_str);
 long				ft_atol(const char *str);
-char	*ft_ltoa(long n);
+char				*ft_ltoa(long n);
 
 /******************************************************************************/
 /*                                                                            */

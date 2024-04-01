@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 07:13:22 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 18:07:25 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:21:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_token	*ft_handle_next_token(t_token **tokens, t_token *curr, t_token *next)
 {
-
 	if (curr->type == OPTION && next->type == OPTION)
 		return (ft_handle_option(tokens, curr, next));
 	else if (curr->type == OPERATOR && next->type == PATH_FILE)

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:34:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 18:15:10 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 18:51:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_token	*ft_lexer(char *input, t_list **env)
 	t_token	*listed_tokens;
 	int		status;
 
-	(void)env;
 	listed_tokens = NULL;
 	tokens = ft_token_split(input);
 	if (!tokens)

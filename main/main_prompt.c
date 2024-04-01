@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:28:14 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:10:07 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:16:26 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int	main_prompt(char **prompt, char **input, t_list **env_list)
 	}
 	if (!(*input)[0])
 		ft_find_var(env_list, "$?")->xit_status = 0;
-	add_history(*input);
 	if (check_syntax(*input) == 0)
 	{
 		ft_find_var(env_list, "$?")->xit_status = 0;
-		return (1);
+		return (add_history(*input), 1);
 	}
-	return (0);
+	return (add_history(*input), 0);
 }
 
 int	rebuild_prompt(char **prompt, char **input, t_list **env_list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:06:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:46:25 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		if (do_redirections(command, (int [2]){0, 1}, *env_list) == -1917)
+		if (do_redirections(command, (int [2]){0, 1}, *env_list) == -1)
 			return (ft_end_minishell(env_list), ft_free_char_tab(env),
 				free(command_str), 1);
 		exit_status = exec_command(&command_str, redo_env(*env_list), env_list,
@@ -123,6 +123,8 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 
 void	ft_close_fd(int fd[2])
 {
-	close(fd[0]);
-	close(fd[1]);
+	if (fd[0] != -1 && fd[0] != -1917)
+		close(fd[0]);
+	if (fd[1] != -1 && fd[1] != -1917)
+		close(fd[1]);
 }

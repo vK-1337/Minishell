@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 15:55:29 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:17:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,8 @@ int					ft_isnumber(char *str);
 void				ft_end_minishell(t_list **env_list);
 void				ft_print_error_exit(char *command, char *exit_status_str);
 void				ft_exit_status_helper(int *exit_status);
-
+int					ft_itoa_check(char **command, int *exit_status,
+						char **exit_status_str);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

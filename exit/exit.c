@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 16:13:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:37:24 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_exit(char **command, t_list **env_list)
 {
-	int		exit_status;
+	long		exit_status;
 	char	*exit_status_str;
 
 	exit_status = ft_find_var(env_list, "$?")->xit_status;
@@ -41,10 +41,10 @@ int	ft_exit(char **command, t_list **env_list)
 		ft_end_minishell(env_list), free(exit_status_str), exit_status);
 }
 
-int	ft_itoa_check(char **command, int *exit_status, char **exit_status_str)
+int	ft_itoa_check(char **command, long *exit_status, char **exit_status_str)
 {
-	*exit_status = ft_atoi(command[1]);
-	*exit_status_str = ft_itoa(*exit_status);
+	*exit_status = ft_atol(command[1]);
+	*exit_status_str = ft_ltoa(*exit_status);
 	if (ft_strcmp(*exit_status_str, command[1]) != 0 && command[1][0] != '+')
 		return (0);
 	return (1);
@@ -61,7 +61,7 @@ void	ft_print_error_exit(char *command, char *exit_status_str)
 	return ;
 }
 
-void	ft_exit_status_helper(int *exit_status)
+void	ft_exit_status_helper(long *exit_status)
 {
 	if (*exit_status > 255 || *exit_status < -255)
 		*exit_status = *exit_status % 256;

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ltoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 14:06:26 by vk                #+#    #+#             */
-/*   Updated: 2024/04/01 16:25:02 by vda-conc         ###   ########.fr       */
+/*   Created: 2024/04/01 16:25:17 by vda-conc          #+#    #+#             */
+/*   Updated: 2024/04/01 16:40:01 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_isneg(long n)
+int	ft_ltoa_isneg(long n)
 {
 	if (n < 0)
 		return (1);
 	return (0);
 }
 
-size_t	ft_nbrlen(long n)
+size_t	ft_ltoa_nbrlen(long n)
 {
 	size_t	i;
 
@@ -34,7 +34,7 @@ size_t	ft_nbrlen(long n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_ltoa(long n)
 {
 	size_t	len;
 	int		neg;
@@ -42,10 +42,10 @@ char	*ft_itoa(int n)
 	long	nbr;
 
 	nbr = n;
-	neg = ft_isneg(nbr);
+	neg = ft_ltoa_isneg(nbr);
 	if (n < 0)
 		nbr *= -1;
-	len = ft_nbrlen(nbr);
+	len = ft_ltoa_nbrlen(nbr);
 	number = malloc((len + 1 + neg) * sizeof(char));
 	if (!number)
 		return (NULL);

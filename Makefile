@@ -2,6 +2,7 @@ SRCS =			cd/cd.c \
         		ast/create_tree.c \
 				ast/build_tree.c \
 				ast/ast.c \
+				atol/atol.c \
 				ast/launch_ast.c \
 				ast/ast_utils.c \
 				ast/ast_utils2.c \
@@ -52,6 +53,7 @@ SRCS =			cd/cd.c \
 				lexer/handle_redirections_utils2.c \
 				lexer/split_redirections.c \
 				lexer/split_redirections_utils.c \
+				ltoa/ltoa.c \
 				main/minishell.c \
 				prompt/prompt.c \
 				pwd/pwd.c \

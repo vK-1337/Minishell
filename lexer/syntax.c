@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 20:44:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:43:59 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:54:27 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_syntax_redir(char *input)
 int	ft_rredir_synt_err(char *input, int index, char redir_char)
 {
 	if (!input[index + 1] || (input[index + 1] == redir_char && !input[index
-			+ 2]))
+				+ 2]))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token ",
 			STDERR_FILENO);
@@ -52,7 +52,7 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 		return (1);
 	}
 	if (!input[index + 1] || (input[index + 1] == redir_char && input[index
-			+ 2] == redir_char))
+				+ 2] == redir_char))
 	{
 		if (input[index + 3] && input[index + 3] == redir_char)
 		{
@@ -62,12 +62,10 @@ int	ft_rredir_synt_err(char *input, int index, char redir_char)
 			return (ft_putchar_fd(redir_char, STDERR_FILENO),
 				ft_putstr_fd("'\n", STDERR_FILENO), 1);
 		}
-		else
-			ft_putstr_fd("minishell: syntax error near unexpected token `",
-				STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected token `",
+			STDERR_FILENO);
 		ft_putchar_fd(redir_char, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-		return (1);
+		return (ft_putstr_fd("'\n", STDERR_FILENO), 1);
 	}
 	return (0);
 }
@@ -111,7 +109,7 @@ int	ft_pipes_synt_error(char *input, int index)
 		return (0);
 	}
 	else if (input[index] == '|' && input[index + 1] == '|' && !input[index
-		+ 2])
+			+ 2])
 	{
 		ft_print_err_message("||");
 		return (0);

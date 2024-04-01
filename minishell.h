@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:50:34 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:55:29 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int					old_pwd_use(char *path, t_list **env);
 int					back_home(char *path, t_list **env);
 int					cdpath_find(char *path, t_list **env);
 void				ft_print_error(char *path);
+int					ft_back_root(t_list **env);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

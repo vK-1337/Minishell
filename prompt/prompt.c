@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 11:45:55 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:30:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:14:35 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*trim_pwd(char *pwd)
 	char	*home;
 
 	home = getenv("HOME");
-    printf("pwd = [%s]\n", pwd);
 	if (!home)
 		return (NULL);
 	while (*pwd && *home && *pwd == *home)

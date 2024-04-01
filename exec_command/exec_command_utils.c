@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:01:49 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:06:00 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:56:54 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	dup_dup2(int *saved_fd)
 
 void	ft_here_doc_error(char *limiter)
 {
-	ft_putstr_fd("\nminishell: warning: here-document delimited by ", STDOUT_FILENO);
+	ft_putstr_fd("\nminishell: warning: here-document delimited by ",
+		STDOUT_FILENO);
 	ft_putstr_fd("end-of-file (wanted '", STDOUT_FILENO);
 	ft_putstr_fd(limiter, STDOUT_FILENO);
 	ft_putstr_fd("')\n", STDOUT_FILENO);

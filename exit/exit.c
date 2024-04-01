@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:57:44 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 13:07:04 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:57:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	ft_exit(char **command, t_list **env_list)
 	{
 		if (ft_istab_digits(&command[1]))
 			return (ft_free_char_tab(command), printf("exit\n"),
-				ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO), 1);
-		return (ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO),
-			ft_free_char_tab(command), ft_end_minishell(env_list), 1);
+				ft_putstr_fd("minishell: exit: too many arguments\n",
+					STDERR_FILENO), 1);
+		return (ft_putstr_fd("minishell: exit: too many arguments\n",
+				STDERR_FILENO), ft_free_char_tab(command),
+			ft_end_minishell(env_list), 1);
 	}
 	return (printf("exit\n"), ft_free_char_tab(command),
 		ft_end_minishell(env_list), free(exit_status_str), exit_status);

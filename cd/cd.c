@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:48:58 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 00:37:17 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/01 15:54:51 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_cd(char *path, t_list **env)
 	int	status;
 
 	if (ft_set_pwd(env) == 0)
-		return (0);
+		return (ft_back_root(env), 0);
 	status = old_pwd_use(path, env);
 	if (status != 1)
 		return (status);
@@ -34,6 +34,24 @@ int	ft_cd(char *path, t_list **env)
 	else
 	{
 		ft_replace_pwd(env);
+		if (ft_find_var(env, "$PWD") == NULL)
+			return (perror("PWD not created: error"), 1);
+	}
+	return (0);
+}
+
+int	ft_back_root(t_list **env)
+{
+	ft_putstr_fd("cd: error retrieving current directory.\n", STDERR_FILENO);
+	ft_putstr_fd("Returning to root \'/\'\n", STDERR_FILENO);
+	if (chdir("/") == -1)
+	{
+		ft_print_error("/");
+		return (1);
+	}
+	else
+	{
+		ft_set_pwd(env);
 		if (ft_find_var(env, "$PWD") == NULL)
 			return (perror("PWD not created: error"), 1);
 	}

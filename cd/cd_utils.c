@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:09:27 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 13:44:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:07:28 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	ft_set_pwd(t_list **env)
 		ft_lstadd_back(env, ft_lstnew("PWD", 1, 1));
 		pwd = ft_find_var(env, "$PWD");
 	}
-	free(pwd->content);
 	current_directory = NULL;
 	current_directory = ft_get_current_directory(current_directory);
 	if (current_directory == NULL)
 		return (0);
+	free(pwd->content);
 	pwd->content = ft_strdup(current_directory);
 	free(current_directory);
 	return (1);

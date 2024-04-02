@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 16:03:57 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:10:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_export(t_list **env_list, char **vars)
 	if (!env_list)
 		return (1);
 	if (!vars[1])
-		return (ft_display_export(env_list), 1);
+		return (ft_free_char_tab(vars), ft_display_export(env_list), 1);
 	while (vars[t_vars.i])
 	{
 		if (ft_correct_format(vars[t_vars.i]))

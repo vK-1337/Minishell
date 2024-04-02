@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:04:26 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/30 12:54:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:08:06 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ void	ft_replace_var(t_list **env_list, char *new_var)
 			break ;
 		i++;
 	}
+    printf("i: %d\n", i);
 	while (curr)
 	{
 		if (strncmp(curr->var_name, new_var, i) == 0
 			&& curr->var_name[i] == '\0')
 		{
 			free(curr->content);
-			curr->content = ft_strdup(new_var + i + 1);
+            if (ft_contain_equal(new_var))
+			    curr->content = ft_strdup(new_var + i + 1);
+            else
+                curr->content = ft_strdup(new_var + i);
 			return ;
 		}
 		curr = curr->next;

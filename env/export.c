@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 20:10:06 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:03:57 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,7 @@ char	**ft_export_input(char *input)
     final_vars[0] = ft_strdup(vars[0]);
 	while (vars[i])
 	{
-        printf("vars[%d] = %s\n", i, vars[i]);
-		if (ft_contain_equal(vars[i]))
-			final_vars[j] = ft_strdup(vars[i]);
+		final_vars[j] = ft_strdup(vars[i]);
 		if (vars[i + 1] && !ft_contain_equal(vars[i + 1]))
 		{
 			final_vars[j] = ft_strjoin(final_vars[j], " ", 1);
@@ -142,7 +140,6 @@ char	**ft_export_input(char *input)
     printf("i = %d\n", i);
     printf("j = %d\n", j);
 	final_vars[j] = NULL;
-    ft_print_tab(final_vars);
     ft_free_char_tab(vars);
 	return (final_vars);
 }

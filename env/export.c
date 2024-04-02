@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 16:10:12 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:01:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,79 +81,48 @@ int	ft_correct_format(char *new_var)
 	return (1);
 }
 
-int	ft_before_equal(char *new_var, int i)
-{
-	while (i)
-	{
-		if (new_var[i] == '=')
-			return (0);
-		i--;
-	}
-	return (1);
-}
-
-int	ft_forbidden_char(char c)
-{
-	int		i;
-	char	*charset;
-
-	i = 0;
-	charset = "!@#$%^&*(){}[]|;:<>,?/-";
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 char	**ft_export_input(char *input)
 {
 	char	**vars;
 	char	**final_vars;
-	int		total_vars;
-	int		i;
-    int     j;
+	t_norme v;
 
-	i = 1;
-    j = 1;
+	v.i = 0;
+	v.j = 1;
 	vars = ft_split(input, ' ');
-	total_vars = ft_count_vars(vars);
-    printf("total_vars = %d\n", total_vars);
-	final_vars = malloc((total_vars + 3) * sizeof(char *));
+	v.k = ft_count_vars(vars);
+	if (v.k == 0)
+		final_vars = malloc((ft_tablen(vars) + 1) * sizeof(char *));
+	else
+		final_vars = malloc((v.k + 3) * sizeof(char *));
 	if (!vars)
 		return (NULL);
-    final_vars[0] = ft_strdup(vars[0]);
-	while (vars[i])
+	final_vars[0] = ft_strdup(vars[0]);
+	while (vars[++v.i])
 	{
-		final_vars[j] = ft_strdup(vars[i]);
-		if (vars[i + 1] && !ft_contain_equal(vars[i + 1]))
+		final_vars[v.j] = ft_strdup(vars[v.i]);
+		if (vars[v.i + 1] && !ft_contain_equal(vars[v.i + 1]) && v.i != 1)
 		{
-			final_vars[j] = ft_strjoin(final_vars[j], " ", 1);
-			final_vars[j] = ft_strjoin(final_vars[j], vars[i + 1], 1);
-            i++;
+			final_vars[v.j] = ft_strjoin(final_vars[v.j], " ", 1);
+			final_vars[v.j] = ft_strjoin(final_vars[v.j], vars[v.i + 1], 1);
+			v.i++;
 		}
-        j++;
-		i++;
+		v.j++;
 	}
-    printf("i = %d\n", i);
-    printf("j = %d\n", j);
-	final_vars[j] = NULL;
-    ft_free_char_tab(vars);
-	return (final_vars);
+	final_vars[v.j] = NULL;
+	return (ft_free_char_tab(vars), final_vars);
 }
 
 int	ft_count_vars(char **vars)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (vars[i])
 	{
-		if (ft_contain_equal(vars[i]))
+		if (ft_contain_equal(vars[i]) || i == 0 || )
 			j++;
 		i++;
 	}

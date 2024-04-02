@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_three.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:44:52 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/27 23:51:10 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/02 16:15:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,31 @@ int	tablen(char **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+
+int	ft_before_equal(char *new_var, int i)
+{
+	while (i)
+	{
+		if (new_var[i] == '=')
+			return (0);
+		i--;
+	}
+	return (1);
+}
+
+int	ft_forbidden_char(char c)
+{
+	int		i;
+	char	*charset;
+
+	i = 0;
+	charset = "!@#$%^&*(){}[]|;:<>,?/-";
+	while (charset[i])
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

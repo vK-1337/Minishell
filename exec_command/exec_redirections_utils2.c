@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:53:37 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 18:13:34 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/02 16:14:16 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	configure_fd_in2(int fd_in, char *token, char *file)
 		close(fd_in);
 	else if (is(token, "<") == 1)
 		fd_in = open(file, O_RDWR, 0777);
-	
 	handle_error(fd_in, file);
 	if (fd_in == -1)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 19:38:52 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:35:42 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,13 @@ void				is_expandable_helper(t_norme *vars, char *input);
 int					ft_before_equal(char *new_var, int i);
 int					ft_count_vars(char **vars);
 char				**ft_export_input(char *input);
+int					ft_is_export_var(char *token);
+size_t				ft_export_cw(char const *s, char c);
+size_t				ft_export_wlen(char const *s, char c, size_t index);
+void				ft_export_e(char *element, const char *src, size_t index,
+						size_t len);
+char				**ft_export_split(char *s, char c);
+void				ft_trim_all_export(char **words);
 
 /******************************************************************************/
 /*                                                                            */

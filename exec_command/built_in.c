@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:01:28 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 19:37:15 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:06:38 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	exec_built_in(char **command, t_list **env_list, char *brut_input,
 	else if (ft_strcmp("unset", command[0]) == 0)
 		exit_status = ft_unset(env_list, command[1]);
 	else if (ft_strcmp("export", command[0]) == 0)
-		exit_status = ft_export(env_list, ft_export_input(brut_input));
+		exit_status = ft_export(env_list, ft_export_split(brut_input, ' '));
 	else if (ft_strcmp("echo", command[0]) == 0)
 		exit_status = ft_echo(command, brut_input, ast);
 	else if (ft_strcmp("cd", command[0]) == 0)

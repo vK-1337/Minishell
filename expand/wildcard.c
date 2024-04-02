@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/29 19:53:27 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:38:13 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,25 @@ int	ft_replace_wildcards(char **token)
 	int	contain_wc;
 
 	contain_wc = ft_contain_wildcards(*token);
-	if (ft_contain_quotes(*token))
+	if (ft_contain_quotes(*token) && !ft_is_export_var(*token))
 		ft_trim_quotes(token);
 	if (contain_wc == 1)
 		return (ft_join_matching_dir(token, ft_match_single_wc));
 	else if (contain_wc > 1)
 		return (ft_join_matching_dir(token, ft_match_multiple_wc));
 	return (0);
+}
+
+int	ft_is_export_var(char *token)
+{
+	if (!ft_isalnum(*token) && *token != '_')
+		return (0);
+	token++;
+	if (!ft_strchr(token, '='))
+		return (0);
+	if (ft_after_equal(token) == 0)
+		return (0);
+	return (1);
 }
 
 int	ft_contain_wildcards(char *input)
@@ -98,21 +110,4 @@ int	ft_contain_wildcards(char *input)
 		i++;
 	}
 	return (counter);
-}
-
-int	ft_compare_last_s(char *pattern, char *name)
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(name) - ft_strlen(pattern);
-	j = 0;
-	while (name[i] && pattern[j])
-	{
-		if (name[i] != pattern[j])
-			return (0);
-		i++;
-		j++;
-	}
-	return (1);
 }

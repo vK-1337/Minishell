@@ -6,35 +6,35 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:04:26 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 16:13:19 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:35:32 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_replace_var(t_list **env_list, char *new_var)
+void	ft_replace_var(t_list **env_list, char *n)
 {
 	t_list	*curr;
 	int		i;
 
-	i = 0;
+	i = -1;
 	curr = *env_list;
-	while (new_var[i])
+	while (n[++i])
 	{
-		if (new_var[i] == '=')
+		if (n[i] == '=')
 			break ;
-		i++;
 	}
 	while (curr)
 	{
-		if (strncmp(curr->var_name, new_var, i) == 0
-			&& curr->var_name[i] == '\0')
+		if (strncmp(curr->var_name, n, i) == 0 && curr->var_name[i] == '\0')
 		{
 			free(curr->content);
-			if (ft_contain_equal(new_var))
-				curr->content = ft_strdup(new_var + i + 1);
+			if (!n[i])
+				curr->content = NULL;
+			else if (ft_contain_equal(n))
+				curr->content = ft_strdup(n + i + 1);
 			else
-				curr->content = ft_strdup(new_var + i);
+				curr->content = ft_strdup(n + i);
 			return ;
 		}
 		curr = curr->next;

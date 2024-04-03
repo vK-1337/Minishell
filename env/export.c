@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:58:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 17:13:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:15:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_export(t_list **env_list, char **vars)
 	if (!env_list)
 		return (1);
 	if (!vars[1])
-		return (ft_display_export(env_list), 1);
+		return (ft_free_char_tab(vars), ft_display_export(env_list), 1);
 	while (vars[t_vars.i])
 	{
 		if (ft_correct_format(vars[t_vars.i]))
@@ -81,77 +81,16 @@ int	ft_correct_format(char *new_var)
 	return (1);
 }
 
-int	ft_before_equal(char *new_var, int i)
-{
-	while (i)
-	{
-		if (new_var[i] == '=')
-			return (0);
-		i--;
-	}
-	return (1);
-}
-
-int	ft_forbidden_char(char c)
-{
-	int		i;
-	char	*charset;
-
-	i = 0;
-	charset = "!@#$%^&*(){}[]|;:<>,?/-";
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	**ft_export_input(char *input)
-{
-	char	**vars;
-	char	**final_vars;
-	int		total_vars;
-	int		i;
-	int		j;
-
-	i = 1;
-	j = 1;
-	vars = ft_split(input, ' ');
-	total_vars = ft_count_vars(vars);
-	final_vars = malloc((total_vars + 3) * sizeof(char *));
-	if (!vars)
-		return (NULL);
-	final_vars[0] = ft_strdup(vars[0]);
-	while (vars[i])
-	{
-		if (ft_contain_equal(vars[i]))
-			final_vars[j] = ft_strdup(vars[i]);
-		if (vars[i + 1] && !ft_contain_equal(vars[i + 1]))
-		{
-			final_vars[j] = ft_strjoin(final_vars[j], " ", 1);
-			final_vars[j] = ft_strjoin(final_vars[j], vars[i + 1], 1);
-			i++;
-		}
-		j++;
-		i++;
-	}
-	final_vars[j] = NULL;
-	ft_free_char_tab(vars);
-	return (final_vars);
-}
-
 int	ft_count_vars(char **vars)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (vars[i])
 	{
-		if (ft_contain_equal(vars[i]))
+		if (ft_contain_equal(vars[i]) || i == 0)
 			j++;
 		i++;
 	}

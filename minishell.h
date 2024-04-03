@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 17:04:23 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:14:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,13 @@ void				is_expandable_helper(t_norme *vars, char *input);
 int					ft_before_equal(char *new_var, int i);
 int					ft_count_vars(char **vars);
 char				**ft_export_input(char *input);
+int					ft_is_export_var(char *token);
+size_t				ft_export_cw(char const *s, char c);
+size_t				ft_export_wlen(char const *s, char c, size_t index);
+void				ft_export_e(char *element, const char *src, size_t index,
+						size_t len);
+char				**ft_export_split(char *s, char c);
+void				ft_trim_all_export(char **words);
 
 /******************************************************************************/
 /*                                                                            */
@@ -467,7 +474,8 @@ void				ft_helper4(int *i, int *count);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_unset(t_list **env_list, char *var_to_del);
+int					ft_unset(t_list **env_list, char **var_to_del);
+void				ft_unset_helper(t_list *curr, t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */

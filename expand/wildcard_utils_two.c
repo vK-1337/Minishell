@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:03:25 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/29 14:50:48 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:38:22 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,21 @@ void	ft_init_join_matching_dir(t_norme *vars, char **token, DIR **dr,
 	vars->j = ft_count_matches(token, ft_match);
 	*dr = opendir(".");
 	return ;
+}
+
+int	ft_compare_last_s(char *pattern, char *name)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(name) - ft_strlen(pattern);
+	j = 0;
+	while (name[i] && pattern[j])
+	{
+		if (name[i] != pattern[j])
+			return (0);
+		i++;
+		j++;
+	}
+	return (1);
 }

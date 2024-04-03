@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 09:17:27 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 19:02:01 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:47:49 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_echo(char **str, char *brut_input, t_ast *ast)
 
 void	ft_init_echo_vars(t_norme *vars)
 {
-	vars->i = 0;
+	vars->i = 1;
 	vars->j = 0;
 	vars->k = 0;
 }

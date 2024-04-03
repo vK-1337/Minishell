@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:42:39 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:11:03 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:26:34 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_in_redirections(t_ast *command, t_exec **exec, t_list **env_list)
 	{
 		(*exec)->fd[0] = launch_here_doc(travel->file_redir, (*exec)->saved_fd,
 				*env_list);
-				return (-1);
+		return (-1);
 	}
 	return ((*exec)->fd[0]);
 }

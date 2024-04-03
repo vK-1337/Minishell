@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:09:12 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:26:19 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 	t_token	*travel_out;
 	int		count;
 
-	count = 1;
-	travel_in = command->token->file_redir_in;
-	travel_out = command->token->file_redir_out;
+	initialize_redir_order(command, &travel_in, &travel_out, &count);
 	while (travel_in || travel_out)
 	{
 		if (travel_in && (travel_in->order == count))
@@ -78,9 +76,9 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 			if (ft_out_redirections_order(&fd[1], &travel_out) == -1917)
 				return (-1);
 	}
-	replace_fd(&fd[0]);
-	return (0);
+	return (replace_fd(&fd[0]), 0);
 }
+
 void	close_exec(t_exec **exec)
 {
 	if ((*exec)->fd[0] != -1 && (*exec)->fd[0] != -1917)
@@ -91,6 +89,7 @@ void	close_exec(t_exec **exec)
 	close((*exec)->saved_fd[1]);
 	free(*exec);
 }
+
 int	do_redirections(t_ast *command, t_list *env_list)
 {
 	t_exec	*exec;
@@ -110,7 +109,6 @@ int	do_redirections(t_ast *command, t_list *env_list)
 	{
 		if (ft_in_redirections(command, &exec, &env_list) == -1)
 			return (close_exec(&exec), -1);
-		
 	}
 	if (do_redirection2(command, &exec->fd[0], &exec->fd[1]) == -1)
 		return (close_exec(&exec), -1);

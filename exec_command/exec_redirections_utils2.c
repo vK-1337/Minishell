@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:53:37 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:15:43 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:24:56 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,12 @@ int	ft_compare_limiter(char *line, char *limiter)
 	}
 	line[i] = '\n';
 	return (1);
+}
+
+void initialize_redir_order(t_ast *command, t_token **travel_in,
+		t_token **travel_out, int *count)
+{
+	*count = 1;
+	*travel_in = command->token->file_redir_in;
+	*travel_out = command->token->file_redir_out;
 }

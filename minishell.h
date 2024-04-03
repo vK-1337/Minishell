@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 17:29:12 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:30:41 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ int					do_redirectionsorder(t_ast *command, int saved_fd[2],
 int					do_redirection2(t_ast *command, int *fd_in, int *fd_out);
 void				cd_management(char **command, int *exit_status,
 						t_list **env_list);
+void				initialize_redir_order(t_ast *command, t_token **travel_in,
+						t_token **travel_out, int *count);
 
 /******************************************************************************/
 /*                                                                            */

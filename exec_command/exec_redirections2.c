@@ -6,7 +6,11 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/03 17:22:43 by vda-conc         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/03 17:26:19 by udumas           ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +61,7 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 	t_token	*travel_out;
 	int		count;
 
-	count = 1;
-	travel_in = command->token->file_redir_in;
-	travel_out = command->token->file_redir_out;
+	initialize_redir_order(command, &travel_in, &travel_out, &count);
 	while (travel_in || travel_out)
 	{
 		if (travel_in && (travel_in->order == count))
@@ -78,8 +80,7 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 			if (ft_out_redirections_order(&fd[1], &travel_out) == -1917)
 				return (-1);
 	}
-	replace_fd(&fd[0]);
-	return (0);
+	return (replace_fd(&fd[0]), 0);
 }
 
 void	close_exec(t_exec **exec)
@@ -92,6 +93,7 @@ void	close_exec(t_exec **exec)
 	close((*exec)->saved_fd[1]);
 	free(*exec);
 }
+
 int	do_redirections(t_ast *command, t_list *env_list)
 {
 	t_exec	*exec;

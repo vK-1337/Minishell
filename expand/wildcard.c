@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:45:54 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 16:52:56 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:14:31 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_count_matches(char **token, int (*ft_match)(char *, char *))
 			count++;
 		de = readdir(dr);
 	}
-    free(de);
+	free(de);
 	closedir(dr);
 	return (count);
 }

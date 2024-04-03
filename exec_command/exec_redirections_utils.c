@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:42:39 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:31:40 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:50:51 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	ft_in_redirections(t_ast *command, t_exec **exec, t_list **env_list)
 	{
 		(*exec)->fd[0] = launch_here_doc(travel->file_redir, (*exec)->saved_fd,
 				*env_list);
-		return (-1);
 	}
 	return ((*exec)->fd[0]);
 }

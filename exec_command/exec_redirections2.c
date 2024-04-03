@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:31:30 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:04:44 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 		if (travel_in && (travel_in->order == count))
 		{
 			if (!travel_in->next)
-				ft_in_redir_o1(&fd[0], travel_in, saved_fd, env_list);
+				fd[0] = ft_in_redir_o1(&fd[0], travel_in, saved_fd, env_list);
 			else
 				fd[0] = ft_in_redir_o2(fd[0], travel_in, saved_fd, env_list);
 			if (fd[0] == -1917)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 16:47:11 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:14:39 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ void				ft_free_char_tab(char **str);
 char				**redo_env(t_list *env);
 int					exec_command(char **command, char **env, t_list **env_list,
 						t_ast *ast);
-int					do_redirections(t_ast *command, int saved_std[2],
-						t_list *env);
+int					do_redirections(t_ast *command, t_list *env);
+void				close_exec(t_exec **exec);
 int					configure_fd_out(int fd_out, char *token, char *file);
 int					configure_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2],
@@ -177,9 +177,9 @@ int					setup_built_in(t_ast *command, char **command_str,
 char				**setup_command_split(char **command);
 void				create_absolute_command(char **cmd_split, t_list **env_list,
 						int *exit_status, char **instruct);
-void				replace_fd(int *fd_out, int *fd_in);
-t_token				*ft_in_redirections(t_ast *command, int fd_in,
-						int saved_fd[2], t_list **env_list);
+void				replace_fd(int *fd_in);
+int					ft_in_redirections(t_ast *command, t_exec **exec,
+						t_list **env_list);
 int					configure_fd_in2(int fd_in, char *token, char *file);
 int					ft_out_redirections_order(int *fd, t_token **travel_out);
 int					ft_in_redir_o2(int fd, t_token *travel_in, int saved_fd[2],
@@ -189,6 +189,10 @@ int					ft_in_redir_o1(int fd[1], t_token *travel_in,
 int					configure_fd_out2(int fd_out, char *token, char *file);
 int					ft_compare_limiter(char *line, char *limiter);
 int					ft_utils_fd2(t_token *token, t_exec **exec);
+int					configure_fd_in3(int fd_in, char *token, char *file);
+int					do_redirectionsorder(t_ast *command, int saved_fd[2],
+						int fd[2], t_list *env_list);
+int					do_redirection2(t_ast *command, int *fd_in, int *fd_out);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

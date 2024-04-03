@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:35:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/03/28 04:56:07 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/02 18:02:57 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ t_token	*ft_clean_tokens(t_token **tokens, t_token **tokens2)
 		tmp = curr->next;
 		if (curr->file_redir != NULL)
 			free(curr->file_redir);
-		free(curr->file_redir_in);
-		free(curr->file_redir_out);
+		if (curr->file_redir_in != NULL)
+			free(curr->file_redir_in);
+		if (curr->file_redir_out != NULL)
+			free(curr->file_redir_out);
 		free(curr->token);
 		free(curr);
 		curr = tmp;

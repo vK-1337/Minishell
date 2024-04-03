@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:53:37 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:24:56 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:32:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_compare_limiter(char *line, char *limiter)
 	return (1);
 }
 
-void initialize_redir_order(t_ast *command, t_token **travel_in,
+void	initialize_redir_order(t_ast *command, t_token **travel_in,
 		t_token **travel_out, int *count)
 {
 	*count = 1;

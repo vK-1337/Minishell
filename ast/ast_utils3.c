@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:12:14 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/29 23:25:49 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:26:27 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_utils_fd(t_token *travel, t_exec **exec, t_list *env)
 		}
 		travel = travel->next;
 	}
-	(*exec)->fd[0] = configure_fd_in((*exec)->fd[0], travel->token,
+	(*exec)->fd[0] = c_fd_in((*exec)->fd[0], travel->token,
 			travel->file_redir);
 	if (ft_strcmp(travel->token, "<<") == 0)
 		(*exec)->fd[0] = launch_here_doc(travel->file_redir, (*exec)->saved_fd,

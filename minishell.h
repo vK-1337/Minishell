@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 17:14:39 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:29:12 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int					exec_command(char **command, char **env, t_list **env_list,
 int					do_redirections(t_ast *command, t_list *env);
 void				close_exec(t_exec **exec);
 int					configure_fd_out(int fd_out, char *token, char *file);
-int					configure_fd_in(int fd_in, char *token, char *file);
+int					c_fd_in(int fd_in, char *token, char *file);
 int					launch_here_doc(char *limiter, int saved_std[2],
 						t_list *env);
 void				here_doc(char *limiter, int fd[2], t_list *env_list);
@@ -193,6 +193,9 @@ int					configure_fd_in3(int fd_in, char *token, char *file);
 int					do_redirectionsorder(t_ast *command, int saved_fd[2],
 						int fd[2], t_list *env_list);
 int					do_redirection2(t_ast *command, int *fd_in, int *fd_out);
+void				cd_management(char **command, int *exit_status,
+						t_list **env_list);
+
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */

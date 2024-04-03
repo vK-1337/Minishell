@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:33:32 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/02 18:27:47 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:24:08 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ int	ft_open_solo_fd(t_token **tokens, t_list **env)
 			return (ft_clean_tokens(tokens, NULL), -1);
 		fd = file_redir(curr, *env);
 		if (fd == -1917)
-			return (ft_end_minishell(env),
-				-1917);
+			return (ft_end_minishell(env), -1917);
 		if (fd == -1)
-			return (handle_error(fd, curr->file_redir), ft_tokenlstclear(&curr), -1);
+			return (handle_error(fd, curr->file_redir), ft_tokenlstclear(&curr),
+				-1);
 		close(fd);
 		ft_tokenlstdelone(&curr);
 		curr = tmp;

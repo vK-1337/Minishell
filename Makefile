@@ -19,6 +19,7 @@ SRCS =			cd/cd.c \
 				env/export_utils_three.c \
 				env/unset.c \
 				exec_command/built_in.c \
+				exec_command/built_in_utils.c \
 				exec_command/exec_command.c \
 				exec_command/exec_command_utils.c \
 				exec_command/exec_redirections.c \

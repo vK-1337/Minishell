@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:30:08 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 19:14:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:26:44 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*build_command(t_ast *node)
 	}
 	return (command);
 }
-int		configure_fd_in2(int fd_in, char *token, char *file);
+int		c_fd_in2(int fd_in, char *token, char *file);
 
 int		ft_manage_fd2(t_exec *exec);
 

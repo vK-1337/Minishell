@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:45:10 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:09:12 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:22:43 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	do_redirectionsorder(t_ast *command, int saved_fd[2], int fd[2],
 	replace_fd(&fd[0]);
 	return (0);
 }
+
 void	close_exec(t_exec **exec)
 {
 	if ((*exec)->fd[0] != -1 && (*exec)->fd[0] != -1917)
@@ -110,7 +111,6 @@ int	do_redirections(t_ast *command, t_list *env_list)
 	{
 		if (ft_in_redirections(command, &exec, &env_list) == -1)
 			return (close_exec(&exec), -1);
-		
 	}
 	if (do_redirection2(command, &exec->fd[0], &exec->fd[1]) == -1)
 		return (close_exec(&exec), -1);

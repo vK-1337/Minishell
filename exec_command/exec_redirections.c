@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/03 17:00:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:27:09 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	launch_here_doc(char *limiter, int saved_std[2], t_list *env_list)
 	return (fd[0]);
 }
 
-int	configure_fd_in(int fd_in, char *token, char *file)
+int	c_fd_in(int fd_in, char *token, char *file)
 {
 	if (file[ft_strlen(file) - 1] == ' ')
 		file[ft_strlen(file) - 1] = '\0';
@@ -93,7 +93,7 @@ int	configure_fd_out(int fd_out, char *token, char *file)
 	{
 		handle_error(-1, "dup2");
 		return (-1);
-	}	
+	}
 	close(fd_out);
 	return (fd_out);
 }

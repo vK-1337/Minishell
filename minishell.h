@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 18:35:42 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:47:11 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,7 +470,8 @@ void				ft_helper4(int *i, int *count);
 /*                                                                            */
 /******************************************************************************/
 
-int					ft_unset(t_list **env_list, char *var_to_del);
+int					ft_unset(t_list **env_list, char **var_to_del);
+void				ft_unset_helper(t_list *curr, t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */

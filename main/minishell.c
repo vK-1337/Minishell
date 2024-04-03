@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/01 17:06:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:49:15 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int	minishell(char **prompt, char **input, t_list **env_list)
 		ft_change_signals();
 		launch_ast(*input, env_list, &ft_find_var(env_list, "$?")->xit_status);
 		if (ft_find_var(env_list, "$?")->should_end == 1)
+		{
+			free(*input);
 			break ;
+		}
 		if (rebuild_prompt(prompt, input, env_list) == 1)
 			return (1);
 	}

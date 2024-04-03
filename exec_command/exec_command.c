@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:27:01 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 18:28:51 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/02 17:11:24 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	exec_shell_command(t_ast *command, t_list **env_list, char **env,
 	handle_error(id, "fork");
 	if (id == 0)
 	{
-		if (do_redirections(command, (int [2]){0, 1}, *env_list) == -1)
+		if (do_redirections(command, *env_list) == -1)
 			return (ft_end_minishell(env_list), ft_free_char_tab(env),
 				free(command_str), 1);
 		exit_status = exec_command(&command_str, redo_env(*env_list), env_list,

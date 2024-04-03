@@ -6,19 +6,14 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 02:42:39 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 18:14:18 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:11:03 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	replace_fd(int *fd_out, int *fd_in)
+void	replace_fd(int *fd_in)
 {
-	if (*fd_out != 1)
-	{
-		dup2(*fd_out, 1);
-		close(*fd_out);
-	}
 	if (*fd_in != 0)
 	{
 		dup2(*fd_in, 0);
@@ -45,24 +40,33 @@ int	ft_tablen(char **tab)
 	return (i);
 }
 
-t_token	*ft_in_redirections(t_ast *command, int fd_in, int saved_fd[2],
-		t_list **env_list)
+int	ft_in_redirections(t_ast *command, t_exec **exec, t_list **env_list)
 {
 	t_token	*travel;
 
 	travel = command->token->file_redir_in;
 	while (travel->next)
 	{
-		if (configure_fd_in2(fd_in, travel->token, travel->file_redir) == -1)
-			return (NULL);
+		if (configure_fd_in3((*exec)->fd[0], travel->token,
+				travel->file_redir) == -1)
+			return (-1);
 		if (ft_strncmp(travel->token, "<<", 2) == 0)
 		{
-			if (launch_here_doc(travel->file_redir, saved_fd, *env_list) == -1)
-				return (NULL);
+			if (launch_here_doc(travel->file_redir, (*exec)->saved_fd,
+					*env_list) == -1)
+				return (-1);
 		}
 		travel = travel->next;
 	}
-	return (travel);
+	(*exec)->fd[0] = configure_fd_in((*exec)->fd[0], travel->token,
+			travel->file_redir);
+	if (ft_strcmp(travel->token, "<<") == 0)
+	{
+		(*exec)->fd[0] = launch_here_doc(travel->file_redir, (*exec)->saved_fd,
+				*env_list);
+				return (-1);
+	}
+	return ((*exec)->fd[0]);
 }
 
 int	ft_in_redir_o1(int *fd, t_token *travel_in, int saved_fd[2],
@@ -70,8 +74,12 @@ int	ft_in_redir_o1(int *fd, t_token *travel_in, int saved_fd[2],
 {
 	*fd = configure_fd_in(*fd, travel_in->token, travel_in->file_redir);
 	if (ft_strncmp(travel_in->token, "<<", 2) == 0)
+	{
 		*fd = launch_here_doc(travel_in->file_redir, saved_fd, env_list);
+		if (*fd == -1)
+			return (-1917);
+	}
 	if (*fd == -1)
-		return (-1917);
+		return (-1);
 	return (*fd);
 }

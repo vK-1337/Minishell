@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:05 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 18:18:15 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/03 17:00:18 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ int	configure_fd_out(int fd_out, char *token, char *file)
 		handle_error(fd_out, file);
 		return (-1);
 	}
-	dup2(fd_out, 1);
+	if (dup2(fd_out, 1) == -1)
+	{
+		handle_error(-1, "dup2");
+		return (-1);
+	}	
 	close(fd_out);
 	return (fd_out);
 }

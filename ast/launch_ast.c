@@ -6,7 +6,7 @@
 /*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:56:17 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 18:33:12 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/02 17:13:16 by udumas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,32 @@ void	check_here_doc(t_ast *ast)
 	check_here_doc(ast->right);
 }
 
-void	ft_print_reverse_token_list(t_token **token)
-{
-	t_token	*curr;
-	int		i;
+// void	ft_print_reverse_token_list(t_token **token)
+// {
+// 	t_token	*curr;
+// 	int		i;
 
-	i = 0;
-	curr = *token;
-	while (curr->next)
-	{
-		i++;
-		curr = curr->next;
-	}
-	while (curr)
-	{
-		printf("\nNoeud numero |%d|\n", i--);
-		printf("Token => |%s|\n", curr->token);
-		printf("Type => |%s|\n", ft_print_type(curr->type));
-		if (curr->file_redir)
-			printf("File redir => |%s|\n", curr->file_redir);
-		if (curr->file_redir_out)
-			printf("File redir out => |%s|\n", curr->file_redir_out->token);
-		if (curr->file_redir_in)
-			printf("File redir in => |%s|\n", curr->file_redir_in->token);
-		curr = curr->prev;
-	}
-}
+// 	i = 0;
+// 	curr = *token;
+// 	while (curr->next)
+// 	{
+// 		i++;
+// 		curr = curr->next;
+// 	}
+// 	while (curr)
+// 	{
+// 		printf("\nNoeud numero |%d|\n", i--);
+// 		printf("Token => |%s|\n", curr->token);
+// 		printf("Type => |%s|\n", ft_print_type(curr->type));
+// 		if (curr->file_redir)
+// 			printf("File redir => |%s|\n", curr->file_redir);
+// 		if (curr->file_redir_out)
+// 			printf("File redir out => |%s|\n", curr->file_redir_out->token);
+// 		if (curr->file_redir_in)
+// 			printf("File redir in => |%s|\n", curr->file_redir_in->token);
+// 		curr = curr->prev;
+// 	}
+// }
 
 int	launch_ast(char *input, t_list **env_list, int *exit_status)
 {

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:04:26 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/02 18:35:32 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:08:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_replace_var(t_list **env_list, char *n)
 	}
 	while (curr)
 	{
-		if (strncmp(curr->var_name, n, i) == 0 && curr->var_name[i] == '\0')
+		if (ft_strncmp(curr->var_name, n, i) == 0 && curr->var_name[i] == '\0')
 		{
 			free(curr->content);
 			if (!n[i])

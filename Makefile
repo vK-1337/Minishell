@@ -76,6 +76,7 @@ SRCS =			cd/cd.c \
 				tokens/token_utils.c \
 				tokens/token_utils_two.c \
 				main/main_prompt.c \
+				main/main_prompt_utils.c \
 
 
 CFLAGS = -Wall -Werror -Wextra -g3

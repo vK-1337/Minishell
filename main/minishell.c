@@ -6,11 +6,13 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:36:19 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 16:49:15 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:26:25 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	g_received_sig = 0;
 
 int	main(int ac, char **av, char **env)
 {

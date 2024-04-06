@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:45:34 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 17:30:41 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:07:23 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,6 +412,7 @@ void				final_free(char **prompt, int *last_exit_status,
 int					initialize_main(char **prompt, t_list **env_list,
 						char **env);
 void				manage_main_args(int ac, char **av);
+void				main_prompt_helper(t_list **env_list, char **input);
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
@@ -437,6 +438,7 @@ void				wait_p_handler(int signum);
 void				ft_here_doc_signals(void);
 void				here_doc_handler(int signum);
 void				ft_here_doc_signal_child(void);
+void				ft_change_xstatus(t_list **env_list);
 
 /******************************************************************************/
 /*                                                                            */
@@ -559,5 +561,7 @@ int					wxs(int id, int *exit_status);
 int					exit_pc(t_ast *command, t_exec **exec, int id);
 void				initialize_fd_ast(int fd[2], t_ast **ast);
 void				init_exec(t_exec **exec);
+
+extern int			g_received_sig;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: udumas <udumas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 04:28:14 by udumas            #+#    #+#             */
-/*   Updated: 2024/04/01 16:16:26 by udumas           ###   ########.fr       */
+/*   Updated: 2024/04/05 17:10:50 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main_prompt(char **prompt, char **input, t_list **env_list)
 	*input = readline(*prompt);
 	if (*input == NULL)
 		return (2);
+	if (g_received_sig != 0)
+		ft_change_xstatus(env_list);
 	while (ft_unclosed_input(*input))
 	{
 		tmp = *input;
@@ -34,10 +36,7 @@ int	main_prompt(char **prompt, char **input, t_list **env_list)
 	if (!(*input)[0])
 		ft_find_var(env_list, "$?")->xit_status = 0;
 	if (check_syntax(*input) == 0)
-	{
-		ft_find_var(env_list, "$?")->xit_status = 0;
-		return (add_history(*input), 1);
-	}
+		return (main_prompt_helper(env_list, input), 1);
 	return (add_history(*input), 0);
 }
 
@@ -51,17 +50,8 @@ int	rebuild_prompt(char **prompt, char **input, t_list **env_list)
 	return (0);
 }
 
-void	final_free(char **prompt, int *last_exit_status, t_list **env_list)
-{
-	free(*prompt);
-	*last_exit_status = ft_find_var(env_list, "$?")->xit_status;
-	ft_free_list(env_list);
-	rl_clear_history();
-}
-
 int	initialize_main(char **prompt, t_list **env_list, char **env)
 {
-	rl_bind_key('\t', rl_complete);
 	*env_list = ft_convert_env(env);
 	if (!*env_list)
 		return (printf("Error: malloc failed\n"), 1);
@@ -69,6 +59,12 @@ int	initialize_main(char **prompt, t_list **env_list, char **env)
 	if (!*prompt)
 		return (printf("Error: malloc failed\n"), ft_free_list(env_list), 1);
 	return (0);
+}
+
+void	main_prompt_helper(t_list **env_list, char **input)
+{
+	ft_find_var(env_list, "$?")->xit_status = 2;
+	add_history(*input);
 }
 
 void	manage_main_args(int ac, char **av)

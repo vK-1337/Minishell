@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:57:39 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/03/29 19:53:43 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:08:19 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_match_multiple_wc(char *pattern, char *name)
 		if (strnstr_ret == NULL)
 			return (0);
 		else
-			name += strlen((const char *)pattern_split[i]);
+			name += ft_strlen((const char *)pattern_split[i]);
 		i++;
 	}
 	if (pattern[ft_strlen(pattern) - 1] != '*')

@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 09:45:40 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 16:49:21 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:08:30 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_unset(t_list **env_list, char **var_to_del)
 			continue ;
 		while (curr)
 		{
-			if (strncmp(curr->var_name, var_to_del[i],
+			if (ft_strncmp(curr->var_name, var_to_del[i],
 					ft_strlen(var_to_del[i])) == 0
 				&& curr->var_name[ft_strlen(var_to_del[i])] == '\0')
 			{

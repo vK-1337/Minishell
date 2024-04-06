@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:53:14 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/05 13:45:11 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:41:56 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_char_join(char *base_str, char to_join)
 	{
 		while (base_str[i])
 		{
-			if (base_str[i + 1] == '$')
+			if (base_str[i + 1] == '$' && ft_not_single_quoted(base_str, i + 1))
 				break ;
 			new_str[i] = base_str[i];
 			i++;

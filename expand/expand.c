@@ -6,7 +6,7 @@
 /*   By: vda-conc <vda-conc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:36:48 by vda-conc          #+#    #+#             */
-/*   Updated: 2024/04/03 19:42:18 by vda-conc         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:43:47 by vda-conc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ char	*ft_expand(char *input, t_list **env)
 			vars.str = ft_char_join(vars.str, input[vars.i]);
 		else if (input[vars.i] == 36 && (ft_isalpha(input[vars.i + 1])
 				|| input[vars.i + 1] == '?'))
-			ft_expand_helper1(&vars, input, env);
+                {
+			        ft_expand_helper1(&vars, input, env);
+                }
 		else if (input[vars.i] == 36 && input[vars.i + 1] == '{')
 			ft_expand_helper2(&vars, input, env);
 		vars.i++;
